@@ -1315,7 +1315,6 @@ fi
 
 %changelog
 * Mon Oct  1 2012 Remi Collet <remi@fedoraproject.org> 5.4.7-9
-- php-fpm: enable PrivateTmp
 - php-fpm: new systemd macros (#850268)
 - php-fpm: add upstream patch for startup issue (#846858)
 
