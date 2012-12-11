@@ -56,7 +56,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: 5.4.9
-Release: 2%{?dist}
+Release: 3%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -105,6 +105,8 @@ Patch44: php-5.4.5-system-libzip.patch
 Patch45: php-5.4.8-ldap_r.patch
 # Make php_config.h constant across builds
 Patch46: php-5.4.9-fixheader.patch
+# drop "Configure command" from phpinfo output
+Patch47: php-5.4.9-phpinfo.patch
 
 
 # Fixes for tests
@@ -678,6 +680,7 @@ support for using the enchant library to PHP.
 %patch45 -p1 -b .ldap_r
 %endif
 %patch46 -p1 -b .fixheader
+%patch47 -p1 -b .phpinfo
 
 # Prevent %%doc confusion over LICENSE files
 cp Zend/LICENSE Zend/ZEND_LICENSE
@@ -1410,6 +1413,9 @@ fi
 
 
 %changelog
+* Tue Dec 11 2012 Remi Collet <rcollet@redhat.com> 5.4.9-3
+- drop "Configure Command" from phpinfo output
+
 * Tue Dec 11 2012 Joe Orton <jorton@redhat.com> - 5.4.9-2
 - prevent php_config.h changes across (otherwise identical) rebuilds
 
