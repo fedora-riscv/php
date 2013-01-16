@@ -57,7 +57,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.4.10
+Version: 5.4.11
 Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -1403,6 +1403,10 @@ fi
 
 
 %changelog
+* Wed Jan 16 2013 Remi Collet <rcollet@redhat.com> 5.4.11-1
+- update to 5.4.11
+- fix php.conf to allow MultiViews managed by php scripts
+
 * Wed Dec 19 2012 Remi Collet <rcollet@redhat.com> 5.4.10-1
 - update to 5.4.10
 - remove patches merged upstream
