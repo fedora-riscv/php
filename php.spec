@@ -53,11 +53,11 @@
 %global db_devel  libdb-devel
 %endif
 
-#global rcver RC1
+#global rcver RC2
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.4.11
+Version: 5.4.12
 Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -86,6 +86,10 @@ Patch8: php-5.4.7-libdb.patch
 # Fixes for extension modules
 # https://bugs.php.net/63171 no odbc call during timeout
 Patch21: php-5.4.7-odbctimer.patch
+# https://bugs.php.net/64128 buit-in web server is broken on ppc64
+Patch22: php-5.4.11-select.patch
+# https://bugs.php.net/64142 dval to lval issue on ppc64
+Patch23: php-5.4.11-conv.patch
 
 # Functional changes
 Patch40: php-5.4.0-dlopen.patch
@@ -104,8 +108,10 @@ Patch47: php-5.4.9-phpinfo.patch
 
 
 # Fixes for tests
+Patch50: php-5.4.11-sockets.patch
 
-BuildRequires: bzip2-devel, curl-devel >= 7.9, %{db_devel}, gmp-devel
+
+BuildRequires: bzip2-devel, curl-devel >= 7.9, gmp-devel
 BuildRequires: httpd-devel >= 2.0.46-1, pam-devel
 BuildRequires: libstdc++-devel, openssl-devel
 BuildRequires: sqlite-devel >= 3.6.0
@@ -543,6 +549,7 @@ Summary: A database abstraction layer module for PHP applications
 Group: Development/Languages
 # All files licensed under PHP version 3.01
 License: PHP
+BuildRequires: %{db_devel}, tokyocabinet-devel
 Requires: php-common%{?_isa} = %{version}-%{release}
 
 %description dba
@@ -658,6 +665,8 @@ support for using the enchant library to PHP.
 %patch8 -p1 -b .libdb
 
 %patch21 -p1 -b .odbctimer
+%patch22 -p1 -b .select
+%patch23 -p1 -b .conv
 
 %patch40 -p1 -b .dlopen
 %patch41 -p1 -b .easter
@@ -671,6 +680,7 @@ support for using the enchant library to PHP.
 %endif
 %patch46 -p1 -b .fixheader
 %patch47 -p1 -b .phpinfo
+%patch50 -p1 -b .sockets
 
 # Prevent %%doc confusion over LICENSE files
 cp Zend/LICENSE Zend/ZEND_LICENSE
@@ -863,6 +873,7 @@ build --enable-force-cgi-redirect \
       --with-gd=shared \
       --enable-bcmath=shared \
       --enable-dba=shared --with-db4=%{_prefix} \
+                          --with-tcadb=%{_prefix} \
       --with-xmlrpc=shared \
       --with-ldap=shared --with-ldap-sasl \
       --enable-mysqlnd=shared \
@@ -965,6 +976,7 @@ build --enable-force-cgi-redirect \
       --with-gd=shared \
       --enable-bcmath=shared \
       --enable-dba=shared --with-db4=%{_prefix} \
+                          --with-tcadb=%{_prefix} \
       --with-xmlrpc=shared \
       --with-ldap=shared --with-ldap-sasl \
       --enable-mysqlnd=shared \
@@ -1403,6 +1415,16 @@ fi
 
 
 %changelog
+* Wed Feb 20 2013 Remi Collet <remi@fedoraproject.org> 5.4.12-1
+- update to 5.4.12
+- security fixes for CVE-2013-1635 and CVE-2013-1643
+- enable tokyocabinet dba handler
+- upstream patch (5.4.13) to fix dval to lval conversion
+  https://bugs.php.net/64142
+- upstream patch (5.4.13) for 2 failed tests
+- fix buit-in web server on ppc64 (fdset usage)
+  https://bugs.php.net/64128
+
 * Wed Jan 16 2013 Remi Collet <rcollet@redhat.com> 5.4.11-1
 - update to 5.4.11
 - fix php.conf to allow MultiViews managed by php scripts
