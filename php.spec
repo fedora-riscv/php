@@ -8,6 +8,9 @@
 %global zipver      1.11.0
 %global jsonver     1.2.1
 
+# Adds -z now to the linker flags
+%global _hardened_build 1
+
 # version used for php embedded library soname
 %global embed_version 5.4
 
@@ -55,7 +58,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.4.12
+Version: 5.4.13
 Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -84,10 +87,6 @@ Patch8: php-5.4.7-libdb.patch
 # Fixes for extension modules
 # https://bugs.php.net/63171 no odbc call during timeout
 Patch21: php-5.4.7-odbctimer.patch
-# https://bugs.php.net/64128 buit-in web server is broken on ppc64
-Patch22: php-5.4.11-select.patch
-# https://bugs.php.net/64142 dval to lval issue on ppc64
-Patch23: php-5.4.11-conv.patch
 
 # Functional changes
 Patch40: php-5.4.0-dlopen.patch
@@ -106,7 +105,6 @@ Patch47: php-5.4.9-phpinfo.patch
 
 
 # Fixes for tests
-Patch50: php-5.4.11-sockets.patch
 
 
 BuildRequires: bzip2-devel, curl-devel >= 7.9, gmp-devel
@@ -663,8 +661,6 @@ support for using the enchant library to PHP.
 %patch8 -p1 -b .libdb
 
 %patch21 -p1 -b .odbctimer
-%patch22 -p1 -b .select
-%patch23 -p1 -b .conv
 
 %patch40 -p1 -b .dlopen
 %patch41 -p1 -b .easter
@@ -678,7 +674,6 @@ support for using the enchant library to PHP.
 %endif
 %patch46 -p1 -b .fixheader
 %patch47 -p1 -b .phpinfo
-%patch50 -p1 -b .sockets
 
 # Prevent %%doc confusion over LICENSE files
 cp Zend/LICENSE Zend/ZEND_LICENSE
@@ -1374,7 +1369,7 @@ fi
 %{_libdir}/php/build
 %{_libdir}/php-zts/build
 %{_mandir}/man1/php-config.1*
-%config %{_sysconfdir}/rpm/macros.php
+%{_sysconfdir}/rpm/macros.php
 
 %files embedded
 %{_libdir}/libphp5.so
@@ -1413,9 +1408,16 @@ fi
 
 
 %changelog
+* Thu Mar 14 2013 Remi Collet <rcollet@redhat.com> 5.4.13-1
+- update to 5.4.13
+- security fix for CVE-2013-1643
+- Hardened build (links with -z now option)
+- Remove %%config from %%{_sysconfdir}/rpm/macros.*
+  (https://fedorahosted.org/fpc/ticket/259).
+
 * Wed Feb 20 2013 Remi Collet <remi@fedoraproject.org> 5.4.12-1
 - update to 5.4.12
-- security fixes for CVE-2013-1635 and CVE-2013-1643
+- security fix for CVE-2013-1635
 - enable tokyocabinet dba handler
 - upstream patch (5.4.13) to fix dval to lval conversion
   https://bugs.php.net/64142
