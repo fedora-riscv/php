@@ -1405,7 +1405,7 @@ fi
 
 %changelog
 * Thu Apr 11 2013 Remi Collet <rcollet@redhat.com> 5.4.14-1
-- update to 5.4.11
+- update to 5.4.14
 - clean old deprecated options
 
 * Thu Mar 14 2013 Remi Collet <rcollet@redhat.com> 5.4.13-1
@@ -1747,7 +1747,7 @@ fi
 - raise sqlite version to 3.6.0 (for sqlite3, build with --enable-load-extension)
 - sync with upstream "production" php.ini
 
-* Sat Jun 21 2009 Remi Collet <Fedora@famillecollet.com> 5.2.10-1
+* Sun Jun 21 2009 Remi Collet <Fedora@famillecollet.com> 5.2.10-1
 - update to 5.2.10
 - add interbase sub-package
 
