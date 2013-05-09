@@ -60,7 +60,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.4.14
+Version: 5.4.15
 Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -97,7 +97,7 @@ Patch42: php-5.3.1-systzdata-v10.patch
 # See http://bugs.php.net/53436
 Patch43: php-5.4.0-phpize.patch
 # Use system libzip instead of bundled one
-Patch44: php-5.4.5-system-libzip.patch
+Patch44: php-5.4.15-system-libzip.patch
 # Use -lldap_r for OpenLDAP
 Patch45: php-5.4.8-ldap_r.patch
 # Make php_config.h constant across builds
@@ -242,10 +242,13 @@ Provides: php-tokenizer, php-tokenizer%{?_isa}
 Provides: php-zip, php-zip%{?_isa}
 Provides: php-pecl-zip = %{zipver}, php-pecl-zip%{?_isa} = %{zipver}
 Provides: php-pecl(zip) = %{zipver}, php-pecl(zip)%{?_isa} = %{zipver}
-Obsoletes: php-pecl-zip
+Obsoletes: php-pecl-zip < 1.11
 %endif
 Provides: php-zlib, php-zlib%{?_isa}
-Obsoletes: php-openssl, php-pecl-json, php-json, php-pecl-phar, php-pecl-Fileinfo
+Obsoletes: php-openssl
+Obsoletes: php-pecl-json < 1.2.2
+Obsoletes: php-pecl-phar < 1.2.4
+Obsoletes: php-pecl-Fileinfo < 1.0.5
 Obsoletes: php-mhash < 5.3.0
 
 %description common
@@ -1351,6 +1354,7 @@ fi
 %attr(770,apache,root) %dir %{_localstatedir}/log/php-fpm
 %dir /run/php-fpm
 %{_mandir}/man8/php-fpm.8*
+%dir %{_datadir}/fpm
 %{_datadir}/fpm/status.html
 %endif
 
@@ -1404,6 +1408,11 @@ fi
 
 
 %changelog
+* Thu May  9 2013 Remi Collet <rcollet@redhat.com> 5.4.15-1
+- update to 5.4.15
+- add version to "Obsoletes"
+- own /usr/share/fpm
+
 * Thu Apr 11 2013 Remi Collet <rcollet@redhat.com> 5.4.14-1
 - update to 5.4.14
 - clean old deprecated options
