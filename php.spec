@@ -60,7 +60,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.4.15
+Version: 5.4.16
 Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -89,6 +89,12 @@ Patch8: php-5.4.7-libdb.patch
 # Fixes for extension modules
 # https://bugs.php.net/63171 no odbc call during timeout
 Patch21: php-5.4.7-odbctimer.patch
+# Fixed Bug #64949 (Buffer overflow in _pdo_pgsql_error)
+Patch22: php-5.4.16-pdopgsql.patch
+# Fixed bug #64960 (Segfault in gc_zval_possible_root)
+Patch23: php-5.4.16-gc.patch
+# Fixed Bug #64915 (error_log ignored when daemonize=0)
+Patch24: php-5.4.16-fpm.patch
 
 # Functional changes
 Patch40: php-5.4.0-dlopen.patch
@@ -105,8 +111,8 @@ Patch46: php-5.4.9-fixheader.patch
 # drop "Configure command" from phpinfo output
 Patch47: php-5.4.9-phpinfo.patch
 
-
 # Fixes for tests
+Patch60: php-5.4.16-pdotests.patch
 
 
 BuildRequires: bzip2-devel, curl-devel >= 7.9, gmp-devel
@@ -174,6 +180,7 @@ Summary: PHP FastCGI Process Manager
 # TSRM and fpm are licensed under BSD
 License: PHP and Zend and BSD
 Requires: php-common%{?_isa} = %{version}-%{release}
+BuildRequires: systemd-devel
 BuildRequires: systemd-units
 Requires: systemd-units
 Requires(pre): /usr/sbin/useradd
@@ -666,6 +673,9 @@ support for using the enchant library to PHP.
 %patch8 -p1 -b .libdb
 
 %patch21 -p1 -b .odbctimer
+%patch22 -p1 -b .pdopgsql
+%patch23 -p1 -b .gc
+%patch24 -p1 -b .fpm
 
 %patch40 -p1 -b .dlopen
 %patch41 -p1 -b .easter
@@ -679,6 +689,8 @@ support for using the enchant library to PHP.
 %endif
 %patch46 -p1 -b .fixheader
 %patch47 -p1 -b .phpinfo
+
+%patch60 -p1 -b .pdotests
 
 # Prevent %%doc confusion over LICENSE files
 cp Zend/LICENSE Zend/ZEND_LICENSE
@@ -940,6 +952,7 @@ popd
 # Build php-fpm
 pushd build-fpm
 build --enable-fpm \
+      --with-fpm-systemd \
       --libdir=%{_libdir}/php \
       --without-mysql --disable-pdo \
       ${without_shared}
@@ -1408,6 +1421,13 @@ fi
 
 
 %changelog
+* Wed Jun  5 2013 Remi Collet <rcollet@redhat.com> 5.4.16-1
+- update to 5.4.16
+- switch systemd unit to Type=notify
+- patch for upstream Bug #64915 error_log ignored when daemonize=0
+- patch for upstream Bug #64949 Buffer overflow in _pdo_pgsql_error
+- patch for upstream bug #64960 Segfault in gc_zval_possible_root
+
 * Thu May  9 2013 Remi Collet <rcollet@redhat.com> 5.4.15-1
 - update to 5.4.15
 - add version to "Obsoletes"
