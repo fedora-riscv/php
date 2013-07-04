@@ -60,7 +60,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.4.16
+Version: 5.4.17
 Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -89,12 +89,9 @@ Patch8: php-5.4.7-libdb.patch
 # Fixes for extension modules
 # https://bugs.php.net/63171 no odbc call during timeout
 Patch21: php-5.4.7-odbctimer.patch
-# Fixed Bug #64949 (Buffer overflow in _pdo_pgsql_error)
-Patch22: php-5.4.16-pdopgsql.patch
-# Fixed bug #64960 (Segfault in gc_zval_possible_root)
-Patch23: php-5.4.16-gc.patch
-# Fixed Bug #64915 (error_log ignored when daemonize=0)
-Patch24: php-5.4.16-fpm.patch
+# https://bugs.php.net/65143 php-cgi man page
+# https://bugs.php.net/65142 phar man page
+Patch22: php-5.4.17-man.patch
 
 # Functional changes
 Patch40: php-5.4.0-dlopen.patch
@@ -112,8 +109,6 @@ Patch46: php-5.4.9-fixheader.patch
 Patch47: php-5.4.9-phpinfo.patch
 
 # Fixes for tests
-Patch60: php-5.4.16-pdotests.patch
-
 
 BuildRequires: bzip2-devel, curl-devel >= 7.9, gmp-devel
 BuildRequires: httpd-devel >= 2.0.46-1, pam-devel
@@ -673,9 +668,7 @@ support for using the enchant library to PHP.
 %patch8 -p1 -b .libdb
 
 %patch21 -p1 -b .odbctimer
-%patch22 -p1 -b .pdopgsql
-%patch23 -p1 -b .gc
-%patch24 -p1 -b .fpm
+%patch22 -p1 -b .manpages
 
 %patch40 -p1 -b .dlopen
 %patch41 -p1 -b .easter
@@ -689,8 +682,6 @@ support for using the enchant library to PHP.
 %endif
 %patch46 -p1 -b .fixheader
 %patch47 -p1 -b .phpinfo
-
-%patch60 -p1 -b .pdotests
 
 # Prevent %%doc confusion over LICENSE files
 cp Zend/LICENSE Zend/ZEND_LICENSE
@@ -1348,6 +1339,9 @@ fi
 # provides phpize here (not in -devel) for pecl command
 %{_bindir}/phpize
 %{_mandir}/man1/php.1*
+%{_mandir}/man1/php-cgi.1*
+%{_mandir}/man1/phar.1*
+%{_mandir}/man1/phar.phar.1*
 %{_mandir}/man1/phpize.1*
 %doc sapi/cgi/README* sapi/cli/README
 
@@ -1421,6 +1415,10 @@ fi
 
 
 %changelog
+* Wed Jul  3 2013 Remi Collet <rcollet@redhat.com> 5.4.17-1
+- update to 5.4.17
+- add missing man pages (phar, php-cgi)
+
 * Wed Jun  5 2013 Remi Collet <rcollet@redhat.com> 5.4.16-1
 - update to 5.4.16
 - switch systemd unit to Type=notify
