@@ -61,7 +61,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: 5.4.17
-Release: 1%{?dist}
+Release: 2%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -107,6 +107,9 @@ Patch45: php-5.4.8-ldap_r.patch
 Patch46: php-5.4.9-fixheader.patch
 # drop "Configure command" from phpinfo output
 Patch47: php-5.4.9-phpinfo.patch
+
+# Security fixes
+Patch60: php-5.4.17-CVE-2013-4013.patch
 
 # Fixes for tests
 
@@ -199,7 +202,8 @@ Summary: Common files for PHP
 # All files licensed under PHP version 3.01, except
 # fileinfo is licensed under PHP version 3.0
 # regex, libmagic are licensed under BSD
-License: PHP and BSD
+# main/snprintf.c, main/spprintf.c and main/rfc1867.c are ASL 1.0
+License: PHP and BSD and ASL 1.0
 # ABI/API check - Arch specific
 Provides: php-api = %{apiver}%{isasuffix}, php-zend-abi = %{zendver}%{isasuffix}
 Provides: php(api) = %{apiver}%{isasuffix}, php(zend-abi) = %{zendver}%{isasuffix}
@@ -682,6 +686,8 @@ support for using the enchant library to PHP.
 %endif
 %patch46 -p1 -b .fixheader
 %patch47 -p1 -b .phpinfo
+
+%patch60 -p1 -b .cve4113
 
 # Prevent %%doc confusion over LICENSE files
 cp Zend/LICENSE Zend/ZEND_LICENSE
@@ -1415,6 +1421,10 @@ fi
 
 
 %changelog
+* Fri Jul 12 2013 Remi Collet <rcollet@redhat.com> - 5.4.17-2
+- add security fix for CVE-2013-4113
+- add missing ASL 1.0 license
+
 * Wed Jul  3 2013 Remi Collet <rcollet@redhat.com> 5.4.17-1
 - update to 5.4.17
 - add missing man pages (phar, php-cgi)
