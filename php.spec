@@ -1539,12 +1539,7 @@ exit 0
 %changelog
 * Mon Aug 19 2013 Remi Collet <rcollet@redhat.com> - 5.5.2-1
 - update to 5.5.1, fixes for CVE-2011-4718 + CVE-2013-4248
-
-* Thu Aug 08 2013 Remi Collet <rcollet@redhat.com> - 5.5.1-3
 - improve system libzip patch
-
-* Sun Aug 04 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.5.1-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
 * Mon Jul 22 2013 Remi Collet <rcollet@redhat.com> - 5.5.1-1
 - update to 5.5.1
