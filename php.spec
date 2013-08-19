@@ -60,8 +60,8 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.4.17
-Release: 2%{?dist}
+Version: 5.4.18
+Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -85,13 +85,12 @@ Patch5: php-5.2.0-includedir.patch
 Patch6: php-5.2.4-embed.patch
 Patch7: php-5.3.0-recode.patch
 Patch8: php-5.4.7-libdb.patch
+# Patch for https://bugs.php.net/65460
+Patch9: php-5.4.18-bison.patch
 
 # Fixes for extension modules
 # https://bugs.php.net/63171 no odbc call during timeout
 Patch21: php-5.4.7-odbctimer.patch
-# https://bugs.php.net/65143 php-cgi man page
-# https://bugs.php.net/65142 phar man page
-Patch22: php-5.4.17-man.patch
 
 # Functional changes
 Patch40: php-5.4.0-dlopen.patch
@@ -109,7 +108,6 @@ Patch46: php-5.4.9-fixheader.patch
 Patch47: php-5.4.9-phpinfo.patch
 
 # Security fixes
-Patch60: php-5.4.17-CVE-2013-4013.patch
 
 # Fixes for tests
 
@@ -124,6 +122,8 @@ BuildRequires: libtool-ltdl-devel
 %if %{with_libzip}
 BuildRequires: libzip-devel >= 0.10
 %endif
+# Temporary for need for https://bugs.php.net/65460
+BuildRequires: bison
 
 Obsoletes: php-dbg, php3, phpfi, stronghold-php, php-zts < 5.3.7
 Provides: php-zts = %{version}-%{release}
@@ -319,6 +319,7 @@ Requires: php-common%{?_isa} = %{version}-%{release}
 Obsoletes: php-pecl-pdo-sqlite, php-pecl-pdo
 # ABI/API check - Arch specific
 Provides: php-pdo-abi = %{pdover}%{isasuffix}
+Provides: php(pdo-abi) = %{pdover}%{isasuffix}
 Provides: php-sqlite3, php-sqlite3%{?_isa}
 Provides: php-pdo_sqlite, php-pdo_sqlite%{?_isa}
 
@@ -651,7 +652,7 @@ The php-intl package contains a dynamic shared object that will add
 support for using the ICU library to PHP.
 
 %package enchant
-Summary: Human Language and Character Encoding Support
+Summary: Enchant spelling extension for PHP applications
 Group: System Environment/Libraries
 # All files licensed under PHP version 3.0
 License: PHP
@@ -659,7 +660,7 @@ Requires: php-common%{?_isa} = %{version}-%{release}
 BuildRequires: enchant-devel >= 1.2.4
 
 %description enchant
-The php-intl package contains a dynamic shared object that will add
+The php-enchant package contains a dynamic shared object that will add
 support for using the enchant library to PHP.
 
 
@@ -670,9 +671,9 @@ support for using the enchant library to PHP.
 %patch6 -p1 -b .embed
 %patch7 -p1 -b .recode
 %patch8 -p1 -b .libdb
+%patch9 -p1 -b .bison
 
 %patch21 -p1 -b .odbctimer
-%patch22 -p1 -b .manpages
 
 %patch40 -p1 -b .dlopen
 %patch41 -p1 -b .easter
@@ -687,7 +688,10 @@ support for using the enchant library to PHP.
 %patch46 -p1 -b .fixheader
 %patch47 -p1 -b .phpinfo
 
-%patch60 -p1 -b .cve4113
+# Temporary workaround for https://bugs.php.net/65460
+# Regenerated bison files
+rm Zend/zend_{language,ini}_parser.[ch]
+./genfiles
 
 # Prevent %%doc confusion over LICENSE files
 cp Zend/LICENSE Zend/ZEND_LICENSE
@@ -1421,6 +1425,12 @@ fi
 
 
 %changelog
+* Mon Aug 19 2013 Remi Collet <rcollet@redhat.com> - 5.4.18-1
+- update to 5.4.18, fix for CVE-2013-4248
+- add Provides: php(pdo-abi), for consistency with php(api)
+  and php(zend-abi)
+- fix php-enchant package summary and description
+
 * Fri Jul 12 2013 Remi Collet <rcollet@redhat.com> - 5.4.17-2
 - add security fix for CVE-2013-4113
 - add missing ASL 1.0 license
