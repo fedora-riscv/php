@@ -50,12 +50,12 @@
 %global  with_libgd 1
 %endif
 
-%if 0%{?fedora} < 17 && 0%{?rhel} < 7
-%global with_zip     0
-%global with_libzip  0
-%else
+%if 0%{?fedora} == 17 || 0%{?fedora} == 18 || 0%{?fedora} == 19 || 0%{?rhel} == 7
 %global with_zip     1
 %global with_libzip  1
+%else
+%global with_zip     0
+%global with_libzip  0
 %endif
 
 %if 0%{?fedora} < 18 && 0%{?rhel} < 7
@@ -68,7 +68,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.5.2
+Version: 5.5.3
 Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -951,9 +951,9 @@ build --libdir=%{_libdir}/php \
       --with-sqlite3=shared,%{_prefix} \
 %if %{with_zip}
       --enable-zip=shared \
-%endif
 %if %{with_libzip}
       --with-libzip \
+%endif
 %endif
       --without-readline \
       --with-libedit \
@@ -1080,9 +1080,9 @@ build --includedir=%{_includedir}/php-zts \
       --with-sqlite3=shared,%{_prefix} \
 %if %{with_zip}
       --enable-zip=shared \
-%endif
 %if %{with_libzip}
       --with-libzip \
+%endif
 %endif
       --without-readline \
       --with-libedit \
@@ -1537,8 +1537,11 @@ exit 0
 
 
 %changelog
+* Wed Aug 21 2013 Remi Collet <rcollet@redhat.com> - 5.5.3-1
+- update to 5.5.3
+
 * Mon Aug 19 2013 Remi Collet <rcollet@redhat.com> - 5.5.2-1
-- update to 5.5.1, fixes for CVE-2011-4718 + CVE-2013-4248
+- update to 5.5.2, fixes for CVE-2011-4718 + CVE-2013-4248
 - improve system libzip patch
 
 * Mon Jul 22 2013 Remi Collet <rcollet@redhat.com> - 5.5.1-1
