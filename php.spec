@@ -60,7 +60,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.4.18
+Version: 5.4.19
 Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -85,8 +85,6 @@ Patch5: php-5.2.0-includedir.patch
 Patch6: php-5.2.4-embed.patch
 Patch7: php-5.3.0-recode.patch
 Patch8: php-5.4.7-libdb.patch
-# Patch for https://bugs.php.net/65460
-Patch9: php-5.4.18-bison.patch
 
 # Fixes for extension modules
 # https://bugs.php.net/63171 no odbc call during timeout
@@ -122,8 +120,6 @@ BuildRequires: libtool-ltdl-devel
 %if %{with_libzip}
 BuildRequires: libzip-devel >= 0.10
 %endif
-# Temporary for need for https://bugs.php.net/65460
-BuildRequires: bison
 
 Obsoletes: php-dbg, php3, phpfi, stronghold-php, php-zts < 5.3.7
 Provides: php-zts = %{version}-%{release}
@@ -671,7 +667,6 @@ support for using the enchant library to PHP.
 %patch6 -p1 -b .embed
 %patch7 -p1 -b .recode
 %patch8 -p1 -b .libdb
-%patch9 -p1 -b .bison
 
 %patch21 -p1 -b .odbctimer
 
@@ -687,11 +682,6 @@ support for using the enchant library to PHP.
 %endif
 %patch46 -p1 -b .fixheader
 %patch47 -p1 -b .phpinfo
-
-# Temporary workaround for https://bugs.php.net/65460
-# Regenerated bison files
-rm Zend/zend_{language,ini}_parser.[ch]
-./genfiles
 
 # Prevent %%doc confusion over LICENSE files
 cp Zend/LICENSE Zend/ZEND_LICENSE
@@ -1425,6 +1415,9 @@ fi
 
 
 %changelog
+* Thu Aug 22 2013 Remi Collet <rcollet@redhat.com> - 5.4.19-1
+- update to 5.4.19
+
 * Mon Aug 19 2013 Remi Collet <rcollet@redhat.com> - 5.4.18-1
 - update to 5.4.18, fix for CVE-2013-4248
 - add Provides: php(pdo-abi), for consistency with php(api)
