@@ -60,7 +60,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.4.22
+Version: 5.4.23
 Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -104,6 +104,9 @@ Patch45: php-5.4.8-ldap_r.patch
 Patch46: php-5.4.9-fixheader.patch
 # drop "Configure command" from phpinfo output
 Patch47: php-5.4.9-phpinfo.patch
+
+# Upstream fixes
+Patch100: php-bug66218.patch
 
 # Security fixes
 
@@ -682,6 +685,8 @@ support for using the enchant library to PHP.
 %endif
 %patch46 -p1 -b .fixheader
 %patch47 -p1 -b .phpinfo
+
+%patch100 -p1 -b .bug66218
 
 # Prevent %%doc confusion over LICENSE files
 cp Zend/LICENSE Zend/ZEND_LICENSE
@@ -1415,6 +1420,10 @@ fi
 
 
 %changelog
+* Wed Dec 11 2013 Remi Collet <rcollet@redhat.com> 5.4.23-1
+- update to 5.4.23, fix for CVE-2013-6420
+- fix zend_register_functions breaks reflection, php bug 66218
+
 * Wed Nov 13 2013 Remi Collet <remi@fedoraproject.org> 5.4.22-1
 - update to 5.4.22
 
