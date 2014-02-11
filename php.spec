@@ -3,7 +3,7 @@
 %global zendver     20121212
 %global pdover      20080721
 # Extension version
-%global opcachever  7.0.3-dev
+%global opcachever  7.0.3
 
 # Adds -z now to the linker flags
 %global _hardened_build 1
@@ -68,7 +68,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.5.8
+Version: 5.5.9
 Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -1534,6 +1534,10 @@ exit 0
 
 
 %changelog
+* Tue Feb 11 2014 Remi Collet <remi@fedoraproject.org> 5.5.9-1
+- Update to 5.5.9
+  http://www.php.net/ChangeLog-5.php#5.5.9
+
 * Wed Jan  8 2014 Remi Collet <rcollet@redhat.com> 5.5.8-1
 - update to 5.5.8
 - drop conflicts with other opcode caches as both can
