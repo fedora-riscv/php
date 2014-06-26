@@ -68,8 +68,8 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.5.13
-Release: 3%{?dist}
+Version: 5.5.14
+Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -121,15 +121,14 @@ Patch46: php-5.4.9-fixheader.patch
 Patch47: php-5.4.9-phpinfo.patch
 
 # Upstream fixes (100+)
-Patch100: php-reg67072.patch
-Patch101: php-bug67326.patch
-Patch102: php-reg67118.patch
 
 # Security fixes (200+)
 
 # Fixes for tests (300+)
 # Revert changes for pcre 8.34
 Patch301: php-5.5.10-pcre834.patch
+# see https://bugzilla.redhat.com/971416
+Patch302: php-5.5.14-noNO.patch
 
 
 BuildRequires: bzip2-devel, curl-devel >= 7.9
@@ -731,14 +730,16 @@ support for using the enchant library to PHP.
 %patch46 -p1 -b .fixheader
 %patch47 -p1 -b .phpinfo
 
-%patch100 -p1 -b .reg67072
-%patch101 -p1 -b .bug67326
-%patch102 -p1 -b .reg67118
+# upstream patches
 
+# security patches
+
+# Fixes for tests
 %if 0%{?fedora} < 21
 # Only revert when system libpcre < 8.34
 %patch301 -p1 -R -b .pcre84
 %endif
+%patch302 -p0 -b .971416
 
 
 # Prevent %%doc confusion over LICENSE files
@@ -1549,6 +1550,11 @@ exit 0
 
 
 %changelog
+* Thu Jun 26 2014 Remi Collet <rcollet@redhat.com> 5.5.14-1
+- Update to 5.5.14
+  http://www.php.net/releases/5_5_14.php
+- fix test for rhbz #971416
+
 * Thu Jun  5 2014 Remi Collet <rcollet@redhat.com> 5.5.13-3
 - fix regression introduce in fix for #67118
 
