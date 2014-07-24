@@ -68,8 +68,8 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.5.14
-Release: 2%{?dist}
+Version: 5.5.15
+Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -121,7 +121,6 @@ Patch46: php-5.4.9-fixheader.patch
 Patch47: php-5.4.9-phpinfo.patch
 
 # Upstream fixes (100+)
-Patch100: php-intl.patch
 
 # Security fixes (200+)
 
@@ -732,7 +731,6 @@ support for using the enchant library to PHP.
 %patch47 -p1 -b .phpinfo
 
 # upstream patches
-%patch100 -p1 -b .intl
 
 # security patches
 
@@ -1554,6 +1552,10 @@ exit 0
 
 
 %changelog
+* Thu Jul 24 2014 Remi Collet <rcollet@redhat.com> 5.5.15-1
+- Update to 5.5.15
+  http://www.php.net/releases/5_5_15.php
+
 * Wed Jul 16 2014 Remi Collet <remi@fedoraproject.org> 5.5.14-2
 - add upstream patch for #67605
 
