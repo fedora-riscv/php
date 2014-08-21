@@ -68,7 +68,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.5.15
+Version: 5.5.16
 Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -1040,6 +1040,8 @@ EXTENSION_DIR=%{_libdir}/php-zts/modules
 build --includedir=%{_includedir}/php-zts \
       --libdir=%{_libdir}/php-zts \
       --enable-maintainer-zts \
+      --program-prefix=zts- \
+      --disable-cgi \
       --with-config-file-scan-dir=%{_sysconfdir}/php-zts.d \
       --enable-pcntl \
       --enable-opcache \
@@ -1185,11 +1187,6 @@ mv $RPM_BUILD_ROOT%{_libdir}/php-zts/modules/pdo_mysql.so \
 make -C build-zts install-modules \
      INSTALL_ROOT=$RPM_BUILD_ROOT
 %endif
-
-# rename ZTS binary
-mv $RPM_BUILD_ROOT%{_bindir}/php        $RPM_BUILD_ROOT%{_bindir}/zts-php
-mv $RPM_BUILD_ROOT%{_bindir}/phpize     $RPM_BUILD_ROOT%{_bindir}/zts-phpize
-mv $RPM_BUILD_ROOT%{_bindir}/php-config $RPM_BUILD_ROOT%{_bindir}/zts-php-config
 %endif
 
 # Install the version for embedded script language in applications + php_embed.h
@@ -1458,12 +1455,14 @@ exit 0
 
 %files cli
 %{_bindir}/php
+%{_bindir}/zts-php
 %{_bindir}/php-cgi
 %{_bindir}/phar.phar
 %{_bindir}/phar
 # provides phpize here (not in -devel) for pecl command
 %{_bindir}/phpize
 %{_mandir}/man1/php.1*
+%{_mandir}/man1/zts-php.1*
 %{_mandir}/man1/php-cgi.1*
 %{_mandir}/man1/phar.1*
 %{_mandir}/man1/phar.phar.1*
@@ -1498,9 +1497,9 @@ exit 0
 %{_bindir}/zts-php-config
 %{_includedir}/php-zts
 %{_bindir}/zts-phpize
-# usefull only to test other module during build
-%{_bindir}/zts-php
 %{_libdir}/php-zts/build
+%{_mandir}/man1/zts-php-config.1*
+%{_mandir}/man1/zts-phpize.1*
 %endif
 %{_mandir}/man1/php-config.1*
 %{_sysconfdir}/rpm/macros.php
@@ -1550,6 +1549,12 @@ exit 0
 
 
 %changelog
+* Thu Aug 21 2014 Remi Collet <rcollet@redhat.com> 5.5.16-1
+- Update to 5.5.16
+  http://www.php.net/releases/5_5_16.php
+- fix zts-php-config --php-binary output #1124605
+- move zts-php from php-devel to php-cli
+
 * Thu Jul 24 2014 Remi Collet <rcollet@redhat.com> 5.5.15-1
 - Update to 5.5.15
   http://www.php.net/releases/5_5_15.php
