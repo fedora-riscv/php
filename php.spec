@@ -121,6 +121,7 @@ Patch46: php-5.4.9-fixheader.patch
 Patch47: php-5.4.9-phpinfo.patch
 
 # Upstream fixes (100+)
+Patch100: php-bug67865.patch
 
 # Security fixes (200+)
 
@@ -731,6 +732,7 @@ support for using the enchant library to PHP.
 %patch47 -p1 -b .phpinfo
 
 # upstream patches
+%patch100 -p1 -b .bug67865
 
 # security patches
 
@@ -1554,6 +1556,7 @@ exit 0
   http://www.php.net/releases/5_5_16.php
 - fix zts-php-config --php-binary output #1124605
 - move zts-php from php-devel to php-cli
+- revert fix for 67724 because of 67865
 
 * Thu Jul 24 2014 Remi Collet <rcollet@redhat.com> 5.5.15-1
 - Update to 5.5.15
