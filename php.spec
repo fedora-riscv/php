@@ -68,7 +68,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.5.16
+Version: 5.5.17
 Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -121,7 +121,7 @@ Patch46: php-5.4.9-fixheader.patch
 Patch47: php-5.4.9-phpinfo.patch
 
 # Upstream fixes (100+)
-Patch100: php-bug67865.patch
+Patch100: php-bug65641.patch
 
 # Security fixes (200+)
 
@@ -732,7 +732,7 @@ support for using the enchant library to PHP.
 %patch47 -p1 -b .phpinfo
 
 # upstream patches
-%patch100 -p1 -b .bug67865
+%patch100 -p1 -b .bug65641
 
 # security patches
 
@@ -1551,6 +1551,12 @@ exit 0
 
 
 %changelog
+* Thu Sep 18 2014 Remi Collet <remi@fedoraproject.org> 5.5.17-1
+- Update to 5.5.17
+  http://www.php.net/releases/5_5_17.php
+- fpm: fix script_name with mod_proxy_fcgi / proxypass
+  add upstream patch for https://bugs.php.net/65641
+
 * Thu Aug 21 2014 Remi Collet <rcollet@redhat.com> 5.5.16-1
 - Update to 5.5.16
   http://www.php.net/releases/5_5_16.php
