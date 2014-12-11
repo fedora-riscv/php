@@ -68,8 +68,8 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.5.19
-Release: 3%{?dist}
+Version: 5.5.20
+Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -121,10 +121,6 @@ Patch46: php-5.4.9-fixheader.patch
 Patch47: php-5.4.9-phpinfo.patch
 
 # Upstream fixes (100+)
-Patch101: php-bug68423.patch
-Patch102: php-bug68421.patch
-Patch103: php-bug68420.patch
-Patch104: php-bug68428.patch
 
 # Security fixes (200+)
 
@@ -735,10 +731,6 @@ support for using the enchant library to PHP.
 %patch47 -p1 -b .phpinfo
 
 # upstream patches
-%patch101 -p1 -b .bug68423
-%patch102 -p1 -b .bug68421
-%patch103 -p1 -b .bug68420
-%patch104 -p1 -b .bug68428
 
 # security patches
 
@@ -1559,6 +1551,10 @@ exit 0
 
 
 %changelog
+* Wed Dec 10 2014 Remi Collet <remi@fedoraproject.org> 5.5.20-1
+- Update to 5.5.20
+  http://www.php.net/releases/5_5_20.php
+
 * Fri Nov 21 2014 Remi Collet <remi@fedoraproject.org> 5.5.19-3
 - FPM: add upstream patch for https://bugs.php.net/68428
   listen.allowed_clients is IPv4 only
