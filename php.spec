@@ -57,12 +57,10 @@
 %global db_devel  libdb-devel
 %endif
 
-#global rcver         RC1
-
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.6.7
-Release: 2%{?dist}
+Version: 5.6.8
+Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -119,6 +117,8 @@ Patch47: php-5.6.3-phpinfo.patch
 # Fixes for tests (300+)
 # Factory is droped from system tzdata
 Patch300: php-5.6.3-datetests.patch
+# Backported from 7.0
+Patch302: php-5.6.8-openssltests.patch
 
 
 BuildRequires: bzip2-devel, curl-devel >= 7.9
@@ -721,6 +721,7 @@ httpd -V  | grep -q 'threaded:.*yes' && exit 1
 
 # Fixes for tests
 %patch300 -p1 -b .datetests
+%patch302 -p1 -b .sslv3
 
 
 # Prevent %%doc confusion over LICENSE files
@@ -1473,6 +1474,11 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Thu Apr 16 2015 Remi Collet <remi@fedoraproject.org> 5.6.8-1
+- Update to 5.6.8
+  http://www.php.net/releases/5_6_8.php
+- add upstream patch to drop SSLv3 tests
+
 * Fri Mar 20 2015 Remi Collet <remi@fedoraproject.org> 5.6.7-2
 - Update to 5.6.7
   http://www.php.net/releases/5_6_7.php
