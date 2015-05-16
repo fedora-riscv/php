@@ -736,7 +736,7 @@ support for using the enchant library to PHP.
 %patch300 -p1 -b .datetests
 %if 0%{?fedora} < 21
 # Only revert when system libpcre < 8.34
-%patch301 -p1 -R -b .pcre84
+%patch301 -p1 -b .pcre84
 %endif
 
 
