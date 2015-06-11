@@ -1,9 +1,16 @@
+# Fedora spec file for php
+#
+# License: MIT
+# http://opensource.org/licenses/MIT
+#
+# Please preserve changelog entries
+#
 # API/ABI check
 %global apiver      20131106
 %global zendver     20131226
 %global pdover      20080721
 # Extension version
-%global opcachever  7.0.4-dev
+%global opcachever  7.0.6-dev
 
 # Use for first build of PHP (before pecl/zip and pecl/jsonc)
 %global php_bootstrap   0
@@ -59,7 +66,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.6.9
+Version: 5.6.10
 Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -117,8 +124,6 @@ Patch47: php-5.6.3-phpinfo.patch
 # Fixes for tests (300+)
 # Factory is droped from system tzdata
 Patch300: php-5.6.3-datetests.patch
-# Backported from 7.0
-Patch302: php-5.6.8-openssltests.patch
 
 
 BuildRequires: bzip2-devel, curl-devel >= 7.9
@@ -721,7 +726,6 @@ httpd -V  | grep -q 'threaded:.*yes' && exit 1
 
 # Fixes for tests
 %patch300 -p1 -b .datetests
-%patch302 -p1 -b .sslv3
 
 
 # Prevent %%doc confusion over LICENSE files
@@ -1476,6 +1480,12 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Thu Jun 11 2015 Remi Collet <remi@fedoraproject.org> 5.6.10-1
+- Update to 5.6.10
+  http://www.php.net/releases/5_6_10.php
+- add explicit spec license (implicit by FPCA)
+- opcache is now 7.0.6-dev
+
 * Fri May 15 2015 Remi Collet <remi@fedoraproject.org> 5.6.9-1
 - Update to 5.6.9
   http://www.php.net/releases/5_6_9.php
