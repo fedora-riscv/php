@@ -1,9 +1,16 @@
+# Fedora spec file for php
+#
+# License: MIT
+# http://opensource.org/licenses/MIT
+#
+# Please preserve changelog entries
+#
 # API/ABI check
 %global apiver      20121113
 %global zendver     20121212
 %global pdover      20080721
 # Extension version
-%global opcachever  7.0.4-dev
+%global opcachever  7.0.6-dev
 
 # Adds -z now to the linker flags
 %global _hardened_build 1
@@ -66,7 +73,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.5.25
+Version: 5.5.26
 Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -1553,6 +1560,12 @@ exit 0
 
 
 %changelog
+* Thu Jun 11 2015 Remi Collet <remi@fedoraproject.org> 5.5.26-1
+- Update to 5.5.26
+  http://www.php.net/releases/5_5_26.php
+- opcache is now 7.0.6-dev
+- add explicit spec license (implicit by FPCA)
+
 * Sat May 16 2015 Remi Collet <remi@fedoraproject.org> 5.5.25-1
 - Update to 5.5.25
   http://www.php.net/releases/5_5_25.php
