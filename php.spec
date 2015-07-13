@@ -66,7 +66,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.6.10
+Version: 5.6.11
 Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -1222,9 +1222,6 @@ install -m 644 %{SOURCE8} $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/php-fpm
 install -D -m 644 %{SOURCE13} $RPM_BUILD_ROOT%{_sysconfdir}/nginx/conf.d/php-fpm.conf
 install -D -m 644 %{SOURCE14} $RPM_BUILD_ROOT%{_sysconfdir}/nginx/default.d/php.conf
 
-# Fix the link
-(cd $RPM_BUILD_ROOT%{_bindir}; ln -sfn phar.phar phar)
-
 # Generate files lists and stub .ini files for each subpackage
 for mod in pgsql odbc ldap snmp xmlrpc imap \
     mysqlnd mysql mysqli pdo_mysql \
@@ -1485,6 +1482,11 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Sun Jul 12 2015 Remi Collet <remi@fedoraproject.org> 5.6.11-1
+- Update to 5.6.11
+  http://www.php.net/releases/5_6_11.php
+- the phar link is now correctly created
+
 * Thu Jun 11 2015 Remi Collet <remi@fedoraproject.org> 5.6.10-1
 - Update to 5.6.10
   http://www.php.net/releases/5_6_10.php
