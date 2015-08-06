@@ -66,8 +66,8 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.6.11
-Release: 2%{?dist}
+Version: 5.6.12
+Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -1477,6 +1477,10 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Thu Aug  6 2015 Remi Collet <remi@fedoraproject.org> 5.6.12-1
+- Update to 5.6.12
+  http://www.php.net/releases/5_6_12.php
+
 * Fri Jul 17 2015 Remi Collet <remi@fedoraproject.org> 5.6.11-2
 - fix typo in php.conf #1244104
 
