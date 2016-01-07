@@ -64,10 +64,17 @@
 %global db_devel  libdb-devel
 %endif
 
+#global rcver  RC1
+%global rpmrel 1
+
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.6.16
-Release: 1%{?dist}
+Version: 5.6.17
+%if 0%{?rcver:1}
+Release: 0.%{rpmrel}.%{rcver}%{?dist}
+%else
+Release: %{rpmrel}%{?dist}
+%endif
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -99,7 +106,7 @@ Source51: opcache-default.blacklist
 Patch5: php-5.6.3-includedir.patch
 Patch6: php-5.2.4-embed.patch
 Patch7: php-5.3.0-recode.patch
-Patch8: php-5.6.3-libdb.patch
+Patch8: php-5.6.17-libdb.patch
 
 # Fixes for extension modules
 # https://bugs.php.net/63171 no odbc call during timeout
@@ -1477,6 +1484,10 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Thu Jan  7 2016 Remi Collet <remi@fedoraproject.org> 5.6.17-1
+- Update to 5.6.17
+  http://www.php.net/releases/5_6_17.php
+
 * Thu Nov 26 2015 Remi Collet <remi@fedoraproject.org> 5.6.16-1
 - Update to 5.6.16
   http://www.php.net/releases/5_6_16.php
