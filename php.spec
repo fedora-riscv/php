@@ -65,7 +65,7 @@
 %endif
 
 %global rcver  RC1
-%global rpmrel 1
+%global rpmrel 2
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
@@ -1199,6 +1199,7 @@ install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/php.d
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/php-zts.d
 %endif
 install -m 755 -d $RPM_BUILD_ROOT%{_sharedstatedir}/php
+install -m 755 -d $RPM_BUILD_ROOT%{_sharedstatedir}/php/peclxml
 install -m 700 -d $RPM_BUILD_ROOT%{_sharedstatedir}/php/session
 install -m 700 -d $RPM_BUILD_ROOT%{_sharedstatedir}/php/wsdlcache
 
@@ -1379,6 +1380,7 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 %dir %{_libdir}/php-zts/modules
 %endif
 %dir %{_sharedstatedir}/php
+%dir %{_sharedstatedir}/php/peclxml
 %dir %{_datadir}/php
 
 %files cli
@@ -1484,6 +1486,9 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Mon Jan 25 2016 Remi Collet <remi@fedoraproject.org> 5.6.18-0.2.RC1
+- define %%pecl_xmldir and own it (/var/lib/php/peclxml)
+
 * Thu Jan 21 2016 Remi Collet <remi@fedoraproject.org> 5.6.18-0.1.RC1
 - update to 5.6.18RC1
 
