@@ -69,7 +69,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.6.17
+Version: 5.6.18
 %if 0%{?rcver:1}
 Release: 0.%{rpmrel}.%{rcver}%{?dist}
 %else
@@ -83,8 +83,8 @@ Group: Development/Languages
 URL: http://www.php.net/
 
 # Need to download official tarball and strip non-free stuff
-# wget http://www.php.net/distributions/php-%{version}%{?rcver}.tar.xz
-# ./strip.sh %{version}
+# wget http://www.php.net/distributions/php-%%{version}%%{?rcver}.tar.xz
+# ./strip.sh %%{version}
 Source0: php-%{version}%{?rcver}-strip.tar.xz
 Source1: php.conf
 Source2: php.ini
@@ -1484,6 +1484,10 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Wed Feb  3 2016 Remi Collet <remi@fedoraproject.org> 5.6.18-1
+- Update to 5.6.18
+  http://www.php.net/releases/5_6_18.php
+
 * Thu Jan  7 2016 Remi Collet <remi@fedoraproject.org> 5.6.17-1
 - Update to 5.6.17
   http://www.php.net/releases/5_6_17.php
