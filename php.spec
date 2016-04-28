@@ -1484,15 +1484,6 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 - Update to 5.6.21
   http://www.php.net/releases/5_6_21.php
 
-* Mon Apr 18 2016 Remi Collet <remi@fedoraproject.org> 5.6.21-0.2.RC1
-- rebuild for ICU 57.1
-
-* Mon Apr 18 2016 Remi Collet <remi@fedoraproject.org> 5.6.21-0.1.RC1
-- update to 5.6.21RC1
-
-* Fri Apr 15 2016 David Tardon <dtardon@redhat.com> - 5.6.20-1.1
-- rebuild for ICU 57.1
-
 * Thu Mar 31 2016 Remi Collet <remi@fedoraproject.org> 5.6.20-1
 - Update to 5.6.20
   http://www.php.net/releases/5_6_20.php
