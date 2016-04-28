@@ -69,7 +69,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.6.20
+Version: 5.6.21
 %if 0%{?rcver:1}
 Release: 0.%{rpmrel}.%{rcver}%{?dist}
 %else
@@ -107,10 +107,6 @@ Patch5: php-5.6.3-includedir.patch
 Patch6: php-5.6.3-embed.patch
 Patch7: php-5.3.0-recode.patch
 Patch8: php-5.6.17-libdb.patch
-
-# Fixes for extension modules
-# https://bugs.php.net/63171 no odbc call during timeout
-Patch21: php-5.4.7-odbctimer.patch
 
 # Functional changes
 Patch40: php-5.4.0-dlopen.patch
@@ -715,8 +711,6 @@ httpd -V  | grep -q 'threaded:.*yes' && exit 1
 %patch6 -p1 -b .embed
 %patch7 -p1 -b .recode
 %patch8 -p1 -b .libdb
-
-%patch21 -p1 -b .odbctimer
 
 %patch40 -p1 -b .dlopen
 %patch42 -p1 -b .systzdata
@@ -1484,6 +1478,10 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Thu Apr 28 2016 Remi Collet <remi@fedoraproject.org> 5.6.21-1
+- Update to 5.6.21
+  http://www.php.net/releases/5_6_21.php
+
 * Thu Mar 31 2016 Remi Collet <remi@fedoraproject.org> 5.6.20-1
 - Update to 5.6.20
   http://www.php.net/releases/5_6_20.php
