@@ -69,7 +69,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.6.23
+Version: 5.6.24
 %if 0%{?rcver:1}
 Release: 0.%{rpmrel}.%{rcver}%{?dist}
 %else
@@ -1485,6 +1485,9 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Thu Jul 21 2016 Remi Collet <remi@fedoraproject.org> 5.6.24-1
+- Update to 5.6.24 - http://www.php.net/releases/5_6_24.php
+
 * Thu Jun 30 2016 Remi Collet <remi@fedoraproject.org> 5.6.23-2
 - own tests/doc directories for pecl packages #1351345
 
