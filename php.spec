@@ -64,7 +64,7 @@
 %global db_devel  libdb-devel
 %endif
 
-%global rcver  RC1
+#global rcver  RC1
 %global rpmrel 1
 
 Summary: PHP scripting language for creating dynamic web sites
@@ -1485,6 +1485,10 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Wed Aug 24 2016 Joe Orton <jorton@redhat.com> - 5.6.25-1
+- update to 5.6.25
+  http://php.net/releases/5_6_25.php
+
 * Thu Aug  4 2016 Remi Collet <remi@fedoraproject.org> 5.6.25-0.1.RC1
 - update to 5.6.25RC1
 
