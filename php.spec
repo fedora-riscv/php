@@ -69,7 +69,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 5.6.25
+Version: 5.6.26
 %if 0%{?rcver:1}
 Release: 0.%{rpmrel}.%{rcver}%{?dist}
 %else
@@ -1485,6 +1485,9 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Thu Sep 15 2016 Remi Collet <remi@fedoraproject.org> 5.6.26-1
+- Update to 5.6.26 - http://www.php.net/releases/5_6_26.php
+
 * Wed Aug 24 2016 Joe Orton <jorton@redhat.com> - 5.6.25-1
 - update to 5.6.25
   http://php.net/releases/5_6_25.php
