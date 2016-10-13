@@ -3,6 +3,7 @@ php-5.3.*.bz2
 php-5.4.*.bz2
 php-5.5.*.xz
 php-5.6.*.xz
+php-7.1.*.xz
 /php-7.0.8.tar.xz
 /php-7.0.9RC1.tar.xz
 /php-7.0.9.tar.xz
@@ -10,3 +11,4 @@ php-5.6.*.xz
 /php-7.0.10.tar.xz
 /php-7.0.11RC1.tar.xz
 /php-7.0.11.tar.xz
+/php-7.0.12.tar.xz
