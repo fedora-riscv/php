@@ -59,7 +59,7 @@
 %endif
 
 #global rcver  RC1
-%global rpmrel 1
+%global rpmrel 2
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
@@ -1490,6 +1490,9 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Fri Nov 24 2016 Remi Collet <remi@fedoraproject.org> 7.0.13-2
+- disable pcre.jit everywhere as it raise AVC #1398474
+
 * Wed Nov  9 2016 Remi Collet <remi@fedoraproject.org> 7.0.13-1
 - Update to 7.0.13 - http://www.php.net/releases/7_0_13.php
 - update tzdata patch to v14, improve check for valid tz file
