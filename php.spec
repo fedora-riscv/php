@@ -63,7 +63,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 7.0.14
+Version: 7.0.15
 %if 0%{?rcver:1}
 Release: 0.%{rpmrel}.%{rcver}%{?dist}
 %else
@@ -1490,6 +1490,9 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Wed Jan 18 2017 Remi Collet <remi@fedoraproject.org> 7.0.15-1
+- Update to 7.0.15 - http://www.php.net/releases/7_0_15.php
+
 * Wed Dec  7 2016 Remi Collet <remi@fedoraproject.org> 7.0.14-1
 - Update to 7.0.14 - http://www.php.net/releases/7_0_14.php
 
