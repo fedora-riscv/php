@@ -1,7 +1,5 @@
 clog
-php-5.3.*.bz2
-php-5.4.*.bz2
-php-5.5.*.xz
+*.md
 php-5.6.*.xz
 php-7.1.*.xz
 /php-7.0.8.tar.xz
@@ -17,3 +15,4 @@ php-7.1.*.xz
 /php-7.0.15.tar.xz
 /php-7.0.16.tar.xz
 /php-7.0.17RC1.tar.xz
+/php-7.0.17.tar.xz
