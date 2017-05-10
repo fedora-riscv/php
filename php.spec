@@ -63,7 +63,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 7.0.18
+Version: 7.0.19
 Release: %{?rcver:0.}%{rpmrel}%{?rcver:.%{rcver}}%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -1485,6 +1485,9 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Tue May  9 2017 Remi Collet <remi@fedoraproject.org> - 7.0.19-1
+- Update to 7.0.19 - http://www.php.net/releases/7_0_19.php
+
 * Tue Apr 11 2017 Remi Collet <remi@fedoraproject.org> 7.0.18-1
 - Update to 7.0.18 - http://www.php.net/releases/7_0_18.php
 - timelib License is MIT
