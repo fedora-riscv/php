@@ -62,11 +62,11 @@
 %endif
 
 #global rcver  RC1
-%global rpmrel 2
+%global rpmrel 1
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 7.1.9
+Version: 7.1.10
 Release: %{?rcver:0.}%{rpmrel}%{?rcver:.%{rcver}}%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -1504,6 +1504,9 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Wed Sep 27 2017 Remi Collet <remi@fedoraproject.org> - 7.1.10-1
+- Update to 7.1.10 - http://www.php.net/releases/7_1_10.php
+
 * Wed Sep  6 2017 Remi Collet <remi@fedoraproject.org> - 7.1.9-2
 - Automatically load OpenSSL configuration file, from PHP 7.2
 
