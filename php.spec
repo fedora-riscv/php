@@ -62,7 +62,7 @@
 %endif
 
 %global upver        7.1.11
-%global rcver        RC1
+#global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
@@ -153,7 +153,7 @@ Provides: mod_php = %{version}-%{release}
 Requires: php-common%{?_isa} = %{version}-%{release}
 # For backwards-compatibility, require php-cli for the time being:
 Requires: php-cli%{?_isa} = %{version}-%{release}
-Requires: php-fpm%{?_isa} = %{version}-%{release}
+Recommends: php-fpm%{?_isa} = %{version}-%{release}
 # To ensure correct /var/lib/php/session ownership:
 Requires(pre): httpd-filesystem
 # php engine for Apache httpd webserver
@@ -1513,6 +1513,10 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Wed Oct 25 2017 Remi Collet <remi@fedoraproject.org> - 7.1.11-1
+- Update to 7.1.11 - http://www.php.net/releases/7_1_11.php
+- make php-fpm a weak dependency #1505644
+
 * Wed Oct 11 2017 Remi Collet <remi@fedoraproject.org> - 7.1.11~RC1-1
 - Update to 7.1.11RC1
 
