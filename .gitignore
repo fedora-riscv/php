@@ -2,6 +2,7 @@ clog
 *.md
 php-5.6.*.xz
 php-7.1.*.xz
+php-7.2.*.xz
 /php-7.0.8.tar.xz
 /php-7.0.9RC1.tar.xz
 /php-7.0.9.tar.xz
@@ -23,3 +24,4 @@ php-7.1.*.xz
 /php-7.0.22.tar.xz
 /php-7.0.23.tar.xz
 /php-7.0.24.tar.xz
+/php-7.0.25.tar.xz
