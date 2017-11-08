@@ -61,8 +61,8 @@
 %global db_devel  libdb-devel
 %endif
 
-%global upver        7.1.11
-#global rcver        RC1
+%global upver        7.1.12
+%global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
@@ -1513,6 +1513,9 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Wed Nov  8 2017 Remi Collet <remi@fedoraproject.org> - 7.1.12~RC1-1
+- Update to 7.1.12RC1
+
 * Wed Oct 25 2017 Remi Collet <remi@fedoraproject.org> - 7.1.11-1
 - Update to 7.1.11 - http://www.php.net/releases/7_1_11.php
 - make php-fpm a weak dependency #1505644
