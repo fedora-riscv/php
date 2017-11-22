@@ -66,7 +66,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 7.1.11
+Version: 7.1.12
 Release: %{?rcver:0.}%{rpmrel}%{?rcver:.%{rcver}}%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -1504,6 +1504,9 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Wed Nov 22 2017 Remi Collet <remi@fedoraproject.org> - 7.1.12-1
+- Update to 7.1.12 - http://www.php.net/releases/7_1_12.php
+
 * Wed Oct 25 2017 Remi Collet <remi@fedoraproject.org> - 7.1.11-1
 - Update to 7.1.11 - http://www.php.net/releases/7_1_11.php
 
