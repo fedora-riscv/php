@@ -62,7 +62,7 @@
 %endif
 
 %global upver        7.1.13
-%global rcver        RC1
+#global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
@@ -1513,6 +1513,9 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Wed Jan  3 2018 Remi Collet <remi@remirepo.net> - 7.1.13-1
+- Update to 7.1.13 - http://www.php.net/releases/7_1_13.php
+
 * Wed Dec  6 2017 Remi Collet <remi@fedoraproject.org> - 7.1.13~RC1-1
 - Update to 7.1.13RC1
 
