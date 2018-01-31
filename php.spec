@@ -57,12 +57,12 @@
 %endif
 
 %global upver        7.1.14
-%global rcver        RC1
+#global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 2%{?dist}
+Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -1539,6 +1539,9 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Wed Jan 31 2018 Remi Collet <remi@remirepo.net> - 7.1.14-1
+- Update to 7.1.14 - http://www.php.net/releases/7_1_14.php
+
 * Mon Jan 29 2018 Remi Collet <rcollet@redhat.com> - 7.1.14~RC1-2
 - disable interbase, imap, pdo_dblib and mcrypt on rhel
 
