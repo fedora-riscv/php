@@ -51,8 +51,6 @@
 
 %global with_zip     0
 %global with_libzip  0
-# Not yet compatible with firebird 3
-# https://bugs.php.net/bug.php?id=73512
 %global with_firebird 1
 
 %if 0%{?fedora} < 18 && 0%{?rhel} < 7
@@ -66,7 +64,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 7.1.13
+Version: 7.1.14
 Release: %{?rcver:0.}%{rpmrel}%{?rcver:.%{rcver}}%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -106,8 +104,6 @@ Patch42: php-7.1.0-systzdata-v14.patch
 Patch43: php-5.4.0-phpize.patch
 # Use -lldap_r for OpenLDAP
 Patch45: php-5.6.3-ldap_r.patch
-# Make php_config.h constant across builds
-Patch46: php-7.0.0-fixheader.patch
 # drop "Configure command" from phpinfo output
 Patch47: php-5.6.3-phpinfo.patch
 # Automatically load OpenSSL configuration file
@@ -196,12 +192,8 @@ Summary: PHP FastCGI Process Manager
 BuildRequires: libacl-devel
 Requires: php-common%{?_isa} = %{version}-%{release}
 Requires(pre): /usr/sbin/useradd
-BuildRequires: systemd-units
 BuildRequires: systemd-devel
-Requires: systemd-units
-Requires(post): systemd-units
-Requires(preun): systemd-units
-Requires(postun): systemd-units
+%{?systemd_requires}
 # To ensure correct /var/lib/php/session ownership:
 Requires(pre): httpd-filesystem
 # For php.conf in /etc/httpd/conf.d
@@ -714,7 +706,6 @@ httpd -V  | grep -q 'threaded:.*yes' && exit 1
 %if 0%{?fedora} >= 18 || 0%{?rhel} >= 7
 %patch45 -p1 -b .ldap_r
 %endif
-%patch46 -p1 -b .fixheader
 %patch47 -p1 -b .phpinfo
 %patch48 -p1 -b .loadconf
 
@@ -824,6 +815,9 @@ sed -e '/opcache.huge_code_pages/s/0/1/' -i 10-opcache.ini
 
 
 %build
+# Set build date from https://reproducible-builds.org/specs/source-date-epoch/
+export SOURCE_DATE_EPOCH=$(date +%s -r NEWS)
+
 # aclocal workaround - to be improved
 cat `aclocal --print-ac-dir`/{libtool,ltoptions,ltsugar,ltversion,lt~obsolete}.m4 >>aclocal.m4
 
@@ -1504,6 +1498,10 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Wed Jan 31 2018 Remi Collet <remi@remirepo.net> - 7.1.14-1
+- Update to 7.1.14 - http://www.php.net/releases/7_1_14.php
+- define SOURCE_DATE_EPOCH for reproducible build
+
 * Wed Jan  3 2018 Remi Collet <remi@remirepo.net> - 7.1.13-1
 - Update to 7.1.13 - http://www.php.net/releases/7_1_13.php
 
