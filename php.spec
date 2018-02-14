@@ -56,8 +56,8 @@
 %global with_mcrypt   0
 %endif
 
-%global upver        7.1.14
-#global rcver        RC1
+%global upver        7.1.15
+%global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
@@ -102,7 +102,7 @@ Patch42: php-7.1.0-systzdata-v14.patch
 # See http://bugs.php.net/53436
 Patch43: php-5.4.0-phpize.patch
 # Use -lldap_r for OpenLDAP
-Patch45: php-5.6.3-ldap_r.patch
+Patch45: php-7.1.15-ldap_r.patch
 # drop "Configure command" from phpinfo output
 Patch47: php-5.6.3-phpinfo.patch
 # Automatically load OpenSSL configuration file
@@ -1539,6 +1539,10 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Wed Feb 14 2018 Remi Collet <remi@remirepo.net> - 7.1.15~RC1-1
+- Update to 7.1.15RC1
+- adapt ldap patch
+
 * Wed Jan 31 2018 Remi Collet <remi@remirepo.net> - 7.1.14-1
 - Update to 7.1.14 - http://www.php.net/releases/7_1_14.php
 
