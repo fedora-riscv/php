@@ -28,9 +28,6 @@
 # arch detection heuristic used by bindir/mysql_config.
 %global mysql_config %{_libdir}/mysql/mysql_config
 
-# Build ZTS extension or only NTS
-%global with_zts      1
-
 %if 0%{?__isa_bits:1}
 %global isasuffix -%{__isa_bits}
 %else
@@ -45,12 +42,14 @@
 %global with_zip      0
 %global with_libzip   0
 %if 0%{?fedora}
+%global with_zts      1
 %global with_firebird 1
 %global with_imap     1
 %global with_freetds  1
 %global with_mcrypt   1
 %global with_pspell   1
 %else
+%global with_zts      0
 %global with_firebird 0
 %global with_imap     0
 %global with_freetds  0
@@ -64,7 +63,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 2%{?dist}
+Release: 3%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -1564,6 +1563,9 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Wed Feb 21 2018 Remi Collet <remi@remirepo.net> - 7.1.15~RC1-3
+- disable ZTS on RHEL
+
 * Fri Feb 16 2018 Remi Collet <remi@remirepo.net> - 7.1.15~RC1-2
 - disable pspell extension on RHEL
 - improve devel dependencies
