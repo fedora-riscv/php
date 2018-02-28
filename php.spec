@@ -58,12 +58,12 @@
 %endif
 
 %global upver        7.1.15
-%global rcver        RC1
+#global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 3%{?dist}
+Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -1563,6 +1563,10 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Wed Feb 28 2018 Remi Collet <remi@remirepo.net> - 7.1.15-1
+- Update to 7.1.15 - http://www.php.net/releases/7_1_15.php
+- FPM: revert pid file removal
+
 * Wed Feb 21 2018 Remi Collet <remi@remirepo.net> - 7.1.15~RC1-3
 - disable ZTS on RHEL
 
