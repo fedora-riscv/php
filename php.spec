@@ -64,7 +64,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 7.1.14
+Version: 7.1.15
 Release: %{?rcver:0.}%{rpmrel}%{?rcver:.%{rcver}}%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -103,7 +103,7 @@ Patch42: php-7.1.0-systzdata-v14.patch
 # See http://bugs.php.net/53436
 Patch43: php-5.4.0-phpize.patch
 # Use -lldap_r for OpenLDAP
-Patch45: php-5.6.3-ldap_r.patch
+Patch45: php-7.1.15-ldap_r.patch
 # drop "Configure command" from phpinfo output
 Patch47: php-5.6.3-phpinfo.patch
 # Automatically load OpenSSL configuration file
@@ -1498,6 +1498,9 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Wed Feb 28 2018 Remi Collet <remi@remirepo.net> - 7.1.15-1
+- Update to 7.1.15 - http://www.php.net/releases/7_1_15.php
+
 * Wed Jan 31 2018 Remi Collet <remi@remirepo.net> - 7.1.14-1
 - Update to 7.1.14 - http://www.php.net/releases/7_1_14.php
 - define SOURCE_DATE_EPOCH for reproducible build
