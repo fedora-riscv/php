@@ -64,7 +64,7 @@
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: 7.1.15
+Version: 7.1.16
 Release: %{?rcver:0.}%{rpmrel}%{?rcver:.%{rcver}}%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -1498,6 +1498,9 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Wed Mar 28 2018 Remi Collet <remi@remirepo.net> - 7.1.16-1
+- Update to 7.1.16 - http://www.php.net/releases/7_1_16.php
+
 * Wed Feb 28 2018 Remi Collet <remi@remirepo.net> - 7.1.15-1
 - Update to 7.1.15 - http://www.php.net/releases/7_1_15.php
 
