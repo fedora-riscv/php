@@ -58,7 +58,7 @@
 %global with_lmdb     0
 %endif
 
-%global upver        7.2.7
+%global upver        7.2.8
 #global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
@@ -108,6 +108,8 @@ Patch45: php-7.2.3-ldap_r.patch
 Patch46: php-7.2.4-fixheader.patch
 # drop "Configure command" from phpinfo output
 Patch47: php-5.6.3-phpinfo.patch
+# getallheaders for FPM backported from 7.3
+Patch48: php-7.2.8-getallheaders.patch
 
 # Upstream fixes (100+)
 
@@ -707,6 +709,7 @@ low-level PHP extension for the libsodium cryptographic library.
 %endif
 %patch46 -p1 -b .fixheader
 %patch47 -p1 -b .phpinfo
+%patch48 -p1 -b .getallheaders
 
 # upstream patches
 
@@ -1550,6 +1553,10 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Jul 17 2018 Remi Collet <remi@remirepo.net> - 7.2.8-1
+- Update to 7.2.8 - http://www.php.net/releases/7_2_8.php
+- FPM: add getallheaders, backported from 7.3
+
 * Wed Jun 20 2018 Remi Collet <remi@remirepo.net> - 7.2.7-1
 - Update to 7.2.7 - http://www.php.net/releases/7_2_7.php
 
