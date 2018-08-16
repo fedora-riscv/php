@@ -58,7 +58,7 @@
 %global with_lmdb     0
 %endif
 
-%global upver        7.2.8
+%global upver        7.2.9
 #global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
@@ -70,7 +70,8 @@ Release: 1%{?dist}
 # TSRM is licensed under BSD
 # main/snprintf.c, main/spprintf.c and main/rfc1867.c are ASL 1.0
 # ext/date/lib is MIT
-License: PHP and Zend and BSD and MIT and ASL 1.0
+# Zend/zend_sort is NCSA
+License: PHP and Zend and BSD and MIT and ASL 1.0 and NCSA
 URL: http://www.php.net/
 
 Source0: http://www.php.net/distributions/php-%{upver}%{?rcver}.tar.xz
@@ -178,6 +179,8 @@ which adds support for the PHP language to Apache HTTP Server.
 
 %package cli
 Summary: Command-line interface for PHP
+# sapi/cli/ps_title.c is PostgreSQL
+License: PHP and Zend and BSD and MIT and ASL 1.0 and NCSA and PostgreSQL
 Requires: php-common%{?_isa} = %{version}-%{release}
 Provides: php-cgi = %{version}-%{release}, php-cgi%{?_isa} = %{version}-%{release}
 Provides: php-pcntl, php-pcntl%{?_isa}
@@ -830,7 +833,7 @@ touch configure.ac
 CFLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -Wno-pointer-sign"
 export CFLAGS
 
-# Install extension modules in %{_libdir}/php/modules.
+# Install extension modules in %%{_libdir}/php/modules.
 EXTENSION_DIR=%{_libdir}/php/modules; export EXTENSION_DIR
 
 # Set PEAR_INSTALLDIR to ensure that the hard-coded include_path
@@ -1553,6 +1556,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Thu Aug 16 2018 Remi Collet <remi@remirepo.net> - 7.2.9-1
+- Update to 7.2.9 - http://www.php.net/releases/7_2_9.php
+
 * Tue Jul 17 2018 Remi Collet <remi@remirepo.net> - 7.2.8-1
 - Update to 7.2.8 - http://www.php.net/releases/7_2_8.php
 - FPM: add getallheaders, backported from 7.3
