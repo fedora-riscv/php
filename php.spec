@@ -57,7 +57,7 @@
 %global with_pspell   0
 %endif
 
-%global upver        7.1.20
+%global upver        7.1.21
 #global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
@@ -1569,6 +1569,9 @@ rm -f README.{Zeus,QNX,CVS-RULES}
 
 
 %changelog
+* Thu Aug 16 2018 Remi Collet <remi@remirepo.net> - 7.1.21-1
+- Update to 7.1.21 - http://www.php.net/releases/7_1_21.php
+
 * Thu Jul 19 2018 Remi Collet <remi@remirepo.net> - 7.1.20-1
 - Update to 7.1.20 - http://www.php.net/releases/7_1_20.php
 
