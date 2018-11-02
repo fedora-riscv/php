@@ -60,11 +60,12 @@
 
 %global upver        7.2.12
 %global rcver        RC1
+%global rpmrel       1
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: %{upver}%{?rcver:~%{rcver}}
-Release: 1%{?dist}
+Version: %{upver}
+Release: %{?rcver:0.}%{rpmrel}%{?rcver:.%{rcver}}%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -1556,6 +1557,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Fri Nov  2 2018 Remi Collet <remi@remirepo.net> - 7.2.12-0.1.RC1
+- rebuild
+
 * Tue Oct 23 2018 Remi Collet <remi@remirepo.net> - 7.2.12~RC1-1
 - update to 7.2.12RC1
 
