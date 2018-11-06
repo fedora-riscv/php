@@ -59,7 +59,7 @@
 %endif
 
 %global upver        7.2.12
-%global rcver        RC1
+#global rcver        RC1
 %global rpmrel       1
 
 Summary: PHP scripting language for creating dynamic web sites
@@ -1557,6 +1557,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Nov  6 2018 Remi Collet <remi@remirepo.net> - 7.2.12-1
+- Update to 7.2.12 - http://www.php.net/releases/7_2_12.php
+
 * Fri Nov  2 2018 Remi Collet <remi@remirepo.net> - 7.2.12-0.1.RC1
 - rebuild
 
