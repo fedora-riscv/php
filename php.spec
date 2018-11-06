@@ -58,12 +58,11 @@
 %global with_lmdb     0
 %endif
 
-%global upver        7.2.11
-#global rcver        RC1
+%global upver        7.2.12
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
-Version: %{upver}%{?rcver:~%{rcver}}
+Version: %{upver}
 Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
@@ -102,7 +101,7 @@ Patch8: php-7.2.0-libdb.patch
 Patch40: php-7.2.4-dlopen.patch
 Patch42: php-7.2.3-systzdata-v16.patch
 # See http://bugs.php.net/53436
-Patch43: php-5.4.0-phpize.patch
+Patch43: php-7.2.12-phpize.patch
 # Use -lldap_r for OpenLDAP
 Patch45: php-7.2.3-ldap_r.patch
 # Make php_config.h constant across builds
@@ -1556,6 +1555,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Nov  6 2018 Remi Collet <remi@remirepo.net> - 7.2.12-1
+- Update to 7.2.12 - http://www.php.net/releases/7_2_12.php
+
 * Wed Oct 10 2018 Remi Collet <remi@remirepo.net> - 7.2.11-1
 - Update to 7.2.11 - http://www.php.net/releases/7_2_11.php
 
