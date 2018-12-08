@@ -60,7 +60,7 @@
 
 %global upver        7.2.13
 #global rcver        RC1
-%global rpmrel       1
+%global rpmrel       2
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
@@ -116,6 +116,7 @@ Patch48: php-7.2.8-getallheaders.patch
 # Upstream fixes (100+)
 
 # Security fixes (200+)
+Patch200: php-imap.patch
 
 # Fixes for tests (300+)
 # Factory is droped from system tzdata
@@ -718,6 +719,7 @@ low-level PHP extension for the libsodium cryptographic library.
 # upstream patches
 
 # security patches
+%patch200 -p1 -b .imap
 
 # Fixes for tests
 %patch300 -p1 -b .datetests
@@ -1557,6 +1559,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Sat Dec  8 2018 Remi Collet <remi@remirepo.net> - 7.2.13-2
+- Fix null pointer dereference in imap_mail CVE-2018-19935
+
 * Wed Dec  5 2018 Remi Collet <remi@remirepo.net> - 7.2.13-1
 - Update to 7.2.13 - http://www.php.net/releases/7_2_13.php
 
