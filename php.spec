@@ -58,7 +58,7 @@
 %global with_lmdb     0
 %endif
 
-%global upver        7.2.15
+%global upver        7.2.16
 #global rcver        RC1
 %global rpmrel       1
 
@@ -101,7 +101,7 @@ Patch8: php-7.2.0-libdb.patch
 
 # Functional changes
 Patch40: php-7.2.4-dlopen.patch
-Patch42: php-7.2.3-systzdata-v16.patch
+Patch42: php-7.2.16-systzdata-v17.patch
 # See http://bugs.php.net/53436
 Patch43: php-7.2.12-phpize.patch
 # Use -lldap_r for OpenLDAP
@@ -114,6 +114,7 @@ Patch47: php-5.6.3-phpinfo.patch
 Patch48: php-7.2.8-getallheaders.patch
 
 # Upstream fixes (100+)
+Patch100: php-openssl111.patch
 
 # Security fixes (200+)
 
@@ -716,6 +717,7 @@ low-level PHP extension for the libsodium cryptographic library.
 %patch48 -p1 -b .getallheaders
 
 # upstream patches
+%patch100 -p1 -b .up
 
 # security patches
 
@@ -1557,6 +1559,11 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Wed Mar  6 2019 Remi Collet <remi@remirepo.net> - 7.2.16-1
+- Update to 7.2.16 - http://www.php.net/releases/7_2_16.php
+- add upstream patch for OpenSSL 1.1.1b
+- adapt systzdata patch (v17)
+
 * Wed Feb  6 2019 Remi Collet <remi@remirepo.net> - 7.2.15-1
 - Update to 7.2.15 - http://www.php.net/releases/7_2_15.php
 
