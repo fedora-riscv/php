@@ -58,7 +58,7 @@
 %global with_lmdb     0
 %endif
 
-%global upver        7.2.16
+%global upver        7.2.17
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
@@ -112,7 +112,6 @@ Patch47: php-5.6.3-phpinfo.patch
 Patch48: php-7.2.8-getallheaders.patch
 
 # Upstream fixes (100+)
-Patch100: php-openssl111.patch
 
 # Security fixes (200+)
 
@@ -715,7 +714,6 @@ low-level PHP extension for the libsodium cryptographic library.
 %patch48 -p1 -b .getallheaders
 
 # upstream patches
-%patch100 -p1 -b .up
 
 # security patches
 
@@ -1557,6 +1555,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Wed Apr  3 2019 Remi Collet <remi@remirepo.net> - 7.2.17-1
+- Update to 7.2.17 - http://www.php.net/releases/7_2_17.php
+
 * Wed Mar  6 2019 Remi Collet <remi@remirepo.net> - 7.2.16-1
 - Update to 7.2.16 - http://www.php.net/releases/7_2_16.php
 - add upstream patch for OpenSSL 1.1.1b
