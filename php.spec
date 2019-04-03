@@ -58,7 +58,7 @@
 %global with_lmdb     0
 %endif
 
-%global upver        7.3.4
+%global upver        7.3.5
 #global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
@@ -111,7 +111,6 @@ Patch46: php-7.2.4-fixheader.patch
 Patch47: php-5.6.3-phpinfo.patch
 
 # Upstream fixes (100+)
-Patch100: php-upstream.patch
 
 # Security fixes (200+)
 
@@ -722,7 +721,6 @@ low-level PHP extension for the libsodium cryptographic library.
 %patch47 -p1 -b .phpinfo
 
 # upstream patches
-%patch100 -p1 -b .up
 
 # security patches
 
@@ -1388,7 +1386,7 @@ sed -e "s/@PHP_APIVER@/%{apiver}-%{__isa_bits}/" \
 %endif
     < %{SOURCE3} > macros.php
 install -m 644 -D macros.php \
-           $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d/macros.php
+           $RPM_BUILD_ROOT%{_rpmmacrodir}/macros.php
 
 # Remove unpackaged files
 rm -rf $RPM_BUILD_ROOT%{_libdir}/php/modules/*.a \
@@ -1511,7 +1509,7 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 %{_mandir}/man1/zts-phpize.1*
 %endif
 %{_mandir}/man1/php-config.1*
-%{_rpmconfigdir}/macros.d/macros.php
+%{_rpmmacrodir}/macros.php
 
 %files embedded
 %{_libdir}/libphp7.so
@@ -1567,6 +1565,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Wed May  1 2019 Remi Collet <remi@remirepo.net> - 7.3.5-1
+- Update to 7.3.5 - http://www.php.net/releases/7_3_5.php
+
 * Tue Apr  2 2019 Remi Collet <remi@remirepo.net> - 7.3.4-1
 - Update to 7.3.4 - http://www.php.net/releases/7_3_4.php
 
