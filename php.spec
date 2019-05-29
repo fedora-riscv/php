@@ -58,7 +58,7 @@
 %global with_lmdb     0
 %endif
 
-%global upver        7.2.18
+%global upver        7.2.19
 #global rcver        RC1
 %global rpmrel       1
 
@@ -1557,6 +1557,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Wed May 29 2019 Remi Collet <remi@remirepo.net> - 7.2.19-1
+- Update to 7.2.19 - http://www.php.net/releases/7_2_19.php
+
 * Tue Apr 30 2019 Remi Collet <remi@remirepo.net> - 7.2.18-1
 - Update to 7.2.18 - http://www.php.net/releases/7_2_18.php
 
