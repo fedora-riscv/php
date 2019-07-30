@@ -58,14 +58,12 @@
 %global with_lmdb     0
 %endif
 
-%global upver        7.2.20
-#global rcver        RC1
-%global rpmrel       1
+%global upver        7.2.21
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}
-Release: %{?rcver:0.}%{rpmrel}%{?rcver:.%{rcver}}%{?dist}
+Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -1557,6 +1555,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Jul 30 2019 Remi Collet <remi@remirepo.net> - 7.2.21-1
+- Update to 7.2.21 - http://www.php.net/releases/7_2_21.php
+
 * Tue Jul  2 2019 Remi Collet <remi@remirepo.net> - 7.2.20-1
 - Update to 7.2.20 - http://www.php.net/releases/7_2_20.php
 
