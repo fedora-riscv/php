@@ -59,7 +59,7 @@
 %global with_lmdb     0
 %endif
 
-%global upver        7.3.8
+%global upver        7.3.9
 #global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
@@ -75,7 +75,7 @@ Release: 1%{?dist}
 License: PHP and Zend and BSD and MIT and ASL 1.0 and NCSA
 URL: http://www.php.net/
 
-Source0: http://www.php.net/distributions/php-%{upver}%{?rcver}.tar.xz
+Source0: https://www.php.net/distributions/php-%{upver}%{?rcver}.tar.xz
 Source1: php.conf
 Source2: php.ini
 Source3: macros.php
@@ -88,6 +88,9 @@ Source10: php.ztsmodconf
 Source12: php-fpm.wants
 Source13: nginx-fpm.conf
 Source14: nginx-php.conf
+# See https://secure.php.net/gpg-keys.php
+Source20: https://www.php.net/distributions/php-keyring.gpg
+Source21: https://www.php.net/distributions/php-%{upver}%{?rcver}.tar.xz.asc
 # Configuration files for some extensions
 Source50: 10-opcache.ini
 Source51: opcache-default.blacklist
@@ -120,6 +123,7 @@ Patch47: php-5.6.3-phpinfo.patch
 Patch300: php-5.6.3-datetests.patch
 
 
+BuildRequires: gnupg2
 BuildRequires: bzip2-devel, curl-devel >= 7.9
 BuildRequires: httpd-devel >= 2.0.46-1, pam-devel
 # to ensure we are using httpd with filesystem feature (see #1081453)
@@ -713,6 +717,8 @@ low-level PHP extension for the libsodium cryptographic library.
 
 
 %prep
+%{gpgverify} --keyring='%{SOURCE20}' --signature='%{SOURCE21}' --data='%{SOURCE0}'
+
 %setup -q -n php-%{upver}%{?rcver}
 
 %patch1 -p1 -b .mpmcheck
@@ -1571,6 +1577,10 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Wed Aug 28 2019 Remi Collet <remi@remirepo.net> - 7.3.9-1
+- Update to 7.3.9 - http://www.php.net/releases/7_3_9.php
+- add tarball signature check
+
 * Tue Jul 30 2019 Remi Collet <remi@remirepo.net> - 7.3.8-1
 - Update to 7.3.8 - http://www.php.net/releases/7_3_8.php
 
