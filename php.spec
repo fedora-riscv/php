@@ -10,7 +10,6 @@
 %global apiver      20180731
 %global zendver     20180731
 %global pdover      20170320
-# Extension version
 %global jsonver     1.7.0
 
 # we don't want -z defs linker flag
@@ -59,7 +58,7 @@
 %global with_lmdb     0
 %endif
 
-%global upver        7.3.9
+%global upver        7.3.10
 #global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
@@ -1577,6 +1576,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Sep 24 2019 Remi Collet <remi@remirepo.net> - 7.3.10-1
+- Update to 7.3.10 - http://www.php.net/releases/7_3_10.php
+
 * Wed Aug 28 2019 Remi Collet <remi@remirepo.net> - 7.3.9-1
 - Update to 7.3.9 - http://www.php.net/releases/7_3_9.php
 - add tarball signature check
