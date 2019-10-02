@@ -161,7 +161,9 @@ Recommends: php-json%{?_isa}     = %{version}-%{release}
 Recommends: php-mbstring%{?_isa} = %{version}-%{release}
 Recommends: php-opcache%{?_isa}  = %{version}-%{release}
 Recommends: php-pdo%{?_isa}      = %{version}-%{release}
+%if %{with_sodium}
 Recommends: php-sodium%{?_isa}   = %{version}-%{release}
+%endif
 Recommends: php-xml%{?_isa}      = %{version}-%{release}
 # To ensure correct /var/lib/php/session ownership:
 Requires(pre): httpd-filesystem
@@ -696,7 +698,7 @@ in pure PHP.
 
 %setup -q -n php-%{upver}%{?rcver}
 
-# Workaround
+# Workaround to https://bugs.php.net/78622
 sed -e 's/__aarch64__/__drop__aarch64__optimization__/' -i ext/standard/crc32.c
 
 %patch1 -p1 -b .mpmcheck
