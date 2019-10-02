@@ -696,6 +696,9 @@ in pure PHP.
 
 %setup -q -n php-%{upver}%{?rcver}
 
+# Workaround
+sed -e 's/__aarch64__/__drop__aarch64__optimization__/' -i ext/standard/crc32.c
+
 %patch1 -p1 -b .mpmcheck
 %patch5 -p1 -b .includedir
 %patch6 -p1 -b .embed
