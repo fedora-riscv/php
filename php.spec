@@ -106,6 +106,8 @@ Patch46: php-7.2.4-fixheader.patch
 Patch47: php-5.6.3-phpinfo.patch
 
 # Upstream fixes (100+)
+# fix for https://bugs.php.net/78622
+Patch100: php-aarch64.patch
 
 # Security fixes (200+)
 
@@ -698,9 +700,6 @@ in pure PHP.
 
 %setup -q -n php-%{upver}%{?rcver}
 
-# Workaround to https://bugs.php.net/78622
-sed -e 's/__aarch64__/__drop__aarch64__optimization__/' -i ext/standard/crc32.c
-
 %patch1 -p1 -b .mpmcheck
 %patch5 -p1 -b .includedir
 %patch6 -p1 -b .embed
@@ -715,6 +714,7 @@ sed -e 's/__aarch64__/__drop__aarch64__optimization__/' -i ext/standard/crc32.c
 %patch47 -p1 -b .phpinfo
 
 # upstream patches
+%patch100 -p1 -b .wip
 
 # security patches
 
@@ -1500,6 +1500,7 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 - drop dependency on libargon2, use libsodium implementation
 - run test suite using 4 concurrent workers
 - cleanup unused conditional
+- add upstream patch to fix aarch64 build
 
 * Tue Sep 24 2019 Remi Collet <remi@remirepo.net> - 7.3.10-1
 - Update to 7.3.10 - http://www.php.net/releases/7_3_10.php
