@@ -139,7 +139,7 @@ BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: libtool
 BuildRequires: libtool-ltdl-devel
-BuildRequires: pkgconfig(libzip) >= 0.11
+BuildRequires: libzip-devel >= 0.11
 BuildRequires: systemtap-sdt-devel
 # used for tests
 BuildRequires: %{_bindir}/ps
