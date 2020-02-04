@@ -51,13 +51,13 @@
 %global with_lmdb     0
 %endif
 
-%global upver        7.4.2
-#global rcver        RC1
+%global upver        7.4.3
+%global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 2%{?dist}
+Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -1503,6 +1503,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Feb  4 2020 Remi Collet <remi@remirepo.net> - 7.4.3~RC1-1
+- update to 7.4.3RC1
+
 * Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 7.4.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
