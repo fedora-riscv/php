@@ -151,6 +151,10 @@ Provides: php-zts%{?_isa} = %{version}-%{release}
 %if %{with_modphp}
 Requires: httpd-mmn = %{_httpd_mmn}
 Provides: mod_php                = %{version}-%{release}
+# To ensure correct /var/lib/php/session ownership:
+Requires(pre): httpd-filesystem
+# php engine for Apache httpd webserver
+Provides: php(httpd)
 %endif
 Requires: php-common%{?_isa}     = %{version}-%{release}
 # For backwards-compatibility, pull the "php" command
@@ -166,10 +170,6 @@ Recommends: php-pdo%{?_isa}      = %{version}-%{release}
 Recommends: php-sodium%{?_isa}   = %{version}-%{release}
 %endif
 Recommends: php-xml%{?_isa}      = %{version}-%{release}
-# To ensure correct /var/lib/php/session ownership:
-Requires(pre): httpd-filesystem
-# php engine for Apache httpd webserver
-Provides: php(httpd)
 
 
 %description
