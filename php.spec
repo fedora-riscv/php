@@ -1354,8 +1354,8 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 %attr(0770,root,apache) %dir %{_sharedstatedir}/php/session
 %attr(0770,root,apache) %dir %{_sharedstatedir}/php/wsdlcache
 %attr(0770,root,apache) %dir %{_sharedstatedir}/php/opcache
-%endif
 %config(noreplace) %{_httpd_confdir}/php.conf
+%endif
 
 %files common -f files.common
 %doc EXTENSIONS NEWS UPGRADING* README.REDIST.BINS *md docs
