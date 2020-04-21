@@ -33,6 +33,7 @@
 # needed at srpm build time, when httpd-devel not yet installed
 %{!?_httpd_mmn:        %{expand: %%global _httpd_mmn        %%(cat %{_includedir}/httpd/.mmn 2>/dev/null || echo 0-0)}}
 
+%global with_modphp   1
 %if 0%{?fedora}
 %global with_zts      1
 %global with_firebird 1
@@ -57,7 +58,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 1%{?dist}
+Release: 2%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -76,7 +77,6 @@ Source5: php-fpm-www.conf
 Source6: php-fpm.service
 Source7: php-fpm.logrotate
 Source9: php.modconf
-Source10: php.ztsmodconf
 Source12: php-fpm.wants
 Source13: nginx-fpm.conf
 Source14: nginx-php.conf
@@ -148,8 +148,10 @@ Provides: php-zts = %{version}-%{release}
 Provides: php-zts%{?_isa} = %{version}-%{release}
 %endif
 
+%if %{with_modphp}
 Requires: httpd-mmn = %{_httpd_mmn}
 Provides: mod_php                = %{version}-%{release}
+%endif
 Requires: php-common%{?_isa}     = %{version}-%{release}
 # For backwards-compatibility, pull the "php" command
 Recommends: php-cli%{?_isa}      = %{version}-%{release}
@@ -177,9 +179,11 @@ offers built-in database integration for several commercial and
 non-commercial database management systems, so writing a
 database-enabled webpage with PHP is fairly simple. The most common
 use of PHP coding is probably as a replacement for CGI scripts.
-
+%if %{with_modphp}
 The php package contains the module (often referred to as mod_php)
-which adds support for the PHP language to Apache HTTP Server.
+which adds support for the PHP language to Apache HTTP Server when
+running in prefork mode.
+%endif
 
 %package cli
 Summary: Command-line interface for PHP
@@ -728,7 +732,10 @@ cp ext/bcmath/libbcmath/LICENSE libbcmath_LICENSE
 cp ext/date/lib/LICENSE.rst timelib_LICENSE
 
 # Multiple builds for multiple SAPIs
-mkdir build-cgi build-apache build-embedded \
+mkdir build-cgi build-embedded \
+%if %{with_modphp}
+    build-apache \
+%endif
 %if %{with_zts}
     build-zts build-ztscli \
 %endif
@@ -965,6 +972,7 @@ without_shared="--without-gd \
       --disable-shmop --disable-sockets --disable-tokenizer \
       --disable-sysvmsg --disable-sysvshm --disable-sysvsem"
 
+%if %{with_modphp}
 # Build Apache module, and the CLI SAPI, /usr/bin/php
 pushd build-apache
 build --with-apxs2=%{_httpd_apxs} \
@@ -973,6 +981,7 @@ build --with-apxs2=%{_httpd_apxs} \
       --disable-pdo \
       ${without_shared}
 popd
+%endif
 
 # Build php-fpm
 pushd build-fpm
@@ -1079,18 +1088,6 @@ build --includedir=%{_includedir}/php-zts \
       --with-enchant=shared
 popd
 
-# Build a special thread-safe Apache SAPI
-pushd build-zts
-build --with-apxs2=%{_httpd_apxs} \
-      --includedir=%{_includedir}/php-zts \
-      --libdir=%{_libdir}/php-zts \
-      --enable-maintainer-zts \
-      --with-config-file-scan-dir=%{_sysconfdir}/php-zts.d \
-      --without-mysqli \
-      --disable-pdo \
-      ${without_shared}
-popd
-
 ### NOTE!!! EXTENSION_DIR was changed for the -zts build, so it must remain
 ### the last SAPI to be built.
 %endif
@@ -1098,7 +1095,7 @@ popd
 
 %check
 %if %runselftest
-cd build-apache
+cd build-fpm
 
 # Run tests, using the CLI SAPI
 export NO_INTERACTION=1 REPORT_EXIT_STATUS=1 MALLOC_CHECK_=2
@@ -1147,20 +1144,16 @@ install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/php.ini
 # For third-party packaging:
 install -m 755 -d $RPM_BUILD_ROOT%{_datadir}/php/preload
 
+%if %{with_modphp}
 # install the DSO
 install -m 755 -d $RPM_BUILD_ROOT%{_httpd_moddir}
 install -m 755 build-apache/libs/libphp7.so $RPM_BUILD_ROOT%{_httpd_moddir}
-
-%if %{with_zts}
-# install the ZTS DSO
-install -m 755 build-zts/libs/libphp7.so $RPM_BUILD_ROOT%{_httpd_moddir}/libphp7-zts.so
 %endif
 
 # Apache config fragment
 # Dual config file with httpd >= 2.4 (fedora >= 18)
+%if %{with_modphp}
 install -D -m 644 %{SOURCE9} $RPM_BUILD_ROOT%{_httpd_modconfdir}/15-php.conf
-%if %{with_zts}
-cat %{SOURCE10} >>$RPM_BUILD_ROOT%{_httpd_modconfdir}/15-php.conf
 %endif
 install -D -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_httpd_confdir}/php.conf
 
@@ -1355,15 +1348,14 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %files
+%if %{with_modphp}
 %{_httpd_moddir}/libphp7.so
-%if %{with_zts}
-%{_httpd_moddir}/libphp7-zts.so
-%endif
+%config(noreplace) %{_httpd_modconfdir}/15-php.conf
 %attr(0770,root,apache) %dir %{_sharedstatedir}/php/session
 %attr(0770,root,apache) %dir %{_sharedstatedir}/php/wsdlcache
 %attr(0770,root,apache) %dir %{_sharedstatedir}/php/opcache
+%endif
 %config(noreplace) %{_httpd_confdir}/php.conf
-%config(noreplace) %{_httpd_modconfdir}/15-php.conf
 
 %files common -f files.common
 %doc EXTENSIONS NEWS UPGRADING* README.REDIST.BINS *md docs
@@ -1503,6 +1495,11 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Apr 21 2020 Remi Collet <remi@fedoraproject.org> - 7.4.5-2
+- make mod_php optional (enabled by default for now)
+- drop mod_php ZTS build
+- run FPM tests
+
 * Tue Apr 14 2020 Remi Collet <remi@remirepo.net> - 7.4.5-1
 - Update to 7.4.5 - http://www.php.net/releases/7_4_5.php
 
