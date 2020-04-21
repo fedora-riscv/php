@@ -162,6 +162,7 @@ Recommends: php-cli%{?_isa}      = %{version}-%{release}
 # httpd have threaded MPM by default
 Recommends: php-fpm%{?_isa}      = %{version}-%{release}
 # as "php" is now mostly a meta-package, commonly used extensions
+# reduce diff with "dnf module install php"
 Recommends: php-json%{?_isa}     = %{version}-%{release}
 Recommends: php-mbstring%{?_isa} = %{version}-%{release}
 Recommends: php-opcache%{?_isa}  = %{version}-%{release}
