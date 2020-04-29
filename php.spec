@@ -52,13 +52,13 @@
 %global with_lmdb     0
 %endif
 
-%global upver        7.4.5
-#global rcver        RC1
+%global upver        7.4.6
+%global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 2%{?dist}
+Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -1496,6 +1496,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Wed Apr 29 2020 Remi Collet <remi@remirepo.net> - 7.4.6~RC1-1
+- update to 7.4.6RC1
+
 * Tue Apr 21 2020 Remi Collet <remi@fedoraproject.org> - 7.4.5-2
 - make mod_php optional (enabled by default for now)
 - drop mod_php ZTS build
