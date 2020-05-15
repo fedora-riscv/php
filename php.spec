@@ -42,6 +42,7 @@
 %global with_sodium   1
 %global with_pspell   1
 %global with_lmdb     1
+%global with_tidy     1
 %else
 %global with_zts      0
 %global with_firebird 0
@@ -50,6 +51,7 @@
 %global with_sodium   0
 %global with_pspell   0
 %global with_lmdb     0
+%global with_tidy     0
 %endif
 
 %global upver        7.4.6
@@ -572,6 +574,7 @@ Requires: php-common%{?_isa} = %{version}-%{release}
 The php-dba package contains a dynamic shared object that will add
 support for using the DBA database abstraction layer to PHP.
 
+%if %{with_tidy}
 %package tidy
 Summary: Standard PHP module provides tidy library support
 # All files licensed under PHP version 3.01
@@ -582,6 +585,7 @@ BuildRequires: libtidy-devel
 %description tidy
 The php-tidy package contains a dynamic shared object that will add
 support for using the tidy library to PHP.
+%endif
 
 %if %{with_freetds}
 %package pdo-dblib
@@ -698,7 +702,7 @@ in pure PHP.
 
 
 %prep
-%{gpgverify} --keyring='%{SOURCE20}' --signature='%{SOURCE21}' --data='%{SOURCE0}'
+%{?gpgverify:%{gpgverify} --keyring='%{SOURCE20}' --signature='%{SOURCE21}' --data='%{SOURCE0}'}
 
 %setup -q -n php-%{upver}%{?rcver}
 
@@ -942,7 +946,9 @@ build --libdir=%{_libdir}/php \
       --with-pspell=shared \
 %endif
       --enable-phar=shared \
+%if %{with_tidy}
       --with-tidy=shared,%{_prefix} \
+%endif
       --enable-sysvmsg=shared --enable-sysvshm=shared --enable-sysvsem=shared \
       --enable-shmop=shared \
       --enable-posix=shared \
@@ -1073,7 +1079,9 @@ build --includedir=%{_includedir}/php-zts \
       --with-pspell=shared \
 %endif
       --enable-phar=shared \
+%if %{with_tidy}
       --with-tidy=shared,%{_prefix} \
+%endif
       --enable-sysvmsg=shared --enable-sysvshm=shared --enable-sysvsem=shared \
       --enable-shmop=shared \
       --enable-posix=shared \
@@ -1215,7 +1223,9 @@ for mod in pgsql odbc ldap snmp \
     sqlite3 \
     enchant phar fileinfo intl \
     ffi \
+%if %{with_tidy}
     tidy \
+%endif
 %if %{with_pspell}
     pspell \
 %endif
@@ -1468,7 +1478,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 %files gmp -f files.gmp
 %files dba -f files.dba
 %files pdo -f files.pdo
+%if %{with_tidy}
 %files tidy -f files.tidy
+%endif
 %if %{with_freetds}
 %files pdo-dblib -f files.pdo_dblib
 %endif
