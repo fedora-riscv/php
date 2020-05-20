@@ -60,7 +60,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 2%{?dist}
+Release: 3%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -286,7 +286,6 @@ Requires: gcc-c++
 Requires: libtool
 # see "php-config --libs"
 Requires: krb5-devel%{?_isa}
-Requires: libedit-devel%{?_isa}
 Requires: libxml2-devel%{?_isa}
 Requires: openssl-devel%{?_isa} >= 1.0.1
 Requires: pcre2-devel%{?_isa}
@@ -1146,6 +1145,9 @@ make -C build-fpm install-fpm \
 make -C build-cgi install \
      INSTALL_ROOT=$RPM_BUILD_ROOT
 
+# Use php-config from embed SAPI to reduce used libs
+install -m 755 build-embedded/scripts/php-config $RPM_BUILD_ROOT%{_bindir}/php-config
+
 # Install the default configuration file
 install -m 755 -d $RPM_BUILD_ROOT%{_sysconfdir}/
 install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/php.ini
@@ -1508,6 +1510,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue May 12 2020 Remi Collet <remi@remirepo.net> - 7.4.6-3
+- use php-config from embed SAPI to reduce used libs
+
 * Sat May 16 2020 Pete Walter <pwalter@fedoraproject.org> - 7.4.6-2
 - Rebuild for ICU 67
 
