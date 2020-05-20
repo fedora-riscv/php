@@ -1510,7 +1510,7 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
-* Tue May 12 2020 Remi Collet <remi@remirepo.net> - 7.4.6-3
+* Wed May 20 2020 Remi Collet <remi@remirepo.net> - 7.4.6-3
 - use php-config from embed SAPI to reduce used libs
 
 * Sat May 16 2020 Pete Walter <pwalter@fedoraproject.org> - 7.4.6-2
