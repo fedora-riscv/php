@@ -54,8 +54,8 @@
 %global with_tidy     0
 %endif
 
-%global upver        7.4.6
-#global rcver        RC1
+%global upver        7.4.7
+%global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
@@ -1510,6 +1510,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue May 26 2020 Remi Collet <remi@remirepo.net> - 7.4.7~RC1-1
+- update to 7.4.7RC1
+
 * Wed May 20 2020 Remi Collet <remi@remirepo.net> - 7.4.6-3
 - use php-config from embed SAPI to reduce used libs
 
