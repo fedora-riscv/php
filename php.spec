@@ -157,6 +157,13 @@ Provides: mod_php                = %{version}-%{release}
 Requires(pre): httpd-filesystem
 # php engine for Apache httpd webserver
 Provides: php(httpd)
+# mod_php is deprecated, no package should requires php or mod_php
+# all packages must requires used SAPI (cli, fpm, embded..)
+# and used extrensions (mysqli, mbstring, xmlwriter...)
+Provides: deprecated()
+%else
+# preserve old behavior
+Recommends: httpd
 %endif
 Requires: php-common%{?_isa}     = %{version}-%{release}
 # For backwards-compatibility, pull the "php" command
@@ -185,7 +192,7 @@ use of PHP coding is probably as a replacement for CGI scripts.
 %if %{with_modphp}
 The php package contains the module (often referred to as mod_php)
 which adds support for the PHP language to Apache HTTP Server when
-running in prefork mode.
+running in prefork mode. This module is deprecated.
 %endif
 
 %package cli
