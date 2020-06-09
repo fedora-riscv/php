@@ -514,10 +514,15 @@ Summary: A module for PHP applications which use the XML-RPC protocol
 # libXMLRPC is licensed under BSD
 License: PHP and BSD
 Requires: php-xml%{?_isa} = %{version}-%{release}
+# Dropped from PHP 8
+Provides: deprecated()
 
 %description xmlrpc
 The php-xmlrpc package contains a dynamic shared object that will add
 support for the XML-RPC protocol to PHP.
+
+This extension is deprecated and will be removed in PHP 8.
+
 
 %package mbstring
 Summary: A module for PHP applications which need multi-byte string handling
