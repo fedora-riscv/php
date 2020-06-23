@@ -61,7 +61,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 2%{?dist}
+Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -1354,6 +1354,8 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/php/modules/*.a \
        $RPM_BUILD_ROOT%{_libdir}/php-zts/modules/*.a \
        $RPM_BUILD_ROOT%{_bindir}/{phptar} \
        $RPM_BUILD_ROOT%{_datadir}/pear \
+       $RPM_BUILD_ROOT%{_bindir}/zts-phar* \
+       $RPM_BUILD_ROOT%{_mandir}/man1/zts-phar* \
        $RPM_BUILD_ROOT%{_libdir}/libphp7.a \
        $RPM_BUILD_ROOT%{_libdir}/libphp7.la
 
