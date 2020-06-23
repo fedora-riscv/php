@@ -55,8 +55,8 @@
 %bcond_with      tidy
 %endif
 
-%global upver        7.4.7
-#global rcver        RC1
+%global upver        7.4.8
+%global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
@@ -103,8 +103,6 @@ Patch42: php-7.3.3-systzdata-v18.patch
 Patch43: php-7.4.0-phpize.patch
 # Use -lldap_r for OpenLDAP
 Patch45: php-7.4.0-ldap_r.patch
-# Make php_config.h constant across builds
-Patch46: php-7.2.4-fixheader.patch
 # drop "Configure command" from phpinfo output
 Patch47: php-5.6.3-phpinfo.patch
 
@@ -728,7 +726,6 @@ in pure PHP.
 %if 0%{?fedora} >= 18 || 0%{?rhel} >= 7
 %patch45 -p1 -b .ldap_r
 %endif
-%patch46 -p1 -b .fixheader
 %patch47 -p1 -b .phpinfo
 
 # upstream patches
@@ -823,6 +820,7 @@ cp %{SOURCE50} %{SOURCE51} %{SOURCE53} .
 %build
 # Set build date from https://reproducible-builds.org/specs/source-date-epoch/
 export SOURCE_DATE_EPOCH=$(date +%s -r NEWS)
+export PHP_UNAME=$(uname)
 
 # Force use of system libtool:
 libtoolize --force --copy
@@ -1524,6 +1522,10 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Jun 23 2020 Remi Collet <remi@remirepo.net> - 7.4.8~RC1-1
+- update to 7.4.8RC1
+- drop patch to fix PHP_UNAME
+
 * Tue Jun 16 2020 Remi Collet <remi@remirepo.net> - 7.4.7-2
 - disable build of mod_php
   https://fedoraproject.org/wiki/Changes/drop_mod_php
