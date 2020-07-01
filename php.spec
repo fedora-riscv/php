@@ -61,7 +61,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 1%{?dist}
+Release: 2%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -818,6 +818,12 @@ cp %{SOURCE50} %{SOURCE51} %{SOURCE53} .
 
 
 %build
+# This package fails to build with LTO due to undefined symbols.  LTO
+# was disabled in OpenSuSE as well, but with no real explanation why
+# beyond the undefined symbols.  It really shold be investigated further.
+# Disable LTO
+%define _lto_cflags %{nil}
+
 # Set build date from https://reproducible-builds.org/specs/source-date-epoch/
 export SOURCE_DATE_EPOCH=$(date +%s -r NEWS)
 export PHP_UNAME=$(uname)
@@ -1524,6 +1530,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Wed Jul 01 2020 Jeff Law <law@redhat.com> - 7.4.8~RC1-2
+- Disable LTO
+
 * Tue Jun 23 2020 Remi Collet <remi@remirepo.net> - 7.4.8~RC1-1
 - update to 7.4.8RC1
 - drop patch to fix PHP_UNAME
