@@ -61,7 +61,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 2%{?dist}
+Release: 3%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -104,7 +104,8 @@ Patch43: php-7.4.0-phpize.patch
 # Use -lldap_r for OpenLDAP
 Patch45: php-7.4.0-ldap_r.patch
 # drop "Configure command" from phpinfo output
-Patch47: php-5.6.3-phpinfo.patch
+# and add build system and provider (from 8.0)
+Patch47: php-7.4.8-phpinfo.patch
 
 # Upstream fixes (100+)
 
@@ -827,6 +828,10 @@ cp %{SOURCE50} %{SOURCE51} %{SOURCE53} .
 # Set build date from https://reproducible-builds.org/specs/source-date-epoch/
 export SOURCE_DATE_EPOCH=$(date +%s -r NEWS)
 export PHP_UNAME=$(uname)
+export PHP_BUILD_SYSTEM=$(cat /etc/redhat-release | sed -e 's/ Beta//')
+%if 0%{?vendor:1}
+export PHP_BUILD_PROVIDER="%{vendor}"
+%endif
 
 # Force use of system libtool:
 libtoolize --force --copy
@@ -1530,6 +1535,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Mon Jul  6 2020 Remi Collet <remi@remirepo.net> - 7.4.8~RC1-3
+- display build system and provider in phpinfo (from 8.0)
+
 * Wed Jul 01 2020 Jeff Law <law@redhat.com> - 7.4.8~RC1-2
 - Disable LTO
 
