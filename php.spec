@@ -51,7 +51,7 @@
 %global with_lmdb     0
 %endif
 
-%global upver        7.4.7
+%global upver        7.4.8
 #global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
@@ -100,10 +100,9 @@ Patch42: php-7.3.3-systzdata-v18.patch
 Patch43: php-7.4.0-phpize.patch
 # Use -lldap_r for OpenLDAP
 Patch45: php-7.4.0-ldap_r.patch
-# Make php_config.h constant across builds
-Patch46: php-7.2.4-fixheader.patch
 # drop "Configure command" from phpinfo output
-Patch47: php-5.6.3-phpinfo.patch
+# and add build system and provider (from 8.0)
+Patch47: php-7.4.8-phpinfo.patch
 
 # Upstream fixes (100+)
 
@@ -707,7 +706,6 @@ in pure PHP.
 %if 0%{?fedora} >= 18 || 0%{?rhel} >= 7
 %patch45 -p1 -b .ldap_r
 %endif
-%patch46 -p1 -b .fixheader
 %patch47 -p1 -b .phpinfo
 
 # upstream patches
@@ -799,6 +797,11 @@ cp %{SOURCE50} %{SOURCE51} %{SOURCE53} .
 %build
 # Set build date from https://reproducible-builds.org/specs/source-date-epoch/
 export SOURCE_DATE_EPOCH=$(date +%s -r NEWS)
+export PHP_UNAME=$(uname)
+export PHP_BUILD_SYSTEM=$(cat /etc/redhat-release | sed -e 's/ Beta//')
+%if 0%{?vendor:1}
+export PHP_BUILD_PROVIDER="%{vendor}"
+%endif
 
 # Force use of system libtool:
 libtoolize --force --copy
@@ -1336,6 +1339,8 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/php/modules/*.a \
        $RPM_BUILD_ROOT%{_libdir}/php-zts/modules/*.a \
        $RPM_BUILD_ROOT%{_bindir}/{phptar} \
        $RPM_BUILD_ROOT%{_datadir}/pear \
+       $RPM_BUILD_ROOT%{_bindir}/zts-phar* \
+       $RPM_BUILD_ROOT%{_mandir}/man1/zts-phar* \
        $RPM_BUILD_ROOT%{_libdir}/libphp7.a \
        $RPM_BUILD_ROOT%{_libdir}/libphp7.la
 
@@ -1503,6 +1508,11 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Jul  7 2020 Remi Collet <remi@remirepo.net> - 7.4.8-1
+- Update to 7.4.8 - http://www.php.net/releases/7_4_8.php
+- display build system and provider in phpinfo (from 8.0)
+- drop patch to fix PHP_UNAME
+
 * Tue Jun  9 2020 Remi Collet <remi@remirepo.net> - 7.4.7-1
 - Update to 7.4.7 - http://www.php.net/releases/7_4_7.php
 
