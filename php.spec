@@ -51,7 +51,7 @@
 %bcond_with      freetds
 %bcond_with      sodium
 %bcond_with      pspell
-%bcond_with      lmdb
+%bcond_without   lmdb
 %bcond_with      tidy
 %endif
 
