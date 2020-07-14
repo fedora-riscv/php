@@ -61,7 +61,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 2%{?dist}
+Release: 3%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -901,7 +901,7 @@ if test $? != 0; then
   exit 1
 fi
 
-make %{?_smp_mflags}
+%make_build
 }
 
 # Build /usr/bin/php-cgi with the CGI SAPI, and most shared extensions
@@ -1535,6 +1535,10 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Jul 14 2020 Tom Stellard <tstellar@redhat.com> - 7.4.8-3
+- Use make macros
+- https://fedoraproject.org/wiki/Changes/UseMakeBuildInstallMacro
+
 * Thu Jul  9 2020 Remi Collet <remi@remirepo.net> - 7.4.8-2
 - Update to 7.4.8 - http://www.php.net/releases/7_4_8.php
   rebuild from new sources
