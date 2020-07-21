@@ -55,13 +55,13 @@
 %bcond_with      tidy
 %endif
 
-%global upver        7.4.8
-#global rcver        RC1
+%global upver        7.4.9
+%global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 3%{?dist}
+Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -1535,6 +1535,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Jul 21 2020 Remi Collet <remi@remirepo.net> - 7.4.9~RC1-1
+- update to 7.4.9RC1
+
 * Tue Jul 14 2020 Tom Stellard <tstellar@redhat.com> - 7.4.8-3
 - Use make macros
 - https://fedoraproject.org/wiki/Changes/UseMakeBuildInstallMacro
