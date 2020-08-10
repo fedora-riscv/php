@@ -58,7 +58,7 @@
 %global with_lmdb     0
 %endif
 
-%global upver        7.3.20
+%global upver        7.3.21
 #global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
@@ -1576,6 +1576,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Mon Aug 10 2020 Remi Collet <remi@remirepo.net> - 7.3.21-1
+- Update to 7.3.21 - http://www.php.net/releases/7_3_21.php
+
 * Tue Jul  7 2020 Remi Collet <remi@remirepo.net> - 7.3.20-1
 - Update to 7.3.20 - http://www.php.net/releases/7_3_20.php
 
