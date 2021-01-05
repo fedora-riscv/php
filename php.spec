@@ -51,7 +51,7 @@
 %global with_lmdb     0
 %endif
 
-%global upver        7.4.13
+%global upver        7.4.14
 #global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
@@ -134,6 +134,7 @@ BuildRequires: bzip2
 BuildRequires: perl-interpreter
 BuildRequires: autoconf
 BuildRequires: automake
+BuildRequires: make
 BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: libtool
@@ -273,6 +274,7 @@ Requires: php-cli%{?_isa} = %{version}-%{release}
 # always needed to build extension
 Requires: autoconf
 Requires: automake
+Requires: make
 Requires: gcc
 Requires: gcc-c++
 Requires: libtool
@@ -1508,6 +1510,10 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Jan  5 2021 Remi Collet <remi@remirepo.net> - 7.4.14-1
+- Update to 7.4.14 - http://www.php.net/releases/7_4_14.php
+- explicitly requires make
+
 * Tue Nov 24 2020 Remi Collet <remi@remirepo.net> - 7.4.13-1
 - Update to 7.4.13 - http://www.php.net/releases/7_4_13.php
 
