@@ -56,12 +56,12 @@
 %endif
 
 %global upver        7.4.15
-%global rcver        RC2
+#global rcver        RC2
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 2%{?dist}
+Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -108,6 +108,7 @@ Patch45: php-7.4.0-ldap_r.patch
 Patch47: php-7.4.8-phpinfo.patch
 
 # Upstream fixes (100+)
+Patch100: php-bug80682.patch
 
 # Security fixes (200+)
 
@@ -732,6 +733,7 @@ in pure PHP.
 %patch47 -p1 -b .phpinfo
 
 # upstream patches
+%patch100 -p1 -b .bug80682
 
 # security patches
 
@@ -1537,6 +1539,11 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Feb  2 2021 Remi Collet <remi@remirepo.net> - 7.4.15-1
+- Update to 7.4.15 - http://www.php.net/releases/7_4_15.php
+- add upstream patch for https://bugs.php.net/80682
+  fix opcache doesn't honour pcre.jit option
+
 * Wed Jan 27 2021 Fedora Release Engineering <releng@fedoraproject.org> - 7.4.15~RC2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
