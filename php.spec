@@ -55,8 +55,8 @@
 %bcond_with      tidy
 %endif
 
-%global upver        7.4.14
-#global rcver        RC1
+%global upver        7.4.15
+#global rcver        RC2
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
@@ -108,6 +108,7 @@ Patch45: php-7.4.0-ldap_r.patch
 Patch47: php-7.4.8-phpinfo.patch
 
 # Upstream fixes (100+)
+Patch100: php-bug80682.patch
 
 # Security fixes (200+)
 
@@ -732,6 +733,7 @@ in pure PHP.
 %patch47 -p1 -b .phpinfo
 
 # upstream patches
+%patch100 -p1 -b .bug80682
 
 # security patches
 
@@ -1537,6 +1539,11 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Feb  2 2021 Remi Collet <remi@remirepo.net> - 7.4.15-1
+- Update to 7.4.15 - http://www.php.net/releases/7_4_15.php
+- add upstream patch for https://bugs.php.net/80682
+  fix opcache doesn't honour pcre.jit option
+
 * Tue Jan  5 2021 Remi Collet <remi@remirepo.net> - 7.4.14-1
 - Update to 7.4.14 - http://www.php.net/releases/7_4_14.php
 - explicitly requires make
