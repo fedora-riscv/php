@@ -61,7 +61,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 1%{?dist}
+Release: 2%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -1539,6 +1539,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Mon Feb 08 2021 Pavel Raiskup <praiskup@redhat.com> - 7.4.15-2
+- rebuild for libpq ABI fix rhbz#1908268
+
 * Tue Feb  2 2021 Remi Collet <remi@remirepo.net> - 7.4.15-1
 - Update to 7.4.15 - http://www.php.net/releases/7_4_15.php
 - add upstream patch for https://bugs.php.net/80682
