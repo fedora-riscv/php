@@ -37,7 +37,7 @@
 %bcond_with      modphp
 %bcond_without   zts
 %bcond_without   firebird
-%bcond_without   imap
+%bcond_with      imap
 %bcond_without   freetds
 %bcond_without   sodium
 %bcond_without   pspell
@@ -61,7 +61,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 2%{?dist}
+Release: 3%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -1539,6 +1539,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Wed Feb 24 2021 Remi Collet <remi@remirepo.net> - 7.4.15-3
+- drop php-imap, fix #1929640
+
 * Mon Feb 08 2021 Pavel Raiskup <praiskup@redhat.com> - 7.4.15-2
 - rebuild for libpq ABI fix rhbz#1908268
 
