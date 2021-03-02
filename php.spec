@@ -55,13 +55,13 @@
 %bcond_with      tidy
 %endif
 
-%global upver        7.4.15
+%global upver        7.4.16
 #global rcver        RC2
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 3%{?dist}
+Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -108,7 +108,6 @@ Patch45: php-7.4.0-ldap_r.patch
 Patch47: php-7.4.8-phpinfo.patch
 
 # Upstream fixes (100+)
-Patch100: php-bug80682.patch
 
 # Security fixes (200+)
 
@@ -733,7 +732,6 @@ in pure PHP.
 %patch47 -p1 -b .phpinfo
 
 # upstream patches
-%patch100 -p1 -b .bug80682
 
 # security patches
 
@@ -1539,6 +1537,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Mar  2 2021 Remi Collet <remi@remirepo.net> - 7.4.16-1
+- Update to 7.4.16 - http://www.php.net/releases/7_4_16.php
+
 * Wed Feb 24 2021 Remi Collet <remi@remirepo.net> - 7.4.15-3
 - drop php-imap, fix #1929640
 
