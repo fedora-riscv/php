@@ -7,8 +7,8 @@
 #
 
 # API/ABI check
-%global apiver      20190902
-%global zendver     20190902
+%global apiver      20200930
+%global zendver     20200930
 %global pdover      20170320
 
 # we don't want -z defs linker flag
@@ -18,7 +18,7 @@
 %global _hardened_build 1
 
 # version used for php embedded library soname
-%global embed_version 7.4
+%global embed_version 8.0
 
 %global mysql_sock %(mysql_config --socket 2>/dev/null || echo /var/lib/mysql/mysql.sock)
 
@@ -55,7 +55,7 @@
 %bcond_with      tidy
 %endif
 
-%global upver        7.4.16
+%global upver        8.0.3
 #global rcver        RC2
 
 Summary: PHP scripting language for creating dynamic web sites
@@ -94,18 +94,21 @@ Source53: 20-ffi.ini
 # Build fixes
 Patch1: php-7.4.0-httpd.patch
 Patch5: php-7.2.0-includedir.patch
-Patch6: php-7.4.0-embed.patch
-Patch8: php-7.2.0-libdb.patch
+Patch6: php-8.0.0-embed.patch
+Patch8: php-7.4.0-libdb.patch
 
 # Functional changes
-Patch42: php-7.3.3-systzdata-v18.patch
+# Use system nikic/php-parser
+Patch41: php-8.0.0-parser.patch
+# use system tzdata
+Patch42: php-8.0.0-systzdata-v19.patch
 # See http://bugs.php.net/53436
 Patch43: php-7.4.0-phpize.patch
 # Use -lldap_r for OpenLDAP
 Patch45: php-7.4.0-ldap_r.patch
 # drop "Configure command" from phpinfo output
-# and add build system and provider (from 8.0)
-Patch47: php-7.4.8-phpinfo.patch
+# and only use gcc (instead of full version)
+Patch47: php-8.0.0-phpinfo.patch
 
 # Upstream fixes (100+)
 
@@ -113,12 +116,12 @@ Patch47: php-7.4.8-phpinfo.patch
 
 # Fixes for tests (300+)
 # Factory is droped from system tzdata
-Patch300: php-5.6.3-datetests.patch
+Patch300: php-7.4.0-datetests.patch
 
 
 BuildRequires: gnupg2
 BuildRequires: bzip2-devel
-BuildRequires: pkgconfig(libcurl)  >= 7.15.5
+BuildRequires: pkgconfig(libcurl)  >= 7.29.0
 BuildRequires: httpd-devel >= 2.0.46-1
 BuildRequires: pam-devel
 # to ensure we are using httpd with filesystem feature (see #1081453)
@@ -173,7 +176,6 @@ Recommends: php-cli%{?_isa}      = %{version}-%{release}
 Recommends: php-fpm%{?_isa}      = %{version}-%{release}
 # as "php" is now mostly a meta-package, commonly used extensions
 # reduce diff with "dnf module install php"
-Recommends: php-json%{?_isa}     = %{version}-%{release}
 Recommends: php-mbstring%{?_isa} = %{version}-%{release}
 Recommends: php-opcache%{?_isa}  = %{version}-%{release}
 Recommends: php-pdo%{?_isa}      = %{version}-%{release}
@@ -267,6 +269,8 @@ Provides: php-gettext, php-gettext%{?_isa}
 Provides: php-hash, php-hash%{?_isa}
 Provides: php-mhash = %{version}, php-mhash%{?_isa} = %{version}
 Provides: php-iconv, php-iconv%{?_isa}
+Obsoletes: php-json < 8
+Provides: php-json = %{version}, php-json%{?_isa} = %{version}
 Provides: php-libxml, php-libxml%{?_isa}
 Provides: php-openssl, php-openssl%{?_isa}
 Provides: php-phar, php-phar%{?_isa}
@@ -299,12 +303,12 @@ Requires: libxml2-devel%{?_isa}
 Requires: openssl-devel%{?_isa} >= 1.0.1
 Requires: pcre2-devel%{?_isa}
 Requires: zlib-devel%{?_isa}
-Obsoletes: php-pecl-json-devel  < %{version}
-Obsoletes: php-pecl-jsonc-devel < %{version}
 %if %{with zts}
 Provides: php-zts-devel = %{version}-%{release}
 Provides: php-zts-devel%{?_isa} = %{version}-%{release}
 %endif
+Recommends: php-nikic-php-parser4 >= 4.3.0
+
 
 %description devel
 The php-devel package contains the files needed for building PHP
@@ -509,22 +513,6 @@ The php-xml package contains dynamic shared objects which add support
 to PHP for manipulating XML documents using the DOM tree,
 and performing XSL transformations on XML documents.
 
-%package xmlrpc
-Summary: A module for PHP applications which use the XML-RPC protocol
-# All files licensed under PHP version 3.01, except
-# libXMLRPC is licensed under BSD
-License: PHP and BSD
-Requires: php-xml%{?_isa} = %{version}-%{release}
-# Dropped from PHP 8
-Provides: deprecated()
-
-%description xmlrpc
-The php-xmlrpc package contains a dynamic shared object that will add
-support for the XML-RPC protocol to PHP.
-
-This extension is deprecated and will be removed in PHP 8.
-
-
 %package mbstring
 Summary: A module for PHP applications which need multi-byte string handling
 # All files licensed under PHP version 3.01, except
@@ -657,27 +645,11 @@ Summary: Enchant spelling extension for PHP applications
 # All files licensed under PHP version 3.0
 License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
-BuildRequires: pkgconfig(enchant)
+BuildRequires: pkgconfig(enchant-2)
 
 %description enchant
 The php-enchant package contains a dynamic shared object that will add
 support for using the enchant library to PHP.
-
-%package json
-Summary: JavaScript Object Notation extension for PHP
-# All files licensed under PHP version 3.0.1
-License: PHP
-Requires: php-common%{?_isa} = %{version}-%{release}
-Obsoletes: php-pecl-json          < %{version}
-Obsoletes: php-pecl-jsonc         < %{version}
-Provides:  php-pecl(json)         = %{version}
-Provides:  php-pecl(json)%{?_isa} = %{version}
-Provides:  php-pecl-json          = %{version}
-Provides:  php-pecl-json%{?_isa}  = %{version}
-
-%description json
-The php-json package provides an extension that will add
-support for JavaScript Object Notation (JSON) to PHP.
 
 %if %{with sodium}
 %package sodium
@@ -834,6 +806,8 @@ export PHP_BUILD_SYSTEM=$(cat /etc/redhat-release | sed -e 's/ Beta//')
 %if 0%{?vendor:1}
 export PHP_BUILD_PROVIDER="%{vendor}"
 %endif
+export PHP_BUILD_COMPILER="$(gcc --version | head -n1)"
+export PHP_BUILD_ARCH="%{_arch}"
 
 # Force use of system libtool:
 libtoolize --force --copy
@@ -936,7 +910,6 @@ build --libdir=%{_libdir}/php \
       --with-iconv=shared \
       --enable-sockets=shared \
       --enable-tokenizer=shared \
-      --with-xmlrpc=shared \
       --with-ldap=shared --with-ldap-sasl \
       --enable-mysqlnd=shared \
       --with-mysqli=shared,mysqlnd \
@@ -962,7 +935,6 @@ build --libdir=%{_libdir}/php \
       --with-pdo-dblib=shared,%{_prefix} \
 %endif
       --with-sqlite3=shared \
-      --enable-json=shared \
       --without-readline \
       --with-libedit \
 %if %{with pspell}
@@ -991,7 +963,6 @@ without_shared="--without-gd \
       --disable-dom --disable-dba --without-unixODBC \
       --disable-opcache \
       --disable-phpdbg \
-      --disable-json \
       --without-ffi \
       --disable-xmlreader --disable-xmlwriter \
       --without-sodium \
@@ -1040,7 +1011,7 @@ pushd build-ztscli
 EXTENSION_DIR=%{_libdir}/php-zts/modules
 build --includedir=%{_includedir}/php-zts \
       --libdir=%{_libdir}/php-zts \
-      --enable-maintainer-zts \
+      --enable-zts \
       --program-prefix=zts- \
       --disable-cgi \
       --with-config-file-scan-dir=%{_sysconfdir}/php-zts.d \
@@ -1069,7 +1040,6 @@ build --includedir=%{_includedir}/php-zts \
       --enable-tokenizer=shared \
       --enable-exif=shared \
       --enable-ftp=shared \
-      --with-xmlrpc=shared \
       --with-ldap=shared --with-ldap-sasl \
       --enable-mysqlnd=shared \
       --with-mysqli=shared,mysqlnd \
@@ -1096,7 +1066,6 @@ build --includedir=%{_includedir}/php-zts \
       --with-pdo-dblib=shared,%{_prefix} \
 %endif
       --with-sqlite3=shared \
-      --enable-json=shared \
       --without-readline \
       --with-libedit \
 %if %{with pspell}
@@ -1127,6 +1096,12 @@ popd
 
 
 %check
+: Ensure proper NTS/ZTS build
+$RPM_BUILD_ROOT%{_bindir}/php     -n -v | grep NTS
+%if %{with zts}
+$RPM_BUILD_ROOT%{_bindir}/zts-php -n -v | grep ZTS
+%endif
+
 %if %runselftest
 cd build-fpm
 
@@ -1183,13 +1158,13 @@ install -m 755 -d $RPM_BUILD_ROOT%{_datadir}/php/preload
 %if %{with modphp}
 # install the DSO
 install -m 755 -d $RPM_BUILD_ROOT%{_httpd_moddir}
-install -m 755 build-apache/libs/libphp7.so $RPM_BUILD_ROOT%{_httpd_moddir}
+install -m 755 build-apache/libs/libphp.so $RPM_BUILD_ROOT%{_httpd_moddir}
 %endif
 
 # Apache config fragment
 # Dual config file with httpd >= 2.4 (fedora >= 18)
 %if %{with modphp}
-install -D -m 644 %{SOURCE9} $RPM_BUILD_ROOT%{_httpd_modconfdir}/15-php.conf
+install -D -m 644 %{SOURCE9} $RPM_BUILD_ROOT%{_httpd_modconfdir}/20-php.conf
 %endif
 install -D -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_httpd_confdir}/php.conf
 
@@ -1242,7 +1217,6 @@ for mod in pgsql odbc ldap snmp \
 %if %{with imap}
     imap \
 %endif
-    json \
     mysqlnd mysqli \
     mbstring gd dom xsl soap bcmath dba \
     simplexml bz2 calendar ctype exif ftp gettext gmp iconv \
@@ -1268,14 +1242,14 @@ for mod in pgsql odbc ldap snmp \
 %if %{with freetds}
     pdo_dblib \
 %endif
-    xmlrpc xmlreader xmlwriter
+    xmlreader xmlwriter
 do
     case $mod in
       opcache)
         # Zend extensions
         TESTCMD="$TESTCMD --define zend_extension=$mod"
         ini=10-${mod}.ini;;
-      pdo_*|mysqli|xmlreader|xmlrpc)
+      pdo_*|mysqli|xmlreader)
         # Extensions with dependencies on 20-*
         TESTCMD="$TESTCMD --define extension=$mod"
         ini=30-${mod}.ini;;
@@ -1369,8 +1343,8 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/php/modules/*.a \
        $RPM_BUILD_ROOT%{_datadir}/pear \
        $RPM_BUILD_ROOT%{_bindir}/zts-phar* \
        $RPM_BUILD_ROOT%{_mandir}/man1/zts-phar* \
-       $RPM_BUILD_ROOT%{_libdir}/libphp7.a \
-       $RPM_BUILD_ROOT%{_libdir}/libphp7.la
+       $RPM_BUILD_ROOT%{_libdir}/libphp.a \
+       $RPM_BUILD_ROOT%{_libdir}/libphp.la
 
 # Remove irrelevant docs
 rm -f README.{Zeus,QNX,CVS-RULES}
@@ -1389,8 +1363,8 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 %files
 %if %{with modphp}
-%{_httpd_moddir}/libphp7.so
-%config(noreplace) %{_httpd_modconfdir}/15-php.conf
+%{_httpd_moddir}/libphp.so
+%config(noreplace) %{_httpd_modconfdir}/20-php.conf
 %attr(0770,root,apache) %dir %{_sharedstatedir}/php/session
 %attr(0770,root,apache) %dir %{_sharedstatedir}/php/wsdlcache
 %attr(0770,root,apache) %dir %{_sharedstatedir}/php/opcache
@@ -1437,7 +1411,7 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 %{_mandir}/man1/phpize.1*
 
 %files dbg
-%doc sapi/phpdbg/{README.md,CREDITS}
+%doc sapi/phpdbg/CREDITS
 %{_bindir}/phpdbg
 %{_mandir}/man1/phpdbg.1*
 %if %{with zts}
@@ -1486,8 +1460,8 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 %{_rpmmacrodir}/macros.php
 
 %files embedded
-%{_libdir}/libphp7.so
-%{_libdir}/libphp7-%{embed_version}.so
+%{_libdir}/libphp.so
+%{_libdir}/libphp-%{embed_version}.so
 
 %files pgsql -f files.pgsql
 %files odbc -f files.odbc
@@ -1497,7 +1471,6 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 %files ldap -f files.ldap
 %files snmp -f files.snmp
 %files xml -f files.xml
-%files xmlrpc -f files.xmlrpc
 %files mbstring -f files.mbstring
 %license libmbfl_LICENSE
 %files gd -f files.gd
@@ -1528,7 +1501,6 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 %if %{with zts}
 %config(noreplace) %{_sysconfdir}/php-zts.d/opcache-default.blacklist
 %endif
-%files json -f files.json
 %if %{with sodium}
 %files sodium -f files.sodium
 %endif
@@ -1537,6 +1509,13 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Thu Mar  4 2021 Remi Collet <remi@remirepo.net> - 8.0.3-1
+- Update to 8.0.3 - http://www.php.net/releases/8_0_3.php
+- see https://fedoraproject.org/wiki/Changes/php80
+- drop xmlrpc extension
+- drop json subpackage, extension always there
+- enchant: use libenchant-2 instead of libenchant
+
 * Tue Mar  2 2021 Remi Collet <remi@remirepo.net> - 7.4.16-1
 - Update to 7.4.16 - http://www.php.net/releases/7_4_16.php
 
