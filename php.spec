@@ -34,26 +34,25 @@
 %{!?_httpd_mmn:        %{expand: %%global _httpd_mmn        %%(cat %{_includedir}/httpd/.mmn 2>/dev/null || echo 0-0)}}
 
 %if 0%{?fedora}
-%bcond_with      modphp
+# Enabled by default on Fedora
 %bcond_without   zts
 %bcond_without   firebird
-%bcond_with      imap
 %bcond_without   freetds
 %bcond_without   sodium
 %bcond_without   pspell
-%bcond_without   lmdb
 %bcond_without   tidy
 %else
-%bcond_without   modphp
+# Disabled by default on RHEL
 %bcond_with      zts
 %bcond_with      firebird
-%bcond_with      imap
 %bcond_with      freetds
 %bcond_with      sodium
 %bcond_with      pspell
-%bcond_without   lmdb
 %bcond_with      tidy
 %endif
+%bcond_with      modphp
+%bcond_with      imap
+%bcond_without   lmdb
 
 %global upver        8.0.3
 #global rcver        RC2
@@ -61,7 +60,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 1%{?dist}
+Release: 2%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -1509,6 +1508,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Mon Mar 15 2021 Remi Collet <remi@remirepo.net> - 8.0.3-2
+- clean conditions
+
 * Thu Mar  4 2021 Remi Collet <remi@remirepo.net> - 8.0.3-1
 - Update to 8.0.3 - http://www.php.net/releases/8_0_3.php
 - see https://fedoraproject.org/wiki/Changes/php80
