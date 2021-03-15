@@ -34,26 +34,25 @@
 %{!?_httpd_mmn:        %{expand: %%global _httpd_mmn        %%(cat %{_includedir}/httpd/.mmn 2>/dev/null || echo 0-0)}}
 
 %if 0%{?fedora}
-%bcond_with      modphp
+# Enabled by default on Fedora
 %bcond_without   zts
 %bcond_without   firebird
-%bcond_with      imap
 %bcond_without   freetds
 %bcond_without   sodium
 %bcond_without   pspell
-%bcond_without   lmdb
 %bcond_without   tidy
 %else
-%bcond_without   modphp
+# Disabled by default on RHEL
 %bcond_with      zts
 %bcond_with      firebird
-%bcond_with      imap
 %bcond_with      freetds
 %bcond_with      sodium
 %bcond_with      pspell
-%bcond_without   lmdb
 %bcond_with      tidy
 %endif
+%bcond_with      modphp
+%bcond_with      imap
+%bcond_without   lmdb
 
 %global upver        7.4.16
 #global rcver        RC2
