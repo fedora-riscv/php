@@ -54,8 +54,8 @@
 %bcond_with      imap
 %bcond_without   lmdb
 
-%global upver        7.4.16
-#global rcver        RC2
+%global upver        7.4.17
+%global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
@@ -1536,6 +1536,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Mar 16 2021 Remi Collet <remi@remirepo.net> - 7.4.17~RC1-1
+- update to 7.4.17RC1
+
 * Tue Mar  2 2021 Remi Collet <remi@remirepo.net> - 7.4.16-1
 - Update to 7.4.16 - http://www.php.net/releases/7_4_16.php
 
