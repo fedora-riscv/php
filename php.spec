@@ -41,6 +41,7 @@
 %bcond_without   sodium
 %bcond_without   pspell
 %bcond_without   tidy
+%bcond_without   db4
 %else
 # Disabled by default on RHEL
 %bcond_with      zts
@@ -49,6 +50,7 @@
 %bcond_with      sodium
 %bcond_with      pspell
 %bcond_with      tidy
+%bcond_with      db4
 %endif
 %bcond_with      modphp
 %bcond_with      imap
@@ -60,7 +62,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 1%{?dist}
+Release: 2%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -563,7 +565,9 @@ using the GNU MP library.
 Summary: A database abstraction layer module for PHP applications
 # All files licensed under PHP version 3.01
 License: PHP
+%if %{with db4}
 BuildRequires: libdb-devel
+%endif
 BuildRequires: tokyocabinet-devel
 %if %{with lmdb}
 BuildRequires: lmdb-devel
@@ -898,7 +902,10 @@ build --libdir=%{_libdir}/php \
       --enable-bcmath=shared \
       --with-bz2=shared \
       --enable-ctype=shared \
-      --enable-dba=shared --with-db4=%{_prefix} \
+      --enable-dba=shared \
+%if %{with db4}
+                          --with-db4=%{_prefix} \
+%endif
                           --with-tcadb=%{_prefix} \
 %if %{with lmdb}
                           --with-lmdb=%{_prefix} \
@@ -1028,7 +1035,10 @@ build --includedir=%{_includedir}/php-zts \
       --enable-bcmath=shared \
       --with-bz2=shared \
       --enable-ctype=shared \
-      --enable-dba=shared --with-db4=%{_prefix} \
+      --enable-dba=shared \
+%if %{with db4}
+                          --with-db4=%{_prefix} \
+%endif
                           --with-tcadb=%{_prefix} \
 %if %{with lmdb}
                           --with-lmdb=%{_prefix} \
@@ -1508,6 +1518,10 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Fri Mar 19 2021 Remi Collet <remi@remirepo.net> - 8.0.4~RC1-2
+- make libdb usage conditional
+  default: on for Fedora, off for RHEL
+
 * Tue Mar 16 2021 Remi Collet <remi@remirepo.net> - 8.0.4~RC1-1
 - update to 8.0.4RC1
 
