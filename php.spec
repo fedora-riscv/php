@@ -56,13 +56,13 @@
 %bcond_with      imap
 %bcond_without   lmdb
 
-%global upver        8.0.4
+%global upver        8.0.5
 %global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 2%{?dist}
+Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -1518,6 +1518,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Apr 13 2021 Remi Collet <remi@remirepo.net> - 8.0.5~RC1-1
+- update to 8.0.5RC1
+
 * Fri Mar 19 2021 Remi Collet <remi@remirepo.net> - 8.0.4~RC1-2
 - make libdb usage conditional
   default: on for Fedora, off for RHEL
