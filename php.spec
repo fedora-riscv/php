@@ -55,8 +55,8 @@
 %bcond_with      tidy
 %endif
 
-%global upver        7.4.16
-#global rcver        RC2
+%global upver        7.4.18
+#global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
@@ -1537,6 +1537,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Apr 27 2021 Remi Collet <remi@remirepo.net> - 7.4.18-1
+- Update to 7.4.18 - http://www.php.net/releases/7_4_18.php
+
 * Tue Mar  2 2021 Remi Collet <remi@remirepo.net> - 7.4.16-1
 - Update to 7.4.16 - http://www.php.net/releases/7_4_16.php
 
