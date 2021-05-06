@@ -62,7 +62,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 1%{?dist}
+Release: 2%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -97,6 +97,8 @@ Patch1: php-7.4.0-httpd.patch
 Patch5: php-7.2.0-includedir.patch
 Patch6: php-8.0.0-embed.patch
 Patch8: php-7.4.0-libdb.patch
+# get rid of deprecated functions from 8.1
+Patch9: php-8.0.6-deprecated.patch
 
 # Functional changes
 # Use system nikic/php-parser
@@ -698,6 +700,7 @@ in pure PHP.
 %patch5 -p1 -b .includedir
 %patch6 -p1 -b .embed
 %patch8 -p1 -b .libdb
+%patch9 -p1 -b .deprecated
 
 %patch42 -p1 -b .systzdata
 %patch43 -p1 -b .headers
@@ -1518,6 +1521,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Thu May  6 2021 Remi Collet <remi@remirepo.net> - 8.0.6-2
+- get rid of inet_ntoa and inet_aton calls
+
 * Wed May  5 2021 Remi Collet <remi@remirepo.net> - 8.0.6-1
 - Update to 8.0.6 - http://www.php.net/releases/8_0_6.php
 
