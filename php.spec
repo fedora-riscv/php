@@ -56,8 +56,8 @@
 %bcond_with      imap
 %bcond_without   lmdb
 
-%global upver        8.0.7
-#global rcver        RC1
+%global upver        8.0.8
+%global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
@@ -114,7 +114,6 @@ Patch45: php-7.4.0-ldap_r.patch
 Patch47: php-8.0.0-phpinfo.patch
 
 # Upstream fixes (100+)
-Patch100: php-net-snmp.patch
 
 # Security fixes (200+)
 
@@ -711,7 +710,6 @@ in pure PHP.
 %patch47 -p1 -b .phpinfo
 
 # upstream patches
-%patch100 -p1 -b .nodes
 
 # security patches
 
@@ -1523,6 +1521,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Jun 15 2021 Remi Collet <remi@remirepo.net> - 8.0.8~RC1-1
+- update to 8.0.8RC1
+
 * Wed Jun  2 2021 Remi Collet <remi@remirepo.net> - 8.0.7-1
 - Update to 8.0.7 - http://www.php.net/releases/8_0_7.php
 
