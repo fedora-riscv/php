@@ -36,7 +36,13 @@
 %if 0%{?fedora}
 # Enabled by default on Fedora
 %bcond_without   zts
+%ifarch s390x
+# https://bugzilla.redhat.com/show_bug.cgi?id=1969393
+# firebird have ExcludeArch: s390x
+%bcond_with      firebird
+%else
 %bcond_without   firebird
+%endif
 %bcond_without   freetds
 %bcond_without   sodium
 %bcond_without   pspell
