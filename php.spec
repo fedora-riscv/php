@@ -739,7 +739,7 @@ in pure PHP.
 
 
 # Prevent %%doc confusion over LICENSE files
-cp Zend/LICENSE Zend/ZEND_LICENSE
+cp Zend/LICENSE ZEND_LICENSE
 cp TSRM/LICENSE TSRM_LICENSE
 cp sapi/fpm/LICENSE fpm_LICENSE
 cp ext/mbstring/libmbfl/LICENSE libmbfl_LICENSE
@@ -1398,7 +1398,7 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 %files common -f files.common
 %doc EXTENSIONS NEWS UPGRADING* README.REDIST.BINS *md docs
-%license LICENSE TSRM_LICENSE
+%license LICENSE TSRM_LICENSE ZEND_LICENSE
 %license libmagic_LICENSE
 %license timelib_LICENSE
 %doc php.ini-*
