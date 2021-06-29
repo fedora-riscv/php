@@ -24,7 +24,8 @@ foreach ($text as $line) {
 		if ($debug) echo "+ Ignore $line\n";
 		continue;
 	}
-	$line = preg_replace('/(#[0-9])+/', 'php\1', $line);
+	$line = preg_replace('/(#[0-9]+)/', 'php\1', $line);
+	$line = preg_replace('/(CVE-[0-9]+-[0-9]+)/', '**\1**', $line);
 	if (empty($line)) {
 		echo "\n\n";
 	} else if (substr($line, 0, 2) == '- ') {
