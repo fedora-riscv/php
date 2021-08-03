@@ -1,0 +1,49 @@
+From 112527d67798b6e18ed1c639e66d8cff674dcfd8 Mon Sep 17 00:00:00 2001
+From: Remi Collet <remi@php.net>
+Date: Tue, 3 Aug 2021 12:06:36 +0200
+Subject: [PATCH] Fix bug #81325  Segfault in zif_simplexml_import_dom
+
+---
+ ext/simplexml/simplexml.c         |  2 +-
+ ext/simplexml/tests/bug81325.phpt | 19 +++++++++++++++++++
+ 2 files changed, 20 insertions(+), 1 deletion(-)
+ create mode 100644 ext/simplexml/tests/bug81325.phpt
+
+diff --git a/ext/simplexml/simplexml.c b/ext/simplexml/simplexml.c
+index 4ed41d758762..21e1190e681b 100644
+--- a/ext/simplexml/simplexml.c
++++ b/ext/simplexml/simplexml.c
+@@ -2635,7 +2635,7 @@ PHP_FUNCTION(simplexml_import_dom)
+ 		nodep = xmlDocGetRootElement((xmlDocPtr) nodep);
+ 	}
+ 
+-	if (nodep->type == XML_ELEMENT_NODE) {
++	if (nodep && nodep->type == XML_ELEMENT_NODE) {
+ 		if (!ce) {
+ 			ce = sxe_class_entry;
+ 			fptr_count = NULL;
+diff --git a/ext/simplexml/tests/bug81325.phpt b/ext/simplexml/tests/bug81325.phpt
+new file mode 100644
+index 000000000000..b4010dd1f0c3
+--- /dev/null
++++ b/ext/simplexml/tests/bug81325.phpt
+@@ -0,0 +1,19 @@
++--TEST--
++BUg #81325 (segfault in zif_simplexml_import_dom)
++--SKIPIF--
++<?php
++if (!extension_loaded('simplexml')) die('skip simplexml not available');
++if (!extension_loaded('dom')) die('skip simplexml not available');
++?>
++--FILE--
++<?php
++$dom = new DOMDocument;
++$dom->loadXML("foo");
++$xml = simplexml_import_dom($dom);
++?>
++Done
++--EXPECTF--
++Warning: DOMDocument::loadXML(): Start tag expected%s
++
++Warning: simplexml_import_dom(): Invalid Nodetype%s
++Done
