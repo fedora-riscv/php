@@ -62,13 +62,13 @@
 %bcond_with      imap
 %bcond_without   lmdb
 
-%global upver        8.0.9
-#global rcver        RC1
+%global upver        8.0.10
+%global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 2%{?dist}
+Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -110,7 +110,7 @@ Patch9: php-8.0.6-deprecated.patch
 # Use system nikic/php-parser
 Patch41: php-8.0.0-parser.patch
 # use system tzdata
-Patch42: php-8.0.0-systzdata-v19.patch
+Patch42: php-8.0.10-systzdata-v20.patch
 # See http://bugs.php.net/53436
 Patch43: php-7.4.0-phpize.patch
 # Use -lldap_r for OpenLDAP
@@ -120,7 +120,6 @@ Patch45: php-7.4.0-ldap_r.patch
 Patch47: php-8.0.0-phpinfo.patch
 
 # Upstream fixes (100+)
-Patch100: php-simplexml.patch
 
 # Security fixes (200+)
 
@@ -717,7 +716,6 @@ in pure PHP.
 %patch47 -p1 -b .phpinfo
 
 # upstream patches
-%patch100 -p1 -b .segfault
 
 # security patches
 
@@ -1529,6 +1527,10 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Aug 10 2021 Remi Collet <remi@remirepo.net> - 8.0.10~RC1-1
+- update to 8.0.10RC1
+- adapt systzdata patch for timelib 2020.03 (v20)
+
 * Tue Aug  3 2021 Remi Collet <remi@remirepo.net> - 8.0.9-2
 - add upstream patch for https://bugs.php.net/81325 segfault in simplexml
 
