@@ -68,7 +68,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 1%{?dist}
+Release: 2%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -118,6 +118,8 @@ Patch45: php-7.4.0-ldap_r.patch
 # drop "Configure command" from phpinfo output
 # and only use gcc (instead of full version)
 Patch47: php-8.0.0-phpinfo.patch
+# add sha256 / sha512 security protocol from 8.1
+Patch48: php-8.0.10-snmp-sha.patch
 
 # Upstream fixes (100+)
 
@@ -714,6 +716,7 @@ in pure PHP.
 %patch45 -p1 -b .ldap_r
 %endif
 %patch47 -p1 -b .phpinfo
+%patch48 -p1 -b .sha
 
 # upstream patches
 
@@ -1527,6 +1530,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Wed Aug 11 2021 Remi Collet <remi@remirepo.net> - 8.0.10~RC1-2
+- snmp: add sha256 / sha512 security protocol, backport from 8.1
+
 * Tue Aug 10 2021 Remi Collet <remi@remirepo.net> - 8.0.10~RC1-1
 - update to 8.0.10RC1
 - adapt systzdata patch for timelib 2020.03 (v20)
