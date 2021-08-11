@@ -68,7 +68,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 2%{?dist}
+Release: 3%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -118,8 +118,11 @@ Patch45: php-7.4.0-ldap_r.patch
 # drop "Configure command" from phpinfo output
 # and only use gcc (instead of full version)
 Patch47: php-8.0.0-phpinfo.patch
-# add sha256 / sha512 security protocol from 8.1
+# add sha256 / sha512 security protocol, from 8.1
 Patch48: php-8.0.10-snmp-sha.patch
+# switch phar to use sha256 signature by default, from 8.1
+# implement openssl_256 and openssl_512 for phar signatures, from 8.1
+Patch49: php-8.0.10-phar-sha.patch
 
 # Upstream fixes (100+)
 
@@ -717,6 +720,7 @@ in pure PHP.
 %endif
 %patch47 -p1 -b .phpinfo
 %patch48 -p1 -b .sha
+%patch49 -p1 -b .pharsha
 
 # upstream patches
 
@@ -1530,8 +1534,12 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Wed Aug 11 2021 Remi Collet <remi@remirepo.net> - 8.0.10~RC1-3
+- phar: switch to sha256 signature by default, backported from 8.1
+- phar: implement openssl_256 and openssl_512 for signatures, backported from 8.1
+
 * Wed Aug 11 2021 Remi Collet <remi@remirepo.net> - 8.0.10~RC1-2
-- snmp: add sha256 / sha512 security protocol, backport from 8.1
+- snmp: add sha256 / sha512 security protocol, backported from 8.1
 
 * Tue Aug 10 2021 Remi Collet <remi@remirepo.net> - 8.0.10~RC1-1
 - update to 8.0.10RC1
