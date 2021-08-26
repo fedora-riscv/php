@@ -63,12 +63,12 @@
 %bcond_without   lmdb
 
 %global upver        8.0.10
-%global rcver        RC1
+#global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 3%{?dist}
+Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -1534,6 +1534,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Thu Aug 26 2021 Remi Collet <remi@remirepo.net> - 8.0.10-1
+- Update to 8.0.10 - http://www.php.net/releases/8_0_10.php
+
 * Wed Aug 11 2021 Remi Collet <remi@remirepo.net> - 8.0.10~RC1-3
 - phar: switch to sha256 signature by default, backported from 8.1
 - phar: implement openssl_256 and openssl_512 for signatures, backported from 8.1
