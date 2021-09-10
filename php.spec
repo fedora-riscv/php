@@ -68,7 +68,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 1%{?dist}
+Release: 2%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -123,6 +123,8 @@ Patch48: php-8.0.10-snmp-sha.patch
 # switch phar to use sha256 signature by default, from 8.1
 # implement openssl_256 and openssl_512 for phar signatures, from 8.1
 Patch49: php-8.0.10-phar-sha.patch
+# compatibility with OpenSSL 3.0, from 8.1
+Patch50: php-8.0.10-openssl3.patch
 
 # Upstream fixes (100+)
 
@@ -721,6 +723,8 @@ in pure PHP.
 %patch47 -p1 -b .phpinfo
 %patch48 -p1 -b .sha
 %patch49 -p1 -b .pharsha
+%patch50 -p1 -b .openssl3
+rm ext/openssl/tests/p12_with_extra_certs.p12
 
 # upstream patches
 
@@ -1534,6 +1538,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Fri Sep 10 2021 Remi Collet <remi@remirepo.net> - 8.0.11~RC1-2
+- backport changes for OpenSSL 3 from PHP 8.1
+
 * Tue Sep  7 2021 Remi Collet <remi@remirepo.net> - 8.0.11~RC1-1
 - update to 8.0.11RC1
 
