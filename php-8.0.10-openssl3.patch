@@ -1,7 +1,7 @@
 From 3d13d14f318267b27f99025b37a2061c835e0727 Mon Sep 17 00:00:00 2001
 From: Remi Collet <remi@php.net>
 Date: Sun, 8 Aug 2021 17:38:30 +0200
-Subject: [PATCH 01/37] minimal fix for openssl 3.0 (#7002)
+Subject: [PATCH 01/39] minimal fix for openssl 3.0 (#7002)
 
 (cherry picked from commit a0972deb0f441fc7991001cb51efc994b70a3b51)
 ---
@@ -28,7 +28,7 @@ index 19e7a0d79e..015cd89aa6 100644
 From fc0dbc36e4563a5146aa5345e8520f6601ec7030 Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Wed, 4 Aug 2021 09:41:39 +0200
-Subject: [PATCH 02/37] Optimize openssl memory leak test
+Subject: [PATCH 02/39] Optimize openssl memory leak test
 
 Just do one call and check whether memory usage changes. Looping
 this 100000 times is extremely slow with debug builds of openssl.
@@ -76,7 +76,7 @@ index 4f3dc9e766..c9c7df2953 100644
 From da4fbfb99a6dfc9dbaaa04a4bc8068a7e9bfa46c Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Wed, 4 Aug 2021 09:46:07 +0200
-Subject: [PATCH 03/37] Reduce security level in some OpenSSL tests
+Subject: [PATCH 03/39] Reduce security level in some OpenSSL tests
 
 This allows tests using older protocols and algorithms to work
 under OpenSSL 3.
@@ -346,7 +346,7 @@ index c1aaa04919..84a137b5f4 100644
 From fe770720985c5f31a79528528be0aa8e0e56a389 Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Wed, 4 Aug 2021 09:57:40 +0200
-Subject: [PATCH 04/37] Adjust some tests for whitespace differences in OpenSSL
+Subject: [PATCH 04/39] Adjust some tests for whitespace differences in OpenSSL
  3
 
 A trailing newline is no longer present in OpenSSL 3.
@@ -454,7 +454,7 @@ index b80c1f71f1..38915157f3 100644
 From 676a47080bed2730b892e4ea43b93deb4acea335 Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Wed, 4 Aug 2021 11:55:47 +0200
-Subject: [PATCH 05/37] Use different cipher in openssl_seal() test
+Subject: [PATCH 05/39] Use different cipher in openssl_seal() test
 
 RC4 is insecure and not supported in newer versions.
 
@@ -493,7 +493,7 @@ index 16efb05a66..e23045c992 100644
 From 389b4605281975d4ecac92cb3751d18d2e3fd60a Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Wed, 4 Aug 2021 11:58:46 +0200
-Subject: [PATCH 06/37] Don't test legacy algorithms in SPKI tests
+Subject: [PATCH 06/39] Don't test legacy algorithms in SPKI tests
 
 MD4 and RMD160 may not be available on newer OpenSSL versions.
 
@@ -634,7 +634,7 @@ index c760d0cb83..35badcda37 100644
 From 054aeebb623e6d4a055a4bab60a864f8c7f65675 Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Wed, 4 Aug 2021 12:48:02 +0200
-Subject: [PATCH 07/37] Only report provided ciphers in
+Subject: [PATCH 07/39] Only report provided ciphers in
  openssl_get_cipher_methods()
 
 With OpenSSL 3 ciphers may be registered, but not provided. Make
@@ -724,7 +724,7 @@ index c674ead34b..16bad9e6b0 100644
 From 62fbe1839d980583156b0d22c49753c4666e73e8 Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Wed, 4 Aug 2021 12:05:02 +0200
-Subject: [PATCH 08/37] Avoid RC4 use in another test
+Subject: [PATCH 08/39] Avoid RC4 use in another test
 
 (cherry picked from commit 503146aa87e48f075f47a093ed7868e323814a66)
 ---
@@ -750,7 +750,7 @@ index 5e551c507f..271a878cdf 100644
 From 95e6b2c67de6a63d059b678d14f291487f563163 Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Wed, 4 Aug 2021 15:47:14 +0200
-Subject: [PATCH 09/37] Use EVP_PKEY API for
+Subject: [PATCH 09/39] Use EVP_PKEY API for
  openssl_public_encrypt/private_decrypt
 
 Use the high level API instead of the deprecated low level API.
@@ -954,7 +954,7 @@ index b55b7ced44..eb76dfbf77 100644
 From b29b719e4741cde6d1e441e0340f038976cb461b Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Wed, 4 Aug 2021 16:56:32 +0200
-Subject: [PATCH 10/37] Use EVP_PKEY APIs for
+Subject: [PATCH 10/39] Use EVP_PKEY APIs for
  openssl_private_encrypt/public_decrypt
 
 Use high level APIs instead of deprecated low level APIs.
@@ -1158,7 +1158,7 @@ index eb76dfbf77..f3eb82067b 100644
 From bfdbdfb6bf128c157adfba402b89b0f82be993ab Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Thu, 5 Aug 2021 10:29:50 +0200
-Subject: [PATCH 11/37] Use EVP_PKEY APIs for key generation
+Subject: [PATCH 11/39] Use EVP_PKEY APIs for key generation
 
 Use high level API instead of deprecated low level API.
 
@@ -1434,7 +1434,7 @@ index 327c916688..12ae0ff0e1 100644
 From 8dfe551ef85a874df63d0bb50b2d065c3370fd7e Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Thu, 5 Aug 2021 11:50:11 +0200
-Subject: [PATCH 12/37] Relax error check
+Subject: [PATCH 12/39] Relax error check
 
 The precise error is version-dependent, just check that there
 is some kind of error reported.
@@ -1467,7 +1467,7 @@ index 12ae0ff0e1..3f319b4b24 100644
 From 44859f59f3ff3d7cf24ae146e9b0da348e6befcd Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Thu, 5 Aug 2021 12:59:13 +0200
-Subject: [PATCH 13/37] Store whether pkey object contains private key
+Subject: [PATCH 13/39] Store whether pkey object contains private key
 
 Rather than querying whether the EVP_PKEY contains private key
 information, determine this at time of construction and store it
@@ -1821,7 +1821,7 @@ index d260670ff9..1fca64df15 100644
 From c58ef46342a52c8b81ee6f727257a2b471b6d9c3 Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Thu, 5 Aug 2021 14:59:16 +0200
-Subject: [PATCH 14/37] Add test for openssl_dh_compute_key()
+Subject: [PATCH 14/39] Add test for openssl_dh_compute_key()
 
 This function was not tested at all :(
 
@@ -1872,7 +1872,7 @@ index 0000000000..8730f4b57d
 From fbb478f86081d4d879d1ed644c37842e0d9b1192 Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Thu, 5 Aug 2021 14:52:56 +0200
-Subject: [PATCH 15/37] Extract php_openssl_pkey_derive() function
+Subject: [PATCH 15/39] Extract php_openssl_pkey_derive() function
 
 To allow sharing it with the openssl_dh_compute_key() implementation.
 
@@ -2019,7 +2019,7 @@ index 1fca64df15..bf3f70d355 100644
 From f8f202ae92bf2c92cec4ad8d6bf2f57236ccd976 Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Thu, 5 Aug 2021 15:58:20 +0200
-Subject: [PATCH 16/37] Avoid DH_compute_key() with OpenSSL 3
+Subject: [PATCH 16/39] Avoid DH_compute_key() with OpenSSL 3
 
 Instead construct a proper EVP_PKEY for the public key and
 perform a derive operation.
@@ -2134,7 +2134,7 @@ index bf3f70d355..91d2589aad 100644
 From fbb13f6bf183f1d2d95fe2aa48edce300aad5fd7 Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Wed, 4 Aug 2021 14:54:59 +0200
-Subject: [PATCH 17/37] Use different algorithm in pkcs7 tests
+Subject: [PATCH 17/39] Use different algorithm in pkcs7 tests
 
 The default of OPENSSL_CIPHER_RC2_40 is no longer (non-legacy)
 supported in OpenSSL 3, specify a newer cipher instead.
@@ -2205,7 +2205,7 @@ index ef9b25e70b..7a600bc292 100644
 From e6d9c6b6cfcc255124bb42b409c29db854ff828d Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Thu, 5 Aug 2021 16:30:55 +0200
-Subject: [PATCH 18/37] Use different algorithm in cms tests
+Subject: [PATCH 18/39] Use different algorithm in cms tests
 
 Same as with pkcs7, switch these tests to use an algorithm that
 OpenSSL 3 supports out of the box.
@@ -2271,7 +2271,7 @@ index 929f3f2e02..4030862391 100644
 From 31e60d155d01253ab42f490fecd0f2a5e537bc47 Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Thu, 5 Aug 2021 17:07:44 +0200
-Subject: [PATCH 19/37] Use larger key size for DSA/DH tests
+Subject: [PATCH 19/39] Use larger key size for DSA/DH tests
 
 OpenSSL 3 validates allowed sizes strictly, pick minimum sizes
 that are supported.
@@ -2320,7 +2320,7 @@ index 0b3f91b8fe..4e4bba8aa8 100644
 From b93f08093684d24a80857fec7ede1c41f440cff5 Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Wed, 4 Aug 2021 13:54:26 +0200
-Subject: [PATCH 20/37] Skip some tests if cipher not available
+Subject: [PATCH 20/39] Skip some tests if cipher not available
 
 (cherry picked from commit d23a8b33abc3cd7e516563877a3f698b7a94ac10)
 ---
@@ -2390,7 +2390,7 @@ index 4175e703d2..e846b42e78 100644
 From bc8281431c8ce82c232fee5674b945af95bbd860 Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Thu, 5 Aug 2021 16:29:43 +0200
-Subject: [PATCH 21/37] Use different cipher in one more CMS test
+Subject: [PATCH 21/39] Use different cipher in one more CMS test
 
 Followup to ec4d926a80fe93c80d2b52f0178bc627097d9288 -- I failed
 to squash in this commit.
@@ -2443,7 +2443,7 @@ index f1a0c6af8b..ee706ebfba 100644
 From c42a69def274fb77cbcb3db4189841e3f582803a Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Fri, 6 Aug 2021 10:35:49 +0200
-Subject: [PATCH 22/37] Generate pkcs12_read test inputs on the fly
+Subject: [PATCH 22/39] Generate pkcs12_read test inputs on the fly
 
 The old p12_with_extra_certs.p12 file uses an unsupported something.
 
@@ -2549,7 +2549,7 @@ index b81b4d9dac..8cb2b41fd7 100644
 From 8e99695bb1f630edee4ddb44ae78e99190b5efb3 Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Fri, 6 Aug 2021 11:15:18 +0200
-Subject: [PATCH 23/37] Do not special case export of EC keys
+Subject: [PATCH 23/39] Do not special case export of EC keys
 
 All other private keys are exported in PKCS#8 format, while EC
 keys use traditional format. Switch them to use PKCS#8 format as
@@ -2644,7 +2644,7 @@ index 678b7e7299..5cd68d18b8 100644
 From 87bec9d2942be4a87cccb0d28cb3e134d692c312 Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Fri, 6 Aug 2021 16:51:05 +0200
-Subject: [PATCH 24/37] Switch manual DH key generation to param API
+Subject: [PATCH 24/39] Switch manual DH key generation to param API
 
 Instead of using the deprecated low-level interface.
 
@@ -2833,7 +2833,7 @@ index b360b0506e..06e5adecda 100644
 From 0b1f12e24360dad5c6feba319af7e12e2cf72fc1 Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Fri, 6 Aug 2021 17:14:58 +0200
-Subject: [PATCH 25/37] Switch manual DSA key generation to param API
+Subject: [PATCH 25/39] Switch manual DSA key generation to param API
 
 This is very similar to the DH case, with the primary difference
 that priv_key is ignored if pub_key is not given, rather than
@@ -3006,7 +3006,7 @@ index 06e5adecda..84a4083807 100644
 From d20cf6a278be5561debcd5ce0cc34a6046eac669 Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Sun, 8 Aug 2021 17:39:06 +0200
-Subject: [PATCH 26/37] Use OpenSSL NCONF APIs (#7337)
+Subject: [PATCH 26/39] Use OpenSSL NCONF APIs (#7337)
 
 (cherry picked from commit 94bc5fce261a4a56a545bdfb25d5c2452a07de08)
 ---
@@ -3184,7 +3184,7 @@ index 84a4083807..1dda83f71e 100644
 From 575c8ddf73c4a343139be225596c5101497e3186 Mon Sep 17 00:00:00 2001
 From: Jakub Zelenka <bukka@php.net>
 Date: Sun, 8 Aug 2021 20:54:46 +0100
-Subject: [PATCH 27/37] Make CertificateGenerator not dependent on external
+Subject: [PATCH 27/39] Make CertificateGenerator not dependent on external
  config in OpenSSL 3.0
 
 (cherry picked from commit c90c9c7545427d9d35cbac45c4ec896f54619744)
@@ -3242,7 +3242,7 @@ index 1dc378e706..4783353a47 100644
 From 4da1bade85b14bd1f0aa9cf9f463931de54de2ef Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Mon, 9 Aug 2021 10:26:12 +0200
-Subject: [PATCH 28/37] Extract EC key initialization
+Subject: [PATCH 28/39] Extract EC key initialization
 
 (cherry picked from commit 14d7c7e9aee5ab55a92ddc626b7b81c130ea7618)
 ---
@@ -3513,7 +3513,7 @@ index 1dda83f71e..a595101cf6 100644
 From 0b12c49898ef390ce53e33490a842fd384de6902 Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Mon, 9 Aug 2021 12:01:35 +0200
-Subject: [PATCH 29/37] Test calculation of EC public key from private key
+Subject: [PATCH 29/39] Test calculation of EC public key from private key
 
 (cherry picked from commit 246698671f941b2034518ab04f35009b2da77bb1)
 ---
@@ -3557,7 +3557,7 @@ index 0a71393ae3..0b05410c2c 100644
 From 6b6b7c28dc81e106f6a1ef96d1f4bc43901764cf Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Mon, 9 Aug 2021 11:12:20 +0200
-Subject: [PATCH 30/37] Use param API for creating EC keys
+Subject: [PATCH 30/39] Use param API for creating EC keys
 
 Rather than the deprecated low level APIs.
 
@@ -3702,7 +3702,7 @@ index a595101cf6..df057caa8b 100644
 From ab4d43be04953eb75b37d532ac5fe42f0464f1be Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Mon, 9 Aug 2021 14:19:33 +0200
-Subject: [PATCH 31/37] Extract public key portion via PEM roundtrip
+Subject: [PATCH 31/39] Extract public key portion via PEM roundtrip
 
 The workaround with cloning the X509_REQ no longer works in
 OpenSSL 3. Instead extract the public key portion by round
@@ -3792,7 +3792,7 @@ index df057caa8b..e86e99c73f 100644
 From 7939ffbdcc8d3358306653d7343f2b70204824f9 Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Fri, 6 Aug 2021 12:08:07 +0200
-Subject: [PATCH 32/37] Use param API for openssl_pkey_get_details()
+Subject: [PATCH 32/39] Use param API for openssl_pkey_get_details()
 
 Now that the DSA/DH/EC keys are not created using the legacy API,
 we can fetch the details using the param API as well, and not
@@ -3989,7 +3989,7 @@ index e86e99c73f..40f05da9f2 100644
 From 35012d2b29254b806e5f376817d22f6c3bab136d Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Mon, 9 Aug 2021 14:34:12 +0200
-Subject: [PATCH 33/37] Add missing unsigned qualifier
+Subject: [PATCH 33/39] Add missing unsigned qualifier
 
 This previously got lost in the deprecation warning noise.
 
@@ -4017,7 +4017,7 @@ index 40f05da9f2..856d7fc4af 100644
 From c34296faadc0a9e15e4ca960d573cdf3aabd8742 Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Mon, 9 Aug 2021 14:47:43 +0200
-Subject: [PATCH 34/37] Use param API to create RSA key
+Subject: [PATCH 34/39] Use param API to create RSA key
 
 Instead of deprecated low-level API.
 
@@ -4240,7 +4240,7 @@ index b2c37f6a87..08c9660f22 100644
 From b32adee0fe39c9d0fb981fc7cfe1892c225ba1c3 Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Tue, 10 Aug 2021 11:50:18 +0200
-Subject: [PATCH 35/37] Fork openssl_error_string() test for OpenSSL
+Subject: [PATCH 35/39] Fork openssl_error_string() test for OpenSSL
 
 The used error code differ signficantly, so use a separate test
 file.
@@ -4467,7 +4467,7 @@ index 0000000000..b119346fe1
 From f99d70f7d8d660c2ded4f8f1700771c227987021 Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Tue, 10 Aug 2021 12:17:17 +0200
-Subject: [PATCH 36/37] Switch dh_param handling to EVP_PKEY API
+Subject: [PATCH 36/39] Switch dh_param handling to EVP_PKEY API
 
 (cherry picked from commit ef787bae242fdd2e72625bbce6ab4ca466b1ef59)
 ---
@@ -4537,7 +4537,7 @@ index 206543ca82..b61234943e 100644
 From b3deb9b38d4a52b4582f40d4d32240353db26653 Mon Sep 17 00:00:00 2001
 From: Nikita Popov <nikita.ppv@gmail.com>
 Date: Wed, 11 Aug 2021 10:11:12 +0200
-Subject: [PATCH 37/37] Fix openssl memory leaks
+Subject: [PATCH 37/39] Fix openssl memory leaks
 
 Some leaks that snuck in during refactorings.
 
@@ -4575,7 +4575,7 @@ index 9e31f76998..d8102bd4bc 100644
 From 02f08ac888b0c5f43468eaf76b59b29a7c2d7c74 Mon Sep 17 00:00:00 2001
 From: Remi Collet <remi@remirepo.net>
 Date: Fri, 10 Sep 2021 11:28:20 +0200
-Subject: [PATCH] fix [-Wmaybe-uninitialized] build warnings
+Subject: [PATCH 38/39] fix [-Wmaybe-uninitialized] build warnings
 
 (cherry picked from commit 6ee96f095ad947ffc820437b2e9e6449000e18a2)
 ---
@@ -4630,6 +4630,132 @@ index d8102bd4bc..40e6e7ba97 100644
  	if (!ctx || !bld || !curve_name_zv || Z_TYPE_P(curve_name_zv) != IS_STRING) {
  		goto cleanup;
  	}
+-- 
+2.31.1
+
+From b881c41d32928781cb48013692da04fc84ca9107 Mon Sep 17 00:00:00 2001
+From: Jakub Zelenka <bukka@php.net>
+Date: Sun, 12 Sep 2021 20:30:02 +0100
+Subject: [PATCH 39/39] Make OpenSSL tests less dependent on system config
+
+It fixes dependencies on system config if running tests with OpenSSL 3.0
+
+(cherry picked from commit 43f0141d74c1db6e792f3b625ea7f4ae57ff338f)
+---
+ ext/openssl/tests/bug52093.phpt                          | 6 +++---
+ ext/openssl/tests/bug72165.phpt                          | 5 +++--
+ ext/openssl/tests/bug73711.phpt                          | 3 +++
+ ext/openssl/tests/ecc.phpt                               | 3 +++
+ .../tests/openssl_error_string_basic_openssl3.phpt       | 9 +++++----
+ 5 files changed, 17 insertions(+), 9 deletions(-)
+
+diff --git a/ext/openssl/tests/bug52093.phpt b/ext/openssl/tests/bug52093.phpt
+index 63eaceb5ac..162945f914 100644
+--- a/ext/openssl/tests/bug52093.phpt
++++ b/ext/openssl/tests/bug52093.phpt
+@@ -14,10 +14,10 @@ $dn = array(
+     "commonName" => "Henrique do N. Angelo",
+     "emailAddress" => "hnangelo@php.net"
+ );
+-
++$options = ['config' => __DIR__ . DIRECTORY_SEPARATOR . 'openssl.cnf'];
+ $privkey = openssl_pkey_new();
+-$csr = openssl_csr_new($dn, $privkey);
+-$cert = openssl_csr_sign($csr, null, $privkey, 365, [], PHP_INT_MAX);
++$csr = openssl_csr_new($dn, $privkey, $options);
++$cert = openssl_csr_sign($csr, null, $privkey, 365, $options, PHP_INT_MAX);
+ var_dump(openssl_x509_parse($cert)['serialNumber']);
+ ?>
+ --EXPECT--
+diff --git a/ext/openssl/tests/bug72165.phpt b/ext/openssl/tests/bug72165.phpt
+index 50e8b54100..fb78881fc3 100644
+--- a/ext/openssl/tests/bug72165.phpt
++++ b/ext/openssl/tests/bug72165.phpt
+@@ -6,8 +6,9 @@ if (!extension_loaded("openssl")) die("skip");
+ ?>
+ --FILE--
+ <?php
+-$var0 = array(0 => "hello", 1 => "world");
+-$var2 = openssl_csr_new(array(0),$var0,null,array(0));
++$var0 = [0 => "hello", 1 => "world"];
++$options = ['config' => __DIR__ . DIRECTORY_SEPARATOR . 'openssl.cnf'];
++$var2 = openssl_csr_new([0], $var0, $options, [0]);
+ ?>
+ --EXPECTF--
+ Warning: openssl_csr_new(): dn: numeric fild names are not supported in %sbug72165.php on line %d
+diff --git a/ext/openssl/tests/bug73711.phpt b/ext/openssl/tests/bug73711.phpt
+index 4e4bba8aa8..8ca0101d1a 100644
+--- a/ext/openssl/tests/bug73711.phpt
++++ b/ext/openssl/tests/bug73711.phpt
+@@ -6,13 +6,16 @@ if (!extension_loaded("openssl")) die("skip openssl not loaded");
+ ?>
+ --FILE--
+ <?php
++$config = __DIR__ . DIRECTORY_SEPARATOR . 'openssl.cnf';
+ var_dump(openssl_pkey_new([
+     "private_key_type" => OPENSSL_KEYTYPE_DSA,
+     "private_key_bits" => 1024,
++    'config' => $config,
+ ]));
+ var_dump(openssl_pkey_new([
+     "private_key_type" => OPENSSL_KEYTYPE_DH,
+     "private_key_bits" => 512,
++    'config' => $config,
+ ]));
+ echo "DONE";
+ ?>
+diff --git a/ext/openssl/tests/ecc.phpt b/ext/openssl/tests/ecc.phpt
+index 0b05410c2c..1d97b1450a 100644
+--- a/ext/openssl/tests/ecc.phpt
++++ b/ext/openssl/tests/ecc.phpt
+@@ -4,9 +4,11 @@ openssl_*() with OPENSSL_KEYTYPE_EC
+ <?php if (!extension_loaded("openssl") || !defined("OPENSSL_KEYTYPE_EC")) print "skip"; ?>
+ --FILE--
+ <?php
++$config =  __DIR__ . DIRECTORY_SEPARATOR . 'openssl.cnf';
+ $args = array(
+     "curve_name" => "secp384r1",
+     "private_key_type" => OPENSSL_KEYTYPE_EC,
++    "config" => $config,
+ );
+ echo "Testing openssl_pkey_new\n";
+ $key1 = openssl_pkey_new($args);
+@@ -15,6 +17,7 @@ var_dump($key1);
+ $argsFailed = array(
+     "curve_name" => "invalid_cuve_name",
+     "private_key_type" => OPENSSL_KEYTYPE_EC,
++    "config" => $config,
+ );
+ 
+ $keyFailed = openssl_pkey_new($argsFailed);
+diff --git a/ext/openssl/tests/openssl_error_string_basic_openssl3.phpt b/ext/openssl/tests/openssl_error_string_basic_openssl3.phpt
+index b119346fe1..d435a53e30 100644
+--- a/ext/openssl/tests/openssl_error_string_basic_openssl3.phpt
++++ b/ext/openssl/tests/openssl_error_string_basic_openssl3.phpt
+@@ -100,18 +100,19 @@ echo "\n";
+ $err_pem_no_start_line = '0480006C';
+ 
+ // PKEY
++$options = ['config' => __DIR__ . DIRECTORY_SEPARATOR . 'openssl.cnf'];
+ echo "PKEY errors\n";
+ // file for pkey (file:///) fails when opennig (BIO_new_file)
+-@openssl_pkey_export_to_file("file://" . $invalid_file_for_read, $output_file);
++@openssl_pkey_export_to_file("file://" . $invalid_file_for_read, $output_file, null, $options);
+ expect_openssl_errors('openssl_pkey_export_to_file opening', ['10000080']);
+ // file or private pkey is not correct PEM - failing PEM_read_bio_PrivateKey
+-@openssl_pkey_export_to_file($csr_file, $output_file);
++@openssl_pkey_export_to_file($csr_file, $output_file, null, $options);
+ expect_openssl_errors('openssl_pkey_export_to_file pem', ['1E08010C']);
+ // file to export cannot be written
+-@openssl_pkey_export_to_file($private_key_file, $invalid_file_for_write);
++@openssl_pkey_export_to_file($private_key_file, $invalid_file_for_write, null, $options);
+ expect_openssl_errors('openssl_pkey_export_to_file write', ['10080002']);
+ // successful export
+-@openssl_pkey_export($private_key_file_with_pass, $out, 'wrong pwd');
++@openssl_pkey_export($private_key_file_with_pass, $out, 'wrong pwd', $options);
+ expect_openssl_errors('openssl_pkey_export', ['1C800064', '04800065']);
+ // invalid x509 for getting public key
+ @openssl_pkey_get_public($private_key_file);
 -- 
 2.31.1
 
