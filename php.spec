@@ -68,7 +68,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 3%{?dist}
+Release: 4%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -1538,6 +1538,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Sep 14 2021 Sahana Prasad <sahana@redhat.com> - 8.0.11~RC1-4
+- Rebuilt with OpenSSL 3.0.0
+
 * Mon Sep 13 2021 Remi Collet <remi@remirepo.net> - 8.0.11~RC1-3
 - more changes for OpenSSL 3 from PHP 8.1
 
