@@ -68,7 +68,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 1%{?dist}
+Release: 2%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -125,6 +125,8 @@ Patch48: php-8.0.10-snmp-sha.patch
 Patch49: php-8.0.10-phar-sha.patch
 # compatibility with OpenSSL 3.0, from 8.1
 Patch50: php-8.0.10-openssl3.patch
+# use system libxcrypt
+Patch51: php-8.0.12-crypt.patch
 
 # Upstream fixes (100+)
 
@@ -152,6 +154,7 @@ BuildRequires: pkgconfig(zlib) >= 1.2.0.4
 BuildRequires: smtpdaemon
 BuildRequires: pkgconfig(libedit)
 BuildRequires: pkgconfig(libpcre2-8) >= 10.30
+BuildRequires: pkgconfig(libxcrypt)
 BuildRequires: bzip2
 BuildRequires: perl-interpreter
 BuildRequires: autoconf
@@ -725,6 +728,7 @@ in pure PHP.
 %patch49 -p1 -b .pharsha
 %patch50 -p1 -b .openssl3
 rm ext/openssl/tests/p12_with_extra_certs.p12
+%patch51 -p1 -b .libxcrypt
 
 # upstream patches
 
@@ -882,6 +886,7 @@ ln -sf ../configure
     --with-openssl \
     --with-system-ciphers \
     --with-external-pcre \
+    --with-external-libcrypt \
 %ifarch s390 s390x sparc64 sparcv9 riscv64
     --without-pcre-jit \
 %endif
@@ -1538,6 +1543,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Mon Oct 18 2021 Remi Collet <remi@remirepo.net> - 8.0.12~RC1-2
+- build using system libxcrypt
+
 * Wed Oct  6 2021 Remi Collet <remi@remirepo.net> - 8.0.12~RC1-1
 - update to 8.0.12RC1
 
