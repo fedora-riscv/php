@@ -62,7 +62,7 @@
 %bcond_with      imap
 %bcond_without   lmdb
 
-%global upver        8.0.11
+%global upver        8.0.12
 #global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
@@ -123,6 +123,8 @@ Patch48: php-8.0.10-snmp-sha.patch
 # switch phar to use sha256 signature by default, from 8.1
 # implement openssl_256 and openssl_512 for phar signatures, from 8.1
 Patch49: php-8.0.10-phar-sha.patch
+# use system libxcrypt
+Patch51: php-8.0.12-crypt.patch
 
 # Upstream fixes (100+)
 
@@ -150,6 +152,7 @@ BuildRequires: pkgconfig(zlib) >= 1.2.0.4
 BuildRequires: smtpdaemon
 BuildRequires: pkgconfig(libedit)
 BuildRequires: pkgconfig(libpcre2-8) >= 10.30
+BuildRequires: pkgconfig(libxcrypt)
 BuildRequires: bzip2
 BuildRequires: perl-interpreter
 BuildRequires: autoconf
@@ -721,6 +724,7 @@ in pure PHP.
 %patch47 -p1 -b .phpinfo
 %patch48 -p1 -b .sha
 %patch49 -p1 -b .pharsha
+%patch51 -p1 -b .libxcrypt
 
 # upstream patches
 
@@ -878,6 +882,7 @@ ln -sf ../configure
     --with-openssl \
     --with-system-ciphers \
     --with-external-pcre \
+    --with-external-libcrypt \
 %ifarch s390 s390x sparc64 sparcv9 riscv64
     --without-pcre-jit \
 %endif
@@ -1534,6 +1539,10 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Oct 19 2021 Remi Collet <remi@remirepo.net> - 8.0.12-1
+- Update to 8.0.12 - http://www.php.net/releases/8_0_12.php
+- build using system libxcrypt
+
 * Wed Sep 22 2021 Remi Collet <remi@remirepo.net> - 8.0.11-1
 - Update to 8.0.11 - http://www.php.net/releases/8_0_11.php
 
