@@ -48,6 +48,7 @@
 %bcond_without   pspell
 %bcond_without   tidy
 %bcond_without   db4
+%bcond_without   qdbm
 %else
 # Disabled by default on RHEL
 %bcond_with      zts
@@ -57,6 +58,7 @@
 %bcond_with      pspell
 %bcond_with      tidy
 %bcond_with      db4
+%bcond_with      qdbm
 %endif
 %bcond_with      modphp
 %bcond_with      imap
@@ -68,7 +70,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 1%{?dist}
+Release: 2%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -590,6 +592,9 @@ BuildRequires: tokyocabinet-devel
 %if %{with lmdb}
 BuildRequires: lmdb-devel
 %endif
+%if %{with qdbm}
+BuildRequires: qdbm-devel
+%endif
 Requires: php-common%{?_isa} = %{version}-%{release}
 
 %description dba
@@ -935,6 +940,9 @@ build --libdir=%{_libdir}/php \
 %if %{with lmdb}
                           --with-lmdb=%{_prefix} \
 %endif
+%if %{with qdbm}
+                          --with-qdbm=%{_prefix} \
+%endif
       --enable-exif=shared \
       --enable-ftp=shared \
       --with-gettext=shared \
@@ -1067,6 +1075,9 @@ build --includedir=%{_includedir}/php-zts \
                           --with-tcadb=%{_prefix} \
 %if %{with lmdb}
                           --with-lmdb=%{_prefix} \
+%endif
+%if %{with qdbm}
+                          --with-qdbm=%{_prefix} \
 %endif
       --with-gettext=shared \
       --with-iconv=shared \
@@ -1543,6 +1554,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Oct 19 2021 Remi Collet <remi@remirepo.net> - 8.0.12-2
+- dba: enable qdbm backend
+
 * Tue Oct 19 2021 Remi Collet <remi@remirepo.net> - 8.0.12-1
 - Update to 8.0.12 - http://www.php.net/releases/8_0_12.php
 
