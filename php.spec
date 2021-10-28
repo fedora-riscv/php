@@ -7,8 +7,8 @@
 #
 
 # API/ABI check
-%global apiver      20200930
-%global zendver     20200930
+%global apiver      20210902
+%global zendver     20210902
 %global pdover      20170320
 
 # we don't want -z defs linker flag
@@ -18,7 +18,7 @@
 %global _hardened_build 1
 
 # version used for php embedded library soname
-%global embed_version 8.0
+%global embed_version 8.1
 
 %global mysql_sock %(mysql_config --socket 2>/dev/null || echo /var/lib/mysql/mysql.sock)
 
@@ -64,20 +64,21 @@
 %bcond_with      imap
 %bcond_without   lmdb
 
-%global upver        8.0.12
-#global rcver        RC1
+%global upver        8.1.0
+%global rcver        RC5
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 2%{?dist}
+Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
 # main/snprintf.c, main/spprintf.c and main/rfc1867.c are ASL 1.0
 # ext/date/lib is MIT
 # Zend/zend_sort is NCSA
-License: PHP and Zend and BSD and MIT and ASL 1.0 and NCSA
+# Zend/asm is Boost
+License: PHP and Zend and BSD and MIT and ASL 1.0 and NCSA and Boost
 URL: http://www.php.net/
 
 Source0: https://www.php.net/distributions/php-%{upver}%{?rcver}.tar.xz
@@ -104,31 +105,20 @@ Source53: 20-ffi.ini
 Patch1: php-7.4.0-httpd.patch
 Patch5: php-7.2.0-includedir.patch
 Patch6: php-8.0.0-embed.patch
-Patch8: php-7.4.0-libdb.patch
-# get rid of deprecated functions from 8.1
-Patch9: php-8.0.6-deprecated.patch
+Patch8: php-8.1.0-libdb.patch
 
 # Functional changes
 # Use system nikic/php-parser
-Patch41: php-8.0.0-parser.patch
+Patch41: php-8.1.0-parser.patch
 # use system tzdata
-Patch42: php-8.0.10-systzdata-v20.patch
+Patch42: php-8.1.0-systzdata-v21.patch
 # See http://bugs.php.net/53436
 Patch43: php-7.4.0-phpize.patch
 # Use -lldap_r for OpenLDAP
 Patch45: php-7.4.0-ldap_r.patch
 # drop "Configure command" from phpinfo output
 # and only use gcc (instead of full version)
-Patch47: php-8.0.0-phpinfo.patch
-# add sha256 / sha512 security protocol, from 8.1
-Patch48: php-8.0.10-snmp-sha.patch
-# switch phar to use sha256 signature by default, from 8.1
-# implement openssl_256 and openssl_512 for phar signatures, from 8.1
-Patch49: php-8.0.10-phar-sha.patch
-# compatibility with OpenSSL 3.0, from 8.1
-Patch50: php-8.0.10-openssl3.patch
-# use system libxcrypt
-Patch51: php-8.0.12-crypt.patch
+Patch47: php-8.1.0-phpinfo.patch
 
 # Upstream fixes (100+)
 
@@ -150,7 +140,7 @@ BuildRequires: httpd-filesystem
 BuildRequires: nginx-filesystem
 BuildRequires: libstdc++-devel
 # no pkgconfig to avoid compat-openssl10
-BuildRequires: openssl-devel >= 1.0.1
+BuildRequires: openssl-devel >= 1.0.2
 BuildRequires: pkgconfig(sqlite3) >= 3.7.4
 BuildRequires: pkgconfig(zlib) >= 1.2.0.4
 BuildRequires: smtpdaemon
@@ -169,6 +159,7 @@ BuildRequires: libtool-ltdl-devel
 BuildRequires: systemtap-sdt-devel
 # used for tests
 BuildRequires: %{_bindir}/ps
+BuildRequires: tzdata
 
 %if %{with zts}
 Provides: php-zts = %{version}-%{release}
@@ -321,7 +312,7 @@ Requires: libtool
 # see "php-config --libs"
 Requires: krb5-devel%{?_isa}
 Requires: libxml2-devel%{?_isa}
-Requires: openssl-devel%{?_isa} >= 1.0.1
+Requires: openssl-devel%{?_isa} >= 1.0.2
 Requires: pcre2-devel%{?_isa}
 Requires: zlib-devel%{?_isa}
 %if %{with zts}
@@ -360,7 +351,7 @@ License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
 BuildRequires: pkgconfig(krb5)
 BuildRequires: pkgconfig(krb5-gssapi)
-BuildRequires: openssl-devel >= 1.0.1
+BuildRequires: openssl-devel >= 1.0.2
 BuildRequires: libc-client-devel
 
 %description imap
@@ -376,7 +367,7 @@ License: PHP
 Requires: php-common%{?_isa} = %{version}-%{release}
 BuildRequires: pkgconfig(libsasl2)
 BuildRequires: openldap-devel
-BuildRequires: openssl-devel >= 1.0.1
+BuildRequires: openssl-devel >= 1.0.2
 
 %description ldap
 The php-ldap adds Lightweight Directory Access Protocol (LDAP)
@@ -428,7 +419,7 @@ Requires: php-pdo%{?_isa} = %{version}-%{release}
 Provides: php_database
 Provides: php-pdo_pgsql, php-pdo_pgsql%{?_isa}
 BuildRequires: krb5-devel
-BuildRequires: openssl-devel >= 1.0.1
+BuildRequires: openssl-devel >= 1.0.2
 BuildRequires: libpq-devel
 
 %description pgsql
@@ -721,7 +712,6 @@ in pure PHP.
 %patch5 -p1 -b .includedir
 %patch6 -p1 -b .embed
 %patch8 -p1 -b .libdb
-%patch9 -p1 -b .deprecated
 
 %patch42 -p1 -b .systzdata
 %patch43 -p1 -b .headers
@@ -729,11 +719,6 @@ in pure PHP.
 %patch45 -p1 -b .ldap_r
 %endif
 %patch47 -p1 -b .phpinfo
-%patch48 -p1 -b .sha
-%patch49 -p1 -b .pharsha
-%patch50 -p1 -b .openssl3
-rm ext/openssl/tests/p12_with_extra_certs.p12
-%patch51 -p1 -b .libxcrypt
 
 # upstream patches
 
@@ -746,6 +731,7 @@ rm ext/openssl/tests/p12_with_extra_certs.p12
 # Prevent %%doc confusion over LICENSE files
 cp Zend/LICENSE ZEND_LICENSE
 cp TSRM/LICENSE TSRM_LICENSE
+cp Zend/asm/LICENSE BOOST_LICENSE
 cp sapi/fpm/LICENSE fpm_LICENSE
 cp ext/mbstring/libmbfl/LICENSE libmbfl_LICENSE
 cp ext/fileinfo/libmagic/LICENSE libmagic_LICENSE
@@ -1418,7 +1404,7 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 %files common -f files.common
 %doc EXTENSIONS NEWS UPGRADING* README.REDIST.BINS *md docs
-%license LICENSE TSRM_LICENSE ZEND_LICENSE
+%license LICENSE TSRM_LICENSE ZEND_LICENSE BOOST_LICENSE
 %license libmagic_LICENSE
 %license timelib_LICENSE
 %doc php.ini-*
@@ -1554,6 +1540,10 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Oct 26 2021 Remi Collet <remi@remirepo.net> - 8.1.0~RC5-1
+- update to 8.1.0RC5 - https://fedoraproject.org/wiki/Changes/php81
+- bump API version
+
 * Tue Oct 19 2021 Remi Collet <remi@remirepo.net> - 8.0.12-2
 - dba: enable qdbm backend
 
