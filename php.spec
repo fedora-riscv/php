@@ -319,7 +319,7 @@ Requires: zlib-devel%{?_isa}
 Provides: php-zts-devel = %{version}-%{release}
 Provides: php-zts-devel%{?_isa} = %{version}-%{release}
 %endif
-Recommends: php-nikic-php-parser4 >= 4.3.0
+Recommends: php-nikic-php-parser4 >= 4.13.0
 
 
 %description devel
@@ -713,6 +713,7 @@ in pure PHP.
 %patch6 -p1 -b .embed
 %patch8 -p1 -b .libdb
 
+%patch41 -p1 -b .syslib
 %patch42 -p1 -b .systzdata
 %patch43 -p1 -b .headers
 %if 0%{?fedora} >= 18 || 0%{?rhel} >= 7
