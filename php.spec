@@ -65,7 +65,7 @@
 %bcond_without   lmdb
 
 %global upver        8.1.0
-%global rcver        RC5
+%global rcver        RC6
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
@@ -1540,6 +1540,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Wed Nov 10 2021 Remi Collet <remi@remirepo.net> - 8.1.0~RC6-1
+- update to 8.1.0RC6
+
 * Tue Oct 26 2021 Remi Collet <remi@remirepo.net> - 8.1.0~RC5-1
 - update to 8.1.0RC5 - https://fedoraproject.org/wiki/Changes/php81
 - bump API version
