@@ -64,13 +64,13 @@
 %bcond_with      imap
 %bcond_without   lmdb
 
-%global upver        8.0.12
+%global upver        8.0.13
 #global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 2%{?dist}
+Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -126,7 +126,7 @@ Patch48: php-8.0.10-snmp-sha.patch
 # implement openssl_256 and openssl_512 for phar signatures, from 8.1
 Patch49: php-8.0.10-phar-sha.patch
 # use system libxcrypt
-Patch51: php-8.0.12-crypt.patch
+Patch51: php-8.0.13-crypt.patch
 
 # Upstream fixes (100+)
 
@@ -1550,6 +1550,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Wed Nov 17 2021 Remi Collet <remi@remirepo.net> - 8.0.13-1
+- Update to 8.0.13 - http://www.php.net/releases/8_0_13.php
+
 * Tue Oct 19 2021 Remi Collet <remi@remirepo.net> - 8.0.12-2
 - dba: enable qdbm backend
 
