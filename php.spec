@@ -1130,9 +1130,6 @@ popd
 %check
 : Ensure proper NTS/ZTS build
 $RPM_BUILD_ROOT%{_bindir}/php     -n -v | grep NTS
-%if %{with zts}
-$RPM_BUILD_ROOT%{_bindir}/zts-php -n -v | grep ZTS
-%endif
 
 %if %runselftest
 cd build-fpm
