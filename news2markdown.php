@@ -25,6 +25,7 @@ foreach ($text as $line) {
 		continue;
 	}
 	$line = preg_replace('/(#[0-9]+)/', 'php\1', $line);
+	$line = preg_replace('/(GH-([0-9]+))/', '[\1](https://github.com/php/php-src/issues/\2)', $line);
 	$line = preg_replace('/(CVE-[0-9]+-[0-9]+)/', '**\1**', $line);
 	if (empty($line)) {
 		echo "\n\n";
