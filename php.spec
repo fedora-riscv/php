@@ -64,7 +64,7 @@
 %bcond_with      imap
 %bcond_without   lmdb
 
-%global upver        8.0.16
+%global upver        8.0.17
 #global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
@@ -112,7 +112,7 @@ Patch9: php-8.0.6-deprecated.patch
 # Use system nikic/php-parser
 Patch41: php-8.0.0-parser.patch
 # use system tzdata
-Patch42: php-8.0.10-systzdata-v20.patch
+Patch42: php-8.0.10-systzdata-v21.patch
 # See http://bugs.php.net/53436
 Patch43: php-7.4.0-phpize.patch
 # Use -lldap_r for OpenLDAP
@@ -761,8 +761,6 @@ mkdir build-cgi build-embedded \
 # ----- Manage known as failed test -------
 # affected by systzdata patch
 rm ext/date/tests/timezone_location_get.phpt
-rm ext/date/tests/timezone_version_get.phpt
-rm ext/date/tests/timezone_version_get_basic1.phpt
 # fails sometime
 rm ext/sockets/tests/mcast_ipv?_recv.phpt
 # cause stack exhausion
@@ -1550,6 +1548,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Mar 15 2022 Remi Collet <remi@remirepo.net> - 8.0.17-1
+- Update to 8.0.17 - http://www.php.net/releases/8_0_17.php
+
 * Wed Feb 16 2022 Remi Collet <remi@remirepo.net> - 8.0.16-1
 - Update to 8.0.16 - http://www.php.net/releases/8_0_16.php
 
