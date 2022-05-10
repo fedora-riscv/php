@@ -64,7 +64,7 @@
 %bcond_with      imap
 %bcond_without   lmdb
 
-%global upver        8.0.18
+%global upver        8.0.19
 #global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
@@ -110,7 +110,7 @@ Patch9: php-8.0.6-deprecated.patch
 
 # Functional changes
 # Use system nikic/php-parser
-Patch41: php-8.0.0-parser.patch
+Patch41: php-8.0.19-parser.patch
 # use system tzdata
 Patch42: php-8.0.10-systzdata-v21.patch
 # See http://bugs.php.net/53436
@@ -326,7 +326,7 @@ Requires: zlib-devel%{?_isa}
 Provides: php-zts-devel = %{version}-%{release}
 Provides: php-zts-devel%{?_isa} = %{version}-%{release}
 %endif
-Recommends: php-nikic-php-parser4 >= 4.3.0
+Recommends: php-nikic-php-parser4 >= 4.13.0
 
 
 %description devel
@@ -1548,6 +1548,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue May 10 2022 Remi Collet <remi@remirepo.net> - 8.0.19-1
+- Update to 8.0.19 - http://www.php.net/releases/8_0_19.php
+
 * Wed Apr 13 2022 Remi Collet <remi@remirepo.net> - 8.0.18-1
 - Update to 8.0.18 - http://www.php.net/releases/8_0_18.php
 
