@@ -1,0 +1,33 @@
+From 2eb2f9d74f22bf35a4915ec95afc53a47ebf1af9 Mon Sep 17 00:00:00 2001
+From: Remi Collet <remi@remirepo.net>
+Date: Thu, 2 Jun 2022 08:05:22 +0200
+Subject: [PATCH] Fix GH-8685 mbstring requires pcre
+
+---
+ ext/mbstring/mbstring.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/ext/mbstring/mbstring.c b/ext/mbstring/mbstring.c
+index 48f22a682a19..4a4088aed3fb 100644
+--- a/ext/mbstring/mbstring.c
++++ b/ext/mbstring/mbstring.c
+@@ -161,9 +161,18 @@ static const php_mb_nls_ident_list php_mb_default_identify_list[] = {
+ 
+ /* }}} */
+ 
++/* {{{ mbstring_deps[] */
++static const zend_module_dep mbstring_deps[] = {
++	ZEND_MOD_REQUIRED("pcre")
++	ZEND_MOD_END
++};
++/* }}} */
++
+ /* {{{ zend_module_entry mbstring_module_entry */
+ zend_module_entry mbstring_module_entry = {
+-	STANDARD_MODULE_HEADER,
++	STANDARD_MODULE_HEADER_EX,
++	NULL,
++	mbstring_deps,
+ 	"mbstring",
+ 	ext_functions,
+ 	PHP_MINIT(mbstring),
