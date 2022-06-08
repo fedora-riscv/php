@@ -65,7 +65,7 @@
 %bcond_without   lmdb
 
 %global upver        8.1.7
-%global rcver        RC1
+#global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
@@ -121,6 +121,7 @@ Patch45: php-7.4.0-ldap_r.patch
 Patch47: php-8.1.0-phpinfo.patch
 
 # Upstream fixes (100+)
+Patch100: php-mbstring.patch
 
 # Security fixes (200+)
 
@@ -722,6 +723,7 @@ in pure PHP.
 %patch47 -p1 -b .phpinfo
 
 # upstream patches
+%patch100 -p1 -b .up
 
 # security patches
 
@@ -1541,6 +1543,10 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Wed Jun  8 2022 Remi Collet <remi@remirepo.net> - 8.1.7-1
+- Update to 8.1.7 - http://www.php.net/releases/8_1_7.php
+- add upstream patch to initialize pcre before mbstring
+
 * Wed May 25 2022 Remi Collet <remi@remirepo.net> - 8.1.7~RC1-1
 - update to 8.1.7RC1
 
