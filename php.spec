@@ -238,7 +238,6 @@ Summary: PHP FastCGI Process Manager
 BuildRequires: libacl-devel
 BuildRequires: pkgconfig(libsystemd) >= 209
 Requires: php-common%{?_isa} = %{version}-%{release}
-Requires(pre): /usr/sbin/useradd
 %{?systemd_requires}
 # To ensure correct /var/lib/php/session ownership:
 Requires(pre): httpd-filesystem
