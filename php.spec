@@ -721,6 +721,7 @@ in pure PHP.
 %patch8 -p1 -b .libdb
 %patch9 -p1 -b .deprecated
 
+%patch41 -p1 -b .syslib
 %patch42 -p1 -b .systzdata
 %patch43 -p1 -b .headers
 %if 0%{?fedora} >= 18 || 0%{?rhel} >= 7
