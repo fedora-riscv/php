@@ -64,7 +64,7 @@
 %bcond_with      imap
 %bcond_without   lmdb
 
-%global upver        8.0.20
+%global upver        8.0.21
 #global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
@@ -129,7 +129,6 @@ Patch49: php-8.0.10-phar-sha.patch
 Patch51: php-8.0.13-crypt.patch
 
 # Upstream fixes (100+)
-Patch100: php-mbstring.patch
 
 # Security fixes (200+)
 
@@ -733,7 +732,6 @@ in pure PHP.
 %patch51 -p1 -b .libxcrypt
 
 # upstream patches
-%patch100 -p1 -b .up
 
 # security patches
 
@@ -1550,6 +1548,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Jul  5 2022 Remi Collet <remi@remirepo.net> - 8.0.21-1
+- Update to 8.0.21 - http://www.php.net/releases/8_0_21.php
+
 * Wed Jun  8 2022 Remi Collet <remi@remirepo.net> - 8.0.20-1
 - Update to 8.0.20 - http://www.php.net/releases/8_0_20.php
 - add upstream patch to initialize pcre before mbstring
