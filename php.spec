@@ -70,7 +70,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 1%{?dist}
+Release: 2%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -1548,7 +1548,7 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
-* Tue Jul  5 2022 Remi Collet <remi@remirepo.net> - 8.0.21-1
+* Wed Jul  6 2022 Remi Collet <remi@remirepo.net> - 8.0.21-2
 - Update to 8.0.21 - http://www.php.net/releases/8_0_21.php
 
 * Wed Jun  8 2022 Remi Collet <remi@remirepo.net> - 8.0.20-1
