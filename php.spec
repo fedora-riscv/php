@@ -64,13 +64,13 @@
 %bcond_with      imap
 %bcond_without   lmdb
 
-%global upver        8.0.21
+%global upver        8.0.22
 #global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 2%{?dist}
+Release: 1%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -1548,6 +1548,10 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Tue Aug  2 2022 Remi Collet <remi@remirepo.net> - 8.0.22-1
+- Update to 8.0.22 - http://www.php.net/releases/8_0_22.php
+- fix snmp backport
+
 * Wed Jul  6 2022 Remi Collet <remi@remirepo.net> - 8.0.21-2
 - Update to 8.0.21 - http://www.php.net/releases/8_0_21.php
 
