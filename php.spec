@@ -64,7 +64,7 @@
 %bcond_with      imap
 %bcond_without   lmdb
 
-%global upver        8.1.11
+%global upver        8.1.12
 #global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
@@ -1540,6 +1540,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Wed Oct 26 2022 Remi Collet <remi@remirepo.net> - 8.1.12-1
+- Update to 8.1.12 - http://www.php.net/releases/8_1_12.php
+
 * Wed Sep 28 2022 Remi Collet <remi@remirepo.net> - 8.1.11-1
 - Update to 8.1.11 - http://www.php.net/releases/8_1_11.php
 
