@@ -64,7 +64,7 @@
 %bcond_with      imap
 %bcond_without   lmdb
 
-%global upver        8.1.13
+%global upver        8.1.14
 #global rcver        RC1
 
 Summary: PHP scripting language for creating dynamic web sites
@@ -706,6 +706,9 @@ in pure PHP.
 %{?gpgverify:%{gpgverify} --keyring='%{SOURCE20}' --signature='%{SOURCE21}' --data='%{SOURCE0}'}
 
 %setup -q -n php-%{upver}%{?rcver}
+
+# Corrupted MacOS archive
+find . -name '._*' -delete
 
 %patch1 -p1 -b .mpmcheck
 %patch5 -p1 -b .includedir
@@ -1540,6 +1543,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Wed Jan  4 2023 Remi Collet <remi@remirepo.net> - 8.1.14-1
+- Update to 8.1.14 - http://www.php.net/releases/8_1_14.php
+
 * Tue Nov 22 2022 Remi Collet <remi@remirepo.net> - 8.1.13-1
 - Update to 8.1.13 - http://www.php.net/releases/8_1_13.php
 
