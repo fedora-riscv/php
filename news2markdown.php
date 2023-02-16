@@ -24,8 +24,11 @@ foreach ($text as $line) {
 		if ($debug) echo "+ Ignore $line\n";
 		continue;
 	}
+	$github = 'https://github.com/php/php-src';
+
 	$line = preg_replace('/(#[0-9]+)/', 'php\1', $line);
-	$line = preg_replace('/(GH-([0-9]+))/', '[\1](https://github.com/php/php-src/issues/\2)', $line);
+	$line = preg_replace('/(GH-([0-9]+))/', "[\\1]($github/issues/\\2)", $line);
+	$line = preg_replace('/(GHSA-([^ ]+))/', "[\\1]($github/security/advisories/\\1)", $line);
 	$line = preg_replace('/(CVE-[0-9]+-[0-9]+)/', '**\1**', $line);
 	if (empty($line)) {
 		echo "\n\n";
