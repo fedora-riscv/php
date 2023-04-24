@@ -70,7 +70,7 @@
 Summary: PHP scripting language for creating dynamic web sites
 Name: php
 Version: %{upver}%{?rcver:~%{rcver}}
-Release: 1%{?dist}
+Release: 1.rv64%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -837,7 +837,11 @@ cat `aclocal --print-ac-dir`/{libtool,ltoptions,ltsugar,ltversion,lt~obsolete}.m
 touch configure.ac
 ./buildconf --force
 
+%ifarch riscv64
+CFLAGS=$(echo $RPM_OPT_FLAGS -fno-strict-aliasing -Wno-pointer-sign -pthread | sed 's/-mstackrealign//')
+%else
 CFLAGS=$(echo $RPM_OPT_FLAGS -fno-strict-aliasing -Wno-pointer-sign | sed 's/-mstackrealign//')
+%endif
 export CFLAGS
 
 # Install extension modules in %%{_libdir}/php/modules.
@@ -1543,6 +1547,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 
 
 %changelog
+* Mon Apr 24 2023 Liu Yang <Yang.Liu.sn@gmail.com> - 8.2.5-1.rv64
+- Fix build on riscv64.
+
 * Wed Apr 12 2023 Remi Collet <remi@remirepo.net> - 8.2.5-1
 - Update to 8.2.5 - http://www.php.net/releases/8_2_5.php
 
